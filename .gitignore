@@ -1,0 +1,25 @@
+# ==============================
+# Android / Kotlin - Proyecto Final DAM
+# ==============================
+
+# Gradle
+.gradle/
+build/
+
+# Local config (NO subir nunca)
+local.properties
+
+# Android Studio
+.idea/
+*.iml
+
+# External native build
+.externalNativeBuild/
+.cxx/
+
+# Captures
+captures/
+
+# OS
+.DS_Store
+Thumbs.db
