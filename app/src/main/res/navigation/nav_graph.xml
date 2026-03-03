@@ -10,10 +10,10 @@
         android:name="com.example.cafedealtura_dam.LoginFragment"
         android:label="Login"
         tools:layout="@layout/fragment_login">
+
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
-
     </fragment>
 
     <fragment
@@ -21,5 +21,15 @@
         android:name="com.example.cafedealtura_dam.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/productsFragment"
+        android:name="com.example.cafedealtura_dam.ui.products.ProductsFragment"
+        android:label="Productos" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.cafedealtura_dam.ui.profile.ProfileFragment"
+        android:label="Perfil" />
 
 </navigation>
