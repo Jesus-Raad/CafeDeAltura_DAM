@@ -1,9 +1,30 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.CafeDeAltura_DAM" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/cafe_verde_montana</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+
+        <item name="colorSecondary">@color/cafe_dorado_suave</item>
+        <item name="colorOnSecondary">@color/cafe_negro_suave</item>
+
+        <item name="android:colorBackground">@color/cafe_fondo_principal</item>
+        <item name="colorSurface">@color/cafe_fondo_principal</item>
+        <item name="colorOnSurface">@color/cafe_marron_principal</item>
     </style>
 
     <style name="Theme.CafeDeAltura_DAM" parent="Base.Theme.CafeDeAltura_DAM" />
+
+    <style name="Theme.CafeDeAltura_DAM.Splash" parent="Theme.SplashScreen">
+        <!-- Color de fondo del splash -->
+        <item name="windowSplashScreenBackground">@color/cafe_fondo_principal</item>
+
+        <!-- Tu logo -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/logo_cafe_sin_fondo</item>
+
+        <!-- Duración (opcional) -->
+        <item name="windowSplashScreenAnimationDuration">700</item>
+
+        <!-- A qué tema pasa después del splash -->
+        <item name="postSplashScreenTheme">@style/Theme.CafeDeAltura_DAM</item>
+    </style>
 </resources>
