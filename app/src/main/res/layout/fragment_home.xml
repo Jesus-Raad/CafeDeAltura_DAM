@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white">
@@ -10,14 +11,15 @@
         android:layout_height="wrap_content"
         android:padding="24dp">
 
+        <!-- Header -->
         <TextView
             android:id="@+id/tvHello"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Hola, María ☕"
+            android:textColor="@android:color/black"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="@android:color/black"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -28,21 +30,28 @@
             android:layout_height="wrap_content"
             android:text="Descubre cafés excepcionales"
             android:textSize="14sp"
-            android:textColor="@android:color/black"
+            android:textColor="#6B6B6B"
+            android:layout_marginTop="6dp"
             app:layout_constraintTop_toBottomOf="@id/tvHello"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="6dp" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- Search -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilSearch"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="Buscar café..."
+            android:layout_marginTop="18dp"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusTopStart="14dp"
+            app:boxCornerRadiusTopEnd="14dp"
+            app:boxCornerRadiusBottomStart="14dp"
+            app:boxCornerRadiusBottomEnd="14dp"
+            app:startIconDrawable="@android:drawable/ic_menu_search"
             app:layout_constraintTop_toBottomOf="@id/tvSubtitleHome"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="18dp">
+            app:layout_constraintEnd_toEndOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etSearch"
@@ -51,6 +60,7 @@
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Recomendados -->
         <TextView
             android:id="@+id/tvRecommended"
             android:layout_width="0dp"
@@ -59,93 +69,395 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@android:color/black"
+            android:layout_marginTop="20dp"
             app:layout_constraintTop_toBottomOf="@id/tilSearch"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="20dp" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Cards simples (placeholder) -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card1"
+        <!-- Grid 2 columnas (sin Recycler por ahora, manual) -->
+        <LinearLayout
+            android:id="@+id/layoutRecommended"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="16dp"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            android:gravity="center"
             app:layout_constraintTop_toBottomOf="@id/tvRecommended"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="12dp">
+            app:layout_constraintEnd_toEndOf="parent">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <!-- Card izquierda -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardRecommended1"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="1dp"
+                app:strokeWidth="0dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Colombia Supremo"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp"/>
+                    android:orientation="vertical"
+                    android:padding="14dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                    <ImageView
+                        android:id="@+id/imgRec1"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:scaleType="centerCrop"
+                        android:src="@android:drawable/ic_menu_gallery"
+                        android:contentDescription="Producto" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Colombia La Casita"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"
+                        android:layout_marginTop="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Huila, Colombia"
+                        android:textColor="#6B6B6B"
+                        android:textSize="12sp"
+                        android:layout_marginTop="4dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="250g · En grano"
+                        android:textColor="#6B6B6B"
+                        android:textSize="12sp"
+                        android:layout_marginTop="2dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$24.90"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"
+                        android:layout_marginTop="8dp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Card derecha -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardRecommended2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="1dp"
+                app:strokeWidth="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Huila · 250g · En grano"
-                    android:textColor="@android:color/black"
-                    android:layout_marginTop="6dp"/>
+                    android:orientation="vertical"
+                    android:padding="14dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="$24.90"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/black"
-                    android:layout_marginTop="10dp"/>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+                    <ImageView
+                        android:id="@+id/imgRec2"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:scaleType="centerCrop"
+                        android:src="@android:drawable/ic_menu_gallery"
+                        android:contentDescription="Producto" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card2"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Etiopía Sidamo"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"
+                        android:layout_marginTop="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sidome, Etiopía"
+                        android:textColor="#6B6B6B"
+                        android:textSize="12sp"
+                        android:layout_marginTop="4dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="250g · En grano"
+                        android:textColor="#6B6B6B"
+                        android:textSize="12sp"
+                        android:layout_marginTop="2dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$28.90"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"
+                        android:layout_marginTop="8dp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+        <!-- Orígenes -->
+        <TextView
+            android:id="@+id/txtOrigins"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="16dp"
-            app:layout_constraintTop_toBottomOf="@id/card1"
+            android:text="Orígenes populares"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="22dp"
+            app:layout_constraintTop_toBottomOf="@id/layoutRecommended"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="12dp">
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <HorizontalScrollView
+            android:id="@+id/hsvOrigins"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@id/txtOrigins"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
             <LinearLayout
+                android:id="@+id/layoutOrigins"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- Item origen 1 -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginEnd="18dp">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:scaleType="centerCrop"
+                        android:src="@android:drawable/ic_menu_gallery"
+                        android:contentDescription="Costa Rica"
+                        app:shapeAppearanceOverlay="@style/CircleImage" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Costa Rica"
+                        android:textSize="12sp"
+                        android:textColor="@android:color/black"
+                        android:layout_marginTop="8dp" />
+                </LinearLayout>
+
+                <!-- Item origen 2 -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginEnd="18dp">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:scaleType="centerCrop"
+                        android:src="@android:drawable/ic_menu_gallery"
+                        android:contentDescription="Colombia"
+                        app:shapeAppearanceOverlay="@style/CircleImage" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Colombia"
+                        android:textSize="12sp"
+                        android:textColor="@android:color/black"
+                        android:layout_marginTop="8dp" />
+                </LinearLayout>
+
+                <!-- Item origen 3 -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginEnd="18dp">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:scaleType="centerCrop"
+                        android:src="@android:drawable/ic_menu_gallery"
+                        android:contentDescription="Etiopia"
+                        app:shapeAppearanceOverlay="@style/CircleImage"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Etiopia"
+                        android:textSize="12sp"
+                        android:textColor="@android:color/black"
+                        android:layout_marginTop="8dp" />
+                </LinearLayout>
+
+                <!-- Item origen 4 -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginEnd="18dp">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:scaleType="centerCrop"
+                        android:src="@android:drawable/ic_menu_gallery"
+                        android:contentDescription="Kenya"
+                        app:shapeAppearanceOverlay="@style/CircleImage"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Kenya"
+                        android:textSize="12sp"
+                        android:textColor="@android:color/black"
+                        android:layout_marginTop="8dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <!-- Categorías -->
+        <TextView
+            android:id="@+id/tvCategories"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Categorías"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="22dp"
+            app:layout_constraintTop_toBottomOf="@id/hsvOrigins"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/layoutCategories"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@id/tvCategories"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Etiopía Yirgacheffe"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp"/>
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Yirgacheffe · 250g · En grano"
-                    android:textColor="@android:color/black"
-                    android:layout_marginTop="6dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Café en grano"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Para moler en casa"
+                        android:textColor="#6B6B6B"
+                        android:layout_marginTop="4dp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="$28.90"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/black"
-                    android:layout_marginTop="10dp"/>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Café molido"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Listo para preparar"
+                        android:textColor="#6B6B6B"
+                        android:layout_marginTop="4dp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ediciones especiales"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lotes limitados"
+                        android:textColor="#6B6B6B"
+                        android:layout_marginTop="4dp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
