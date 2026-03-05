@@ -21,10 +21,11 @@
         <!-- Tu logo -->
         <item name="windowSplashScreenAnimatedIcon">@drawable/logo_cafe_sin_fondo</item>
 
-        <!-- Duración (opcional) -->
-        <item name="windowSplashScreenAnimationDuration">700</item>
+        <!-- Duración  -->
+        <item name="windowSplashScreenAnimationDuration">800</item>
 
         <!-- A qué tema pasa después del splash -->
         <item name="postSplashScreenTheme">@style/Theme.CafeDeAltura_DAM</item>
     </style>
+
 </resources>
