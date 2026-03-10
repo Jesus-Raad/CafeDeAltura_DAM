@@ -5,5 +5,5 @@ data class ProductUiModel(
     val origin: String,
     val meta: String,
     val price: String,
-    val imageRes: Int
+    val imageUrl: String
 )

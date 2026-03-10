@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/loginFragment">
+
+    <!-- LOGIN -->
 
     <fragment
         android:id="@+id/loginFragment"
@@ -14,7 +17,10 @@
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+
     </fragment>
+
+    <!-- HOME -->
 
     <fragment
         android:id="@+id/homeFragment"
@@ -22,14 +28,34 @@
         android:label="Home"
         tools:layout="@layout/fragment_home" />
 
+    <!-- PRODUCTS -->
+
     <fragment
         android:id="@+id/productsFragment"
         android:name="com.example.cafedealtura_dam.ui.products.ProductsFragment"
-        android:label="Productos" />
+        android:label="Productos"
+        tools:layout="@layout/fragment_products">
+
+        <action
+            android:id="@+id/products_to_detail"
+            app:destination="@id/productDetailFragment" />
+
+    </fragment>
+
+    <!-- PRODUCT DETAIL -->
+
+    <fragment
+        android:id="@+id/productDetailFragment"
+        android:name="com.example.cafedealtura_dam.ui.products.ProductDetailFragment"
+        android:label="Detalle"
+        tools:layout="@layout/fragment_product_detail" />
+
+    <!-- PROFILE -->
 
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.cafedealtura_dam.ui.profile.ProfileFragment"
-        android:label="Perfil" />
+        android:label="Perfil"
+        tools:layout="@layout/fragment_profile" />
 
 </navigation>

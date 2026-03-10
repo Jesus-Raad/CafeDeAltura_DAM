@@ -12,16 +12,28 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val btn = view.findViewById<MaterialButton>(R.id.btnLogout)
-        btn.setOnClickListener {
-            Toast.makeText(requireContext(), "Sesión cerrada (demo)", Toast.LENGTH_SHORT).show()
-        }
         view.findViewById<View>(R.id.optionOrders).setOnClickListener {
-            Toast.makeText(requireContext(), "Ir a pedidos", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Mis pedidos", Toast.LENGTH_SHORT).show()
         }
 
         view.findViewById<View>(R.id.optionFavorites).setOnClickListener {
-            Toast.makeText(requireContext(), "Ir a favoritos", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Favoritos", Toast.LENGTH_SHORT).show()
+        }
+
+        view.findViewById<View>(R.id.optionAddress).setOnClickListener {
+            Toast.makeText(requireContext(), "Dirección", Toast.LENGTH_SHORT).show()
+        }
+
+        view.findViewById<View>(R.id.optionPayment).setOnClickListener {
+            Toast.makeText(requireContext(), "Método de pago", Toast.LENGTH_SHORT).show()
+        }
+
+        view.findViewById<View>(R.id.optionSettings).setOnClickListener {
+            Toast.makeText(requireContext(), "Configuración", Toast.LENGTH_SHORT).show()
+        }
+
+        view.findViewById<MaterialButton>(R.id.btnLogout).setOnClickListener {
+            Toast.makeText(requireContext(), "Sesión cerrada (demo)", Toast.LENGTH_SHORT).show()
         }
     }
 }
