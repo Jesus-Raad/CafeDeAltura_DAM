@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cafedealtura_dam.R
 
+
 class ProductsAdapter(
     private var products: List<ProductUiModel>
 ) : RecyclerView.Adapter<ProductsAdapter.ProductViewHolder>() {
@@ -26,7 +27,6 @@ class ProductsAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_product, parent, false)
-
         return ProductViewHolder(view)
     }
 

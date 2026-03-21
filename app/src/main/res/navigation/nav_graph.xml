@@ -10,38 +10,68 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.cafedealtura_dam.LoginFragment"
+        android:name="com.example.cafedealtura_dam.ui.autent.LoginFragment"
         android:label="Login"
         tools:layout="@layout/fragment_login">
 
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+<<<<<<< HEAD
 
+=======
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.cafedealtura_dam.ui.autent.RegisterFragment"
+        android:label="RegisterFragment" >
+
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+>>>>>>> origin/main
     </fragment>
 
     <!-- HOME -->
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.cafedealtura_dam.HomeFragment"
+        android:name="com.example.cafedealtura_dam.ui.home.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home" />
 
     <!-- PRODUCTS -->
 
     <fragment
+        android:id="@+id/productDetailFragment"
+        android:name="com.example.cafedealtura_dam.ui.product.ProductDetailFragment"
+        android:label="ProductDetailFragment"
+        tools:layout="@layout/fragment_product_detail" />
+
+    <fragment
         android:id="@+id/productsFragment"
         android:name="com.example.cafedealtura_dam.ui.products.ProductsFragment"
+<<<<<<< HEAD
         android:label="Productos"
         tools:layout="@layout/fragment_products">
 
         <action
             android:id="@+id/products_to_detail"
+=======
+        android:label="Productos">
+
+        <action
+            android:id="@+id/action_productsFragment_to_productDetailFragment"
+>>>>>>> origin/main
             app:destination="@id/productDetailFragment" />
 
     </fragment>
 
+<<<<<<< HEAD
     <!-- PRODUCT DETAIL -->
 
     <fragment
@@ -51,6 +81,9 @@
         tools:layout="@layout/fragment_product_detail" />
 
     <!-- PROFILE -->
+=======
+
+>>>>>>> origin/main
 
     <fragment
         android:id="@+id/profileFragment"

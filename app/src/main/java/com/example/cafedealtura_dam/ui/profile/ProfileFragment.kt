@@ -6,11 +6,13 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.cafedealtura_dam.R
 import com.google.android.material.button.MaterialButton
+import com.example.cafedealtura_dam.utils.applyTopInsets
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        view.applyTopInsets()
 
         view.findViewById<View>(R.id.optionOrders).setOnClickListener {
             Toast.makeText(requireContext(), "Mis pedidos", Toast.LENGTH_SHORT).show()
