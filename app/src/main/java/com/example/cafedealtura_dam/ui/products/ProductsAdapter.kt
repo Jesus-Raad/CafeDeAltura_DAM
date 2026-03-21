@@ -37,7 +37,7 @@ class ProductsAdapter(
 
         holder.name.text = product.name
         holder.origin.text = product.origin
-        holder.meta.text = product.meta
+        holder.meta.text = product.description
         holder.price.text = product.price
 
         Glide.with(holder.itemView.context)
@@ -53,7 +53,7 @@ class ProductsAdapter(
             }
 
             holder.itemView.findNavController()
-                .navigate(R.id.products_to_detail, bundle)
+                .navigate(R.id.action_productsFragment_to_productDetailFragment, bundle)
         }
     }
 

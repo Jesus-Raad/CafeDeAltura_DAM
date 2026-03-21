@@ -27,6 +27,7 @@ class ProductDetailFragment : Fragment(R.layout.fragment_product_detail) {
 
         unitPrice = priceText
             .replace("€", "")
+            .replace("$", "")
             .trim()
             .replace(",", ".")
             .toDoubleOrNull() ?: 0.0
@@ -42,19 +43,7 @@ class ProductDetailFragment : Fragment(R.layout.fragment_product_detail) {
         val btnBack = view.findViewById<ImageButton>(R.id.btnBack)
         val btnFavorite = view.findViewById<ImageButton>(R.id.btnFavorite)
 
-        var quantity = 1
-
-        btnPlus.setOnClickListener {
-            quantity++
-            tvQuantity.text = quantity.toString()
-        }
-
-        btnMinus.setOnClickListener {
-            if (quantity > 1) {
-                quantity--
-                tvQuantity.text = quantity.toString()
-            }
-        }
+        // 👉 Установка данных
         tvTitle.text = name
         tvOrigin.text = origin
         tvQuantity.text = quantity.toString()
@@ -64,19 +53,7 @@ class ProductDetailFragment : Fragment(R.layout.fragment_product_detail) {
             .load(image)
             .into(imgProduct)
 
-        btnBack.setOnClickListener {
-            findNavController().navigateUp()
-        }
-
-        btnFavorite.setOnClickListener {
-            isFavorite = !isFavorite
-            if (isFavorite) {
-                btnFavorite.setImageResource(R.drawable.ic_favorite)
-            } else {
-                btnFavorite.setImageResource(R.drawable.ic_favorite_border)
-            }
-        }
-
+        // 👉 КНОПКИ
         btnPlus.setOnClickListener {
             quantity++
             tvQuantity.text = quantity.toString()
@@ -89,6 +66,18 @@ class ProductDetailFragment : Fragment(R.layout.fragment_product_detail) {
                 tvQuantity.text = quantity.toString()
                 updatePrice(tvPrice)
             }
+        }
+
+        btnBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        btnFavorite.setOnClickListener {
+            isFavorite = !isFavorite
+            btnFavorite.setImageResource(
+                if (isFavorite) R.drawable.ic_favorite
+                else R.drawable.ic_favorite_border
+            )
         }
     }
 

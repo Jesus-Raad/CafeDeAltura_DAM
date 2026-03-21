@@ -1,302 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-=======
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:background="@android:color/white">
->>>>>>> origin/main
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-<<<<<<< HEAD
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <!-- IMAGE -->
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="260dp">
-
-            <ImageView
-                android:id="@+id/imgProduct"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"/>
-=======
         android:orientation="vertical">
 
+        <!-- IMAGE -->
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="320dp">
 
             <ImageView
-                android:id="@+id/ivProductImage"
+                android:id="@+id/imgProduct"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop" />
->>>>>>> origin/main
 
-            <ImageButton
+            <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/btnBack"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-<<<<<<< HEAD
-                android:layout_margin="12dp"
-                android:background="@android:color/transparent"
-                android:src="@android:drawable/ic_media_previous"/>
-
-            <ImageButton
-                android:id="@+id/btnFavorite"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="end"
-                android:layout_margin="12dp"
-                android:background="@android:color/transparent"
-                android:src="@drawable/ic_favorite_border"/>
-
-        </FrameLayout>
-
-        <!-- TITLE + PRICE -->
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvTitle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="20sp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:id="@+id/tvPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:textStyle="bold"/>
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvOrigin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#777"
-            android:layout_marginTop="2dp"/>
-
-        <!-- RATING -->
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:src="@android:drawable/btn_star_big_on"/>
-
-            <TextView
-                android:id="@+id/tvRating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="4.8 (127 reseñas)"
-                android:layout_marginStart="6dp"/>
-
-        </LinearLayout>
-
-        <!-- DESCRIPTION -->
-
-        <TextView
-            android:id="@+id/tvDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:textColor="#444"/>
-
-        <!-- NOTAS -->
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Notas de sabor"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp"/>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="6dp">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Chocolate"
-                android:layout_marginEnd="8dp"/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Caramelo"
-                android:layout_marginEnd="8dp"/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nuez"/>
-
-        </LinearLayout>
-
-        <!-- DETALLES -->
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Detalles"
-            android:textStyle="bold"
-            android:layout_marginTop="18dp"/>
-
-=======
                 android:layout_gravity="top|start"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_margin="16dp"
                 android:background="@drawable/bg_circle_white"
-                android:clickable="true"
-                android:contentDescription="Volver"
-                android:focusable="true"
                 android:padding="8dp"
                 android:src="@drawable/outline_arrow_back_24"
-                android:tint="@android:color/black" />
+                app:tint="@android:color/black" />
 
         </FrameLayout>
 
->>>>>>> origin/main
+        <!-- CONTENT -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-<<<<<<< HEAD
-            android:background="#F2F2F2"
-            android:padding="12dp"
-            android:layout_marginTop="8dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Altitud: 1,400 - 1,800 msnm"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Proceso: Lavado"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tueste: Medio"/>
-
-        </LinearLayout>
-
-        <!-- MOLIDO -->
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Molido"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="6dp">
-
-            <Button
-                android:id="@+id/btnGrano"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="En grano"/>
-
-            <Button
-                android:id="@+id/btnMolido"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Molido"/>
-
-        </LinearLayout>
-
-        <!-- CANTIDAD -->
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cantidad"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp"/>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="6dp">
-
-            <Button
-                android:id="@+id/btnMinus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="-" />
-
-            <TextView
-                android:id="@+id/tvQuantity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1"
-                android:layout_margin="12dp"/>
-
-            <Button
-                android:id="@+id/btnPlus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="+" />
-
-        </LinearLayout>
-
-        <!-- ADD CART -->
-
-        <Button
-            android:id="@+id/btnAddCart"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Agregar al carrito"
-            android:layout_marginTop="20dp"/>
-
-    </LinearLayout>
-
-</ScrollView>
-=======
             android:padding="16dp">
 
+            <!-- NAME + PRICE -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="top"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -306,220 +57,124 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tvProductName"
+                        android:id="@+id/tvTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Colombia Supremo"
-                        android:textColor="#0F172A"
-                        android:textSize="18sp"
+                        android:text="Coffee name"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tvOrigin"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="Huila, Colombia"
-                        android:textColor="#6B7280"
-                        android:textSize="14sp" />
-
+                        android:text="Origin"
+                        android:textColor="#777" />
                 </LinearLayout>
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/tvPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="end"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tvPrice"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="$24.9"
-                        android:textColor="#0F172A"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/tvWeight"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:text="250g"
-                        android:textColor="#6B7280"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
+                    android:text="$0"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
+            <!-- RATING -->
             <TextView
                 android:id="@+id/tvRating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="★ 4.8  (127 reseñas)"
-                android:textColor="#8B6B5C"
-                android:textSize="14sp" />
+                android:layout_marginTop="8dp"
+                android:text="★ 4.8 (127 reseñas)" />
 
+            <!-- DESCRIPTION -->
             <TextView
                 android:id="@+id/tvDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:lineSpacingExtra="6dp"
-                android:text="Cultivado en las montañas de Huila, este café de altura ofrece un perfil dulce y balanceado con cuerpo medio y acidez brillante."
-                android:textColor="#374151"
-                android:textSize="15sp" />
+                android:layout_marginTop="12dp"
+                android:text="Description"
+                android:textColor="#444" />
 
+            <!-- DETAILS -->
             <TextView
-                android:id="@+id/tvFlavorTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="Notas de sabor"
-                android:textColor="#0F172A"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:id="@+id/layoutFlavorNotes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/chipFlavor1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_flavor_chip"
-                    android:paddingStart="16dp"
-                    android:paddingTop="10dp"
-                    android:paddingEnd="16dp"
-                    android:paddingBottom="10dp"
-                    android:text="Chocolate"
-                    android:textColor="#2B2B2B"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/chipFlavor2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:background="@drawable/bg_flavor_chip"
-                    android:paddingStart="16dp"
-                    android:paddingTop="10dp"
-                    android:paddingEnd="16dp"
-                    android:paddingBottom="10dp"
-                    android:text="Caramelo"
-                    android:textColor="#2B2B2B"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/chipFlavor3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:background="@drawable/bg_flavor_chip"
-                    android:paddingStart="16dp"
-                    android:paddingTop="10dp"
-                    android:paddingEnd="16dp"
-                    android:paddingBottom="10dp"
-                    android:text="Nuez"
-                    android:textColor="#2B2B2B"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/tvDetailsTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
                 android:text="Detalles"
-                android:textColor="#0F172A"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginTop="16dp" />
 
             <LinearLayout
-                android:id="@+id/layoutDetailsCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:background="@drawable/bg_detail_card"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:background="#F2F2F2"
+                android:padding="12dp"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:id="@+id/tvAltitude"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Altitud: -" />
+
+                <TextView
+                    android:id="@+id/tvProcess"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Proceso: -" />
+
+                <TextView
+                    android:id="@+id/tvRoast"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tueste: -" />
+
+                <!-- QUANTITY -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cantidad"
+                    android:textStyle="bold"
+                    android:layout_marginTop="16dp" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp">
 
-                    <TextView
-                        android:id="@+id/tvAltitudeLabel"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Altitud"
-                        android:textColor="#6B7280"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/tvAltitudeValue"
+                    <Button
+                        android:id="@+id/btnMinus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1,400 - 1,800 msnm"
-                        android:textColor="#0F172A"
-                        android:textSize="14sp" />
+                        android:text="-" />
+
+                    <TextView
+                        android:id="@+id/tvQuantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        android:layout_margin="12dp" />
+
+                    <Button
+                        android:id="@+id/btnPlus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="+" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                <!-- FAVORITE -->
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/btnFavorite"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginTop="16dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tvProcessLabel"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Proceso"
-                        android:textColor="#6B7280"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/tvProcessValue"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Lavado"
-                        android:textColor="#0F172A"
-                        android:textSize="14sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tvRoastLabel"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Tueste"
-                        android:textColor="#6B7280"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/tvRoastValue"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Medio"
-                        android:textColor="#0F172A"
-                        android:textSize="14sp" />
-                </LinearLayout>
+                    android:background="@drawable/bg_circle_white"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_favorite_border" />
 
             </LinearLayout>
 
@@ -528,4 +183,3 @@
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>
->>>>>>> origin/main

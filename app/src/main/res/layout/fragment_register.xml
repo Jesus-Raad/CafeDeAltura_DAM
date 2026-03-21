@@ -1,233 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cafe_fondo_principal"
-    android:fillViewport="true">
+    android:background="@android:color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingStart="24dp"
-        android:paddingTop="20dp"
-        android:paddingEnd="24dp"
         android:paddingBottom="24dp">
 
-        <ImageView
+        <!-- BACK BUTTON -->
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/btnBack"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_margin="16dp"
             android:src="@drawable/outline_arrow_back_24"
             android:padding="8dp"
-            android:contentDescription="Volver"
-            android:tint="@color/cafe_marron_principal" />
+            android:background="@drawable/bg_circle_white"
+            app:tint="@color/cafe_marron_principal"
+            android:contentDescription="Volver" />
 
+        <!-- LOGO -->
         <ImageView
             android:id="@+id/imgLogo"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"
-            android:src="@drawable/logo_cafe_sin_fondo"
-            android:contentDescription="Logo Café de Altura" />
+            android:src="@drawable/logo_cafe_sin_fondo" />
 
+        <!-- TITLE -->
         <TextView
-            android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
             android:text="Crear cuenta"
-            android:textColor="@color/cafe_marron_principal"
             android:textSize="22sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvSubtitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:textStyle="bold"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="28dp"
-            android:text="Únete a nuestra comunidad cafetera"
-            android:textColor="@color/cafe_marron_suave"
-            android:textSize="14sp" />
+            android:layout_marginTop="16dp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Nombre completo"
-            android:textColor="@color/cafe_marron_principal"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/etName"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/bg_edittext_register"
-            android:hint="María García"
-            android:inputType="textPersonName"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textColor="@color/cafe_marron_principal"
-            android:textColorHint="@color/cafe_marron_suave" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Correo electrónico"
-            android:textColor="@color/cafe_marron_principal"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
+        <!-- EMAIL -->
         <EditText
             android:id="@+id/etEmail"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/bg_edittext_register"
-            android:hint="tu@email.com"
-            android:inputType="textEmailAddress"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textColor="@color/cafe_marron_principal"
-            android:textColorHint="@color/cafe_marron_suave" />
-
-        <TextView
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Teléfono"
-            android:textColor="@color/cafe_marron_principal"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/etPhone"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="20dp"
+            android:layout_margin="16dp"
+            android:hint="Email"
             android:background="@drawable/bg_edittext_register"
-            android:hint="+1 (555) 123-4567"
-            android:inputType="phone"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textColor="@color/cafe_marron_principal"
-            android:textColorHint="@color/cafe_marron_suave" />
+            android:padding="12dp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Contraseña"
-            android:textColor="@color/cafe_marron_principal"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
+        <!-- PASSWORD -->
         <EditText
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/bg_edittext_register"
-            android:hint="••••••••"
-            android:inputType="textPassword"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textColor="@color/cafe_marron_principal"
-            android:textColorHint="@color/cafe_marron_suave" />
-
-        <TextView
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Confirmar contraseña"
-            android:textColor="@color/cafe_marron_principal"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/etConfirmPassword"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="24dp"
-            android:background="@drawable/bg_edittext_register"
-            android:hint="••••••••"
+            android:layout_marginHorizontal="16dp"
+            android:hint="Password"
             android:inputType="textPassword"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textColor="@color/cafe_marron_principal"
-            android:textColorHint="@color/cafe_marron_suave" />
+            android:background="@drawable/bg_edittext_register"
+            android:padding="12dp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:gravity="top"
-            android:orientation="horizontal">
-
-            <CheckBox
-                android:id="@+id/cbTerms"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:buttonTint="@color/cafe_verde_montana"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:padding="0dp" />
-
-            <TextView
-                android:id="@+id/tvTerms"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                android:lineSpacingExtra="2dp"
-                android:text="Acepto los términos y condiciones y la política de privacidad"
-                android:textColor="@color/cafe_marron_principal"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <com.google.android.material.button.MaterialButton
+        <!-- BUTTON REGISTER -->
+        <Button
             android:id="@+id/btnRegister"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="20dp"
-            android:backgroundTint="@color/cafe_verde_montana"
-            android:text="Crear cuenta"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:layout_height="wrap_content"
+            android:text="Registrarse"
+            android:layout_margin="16dp" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/tvLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="¿Ya tienes cuenta? Iniciar sesión"
+            android:textColor="@color/cafe_marron_principal"
+            android:textStyle="bold"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="¿Ya tienes cuenta?"
-                android:textColor="@color/cafe_marron_suave"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/tvLogin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" Inicia sesión"
-                android:textColor="@color/cafe_verde_montana"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+            android:layout_marginTop="16dp"/>
 
     </LinearLayout>
+
 </ScrollView>

@@ -124,7 +124,7 @@ class HomeFragment : Fragment() {
 
         nameView.text = product.name
         originView.text = product.origin
-        metaView.text = product.meta
+        metaView.text = product.rating.toString()
         priceView.text = product.price
     }
 
