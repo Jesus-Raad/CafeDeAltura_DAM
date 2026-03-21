@@ -3,25 +3,36 @@
 
     <!-- ===== IDENTIDAD CAFÉ DE ALTURA ===== -->
 
-    <!-- Fondos -->
-    <color name="cafe_fondo_principal">#F3E7D3</color>      <!-- pergamino claro -->
-    <color name="cafe_fondo_secundario">#E8D6B9</color>     <!-- beige profundo -->
+    <!-- Fondo principal de la app (beige frío elegante) -->
+    <color name="cafe_fondo_principal">#F3F1EC</color>
 
-    <!-- Marrones -->
-    <color name="cafe_marron_principal">#4B2E1E</color>     <!-- café tostado -->
-    <color name="cafe_marron_suave">#6B4C3B</color>         <!-- marrón claro -->
+    <!-- Fondo de cards -->
+    <color name="cafe_card_fondo">#FFFFFF</color>
 
-    <!-- Verde montaña (marca) -->
-    <color name="cafe_verde_montana">#4F6D3A</color>
+    <!-- Verde principal de marca (botones / elementos activos) -->
+    <color name="cafe_verde_montana">#2F4F44</color>
 
-    <!-- Dorado etiqueta -->
-    <color name="cafe_dorado_suave">#C2A878</color>
+    <!-- Marrón café para títulos -->
+    <color name="cafe_marron_principal">#2B1B17</color>
 
-    <!-- Negro paquete (no absoluto) -->
+    <!-- Marrón suave para textos secundarios -->
+    <color name="cafe_marron_suave">#7A6A58</color>
+
+    <!-- Negro suave para textos fuertes -->
     <color name="cafe_negro_suave">#1C1B1A</color>
 
-    <!-- Textos -->
-    <color name="texto_principal">@color/cafe_marron_principal</color>
-    <color name="texto_secundario">#7A6A58</color>
+    <!-- Dorado suave (solo detalles premium si quieres usarlo) -->
+    <color name="cafe_dorado_suave">#C2A878</color>
 
+    <!-- Texto principal -->
+    <color name="texto_principal">@color/cafe_marron_principal</color>
+
+    <!-- Texto secundario -->
+    <color name="texto_secundario">@color/cafe_marron_suave</color>
+
+    <!-- Fondo del bottom navigation -->
+    <color name="bottom_nav_background">#FFFFFF</color>
+
+    <!-- Fondo del bottom  -->
+    <color name="cafe_texto_boton">@android:color/white</color>
 </resources>

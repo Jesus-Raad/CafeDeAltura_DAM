@@ -7,8 +7,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cafedealtura_dam.R
+import com.bumptech.glide.Glide
 
-class ProductsAdapter : RecyclerView.Adapter<ProductsAdapter.VH>() {
+class ProductsAdapter(
+    private val onProductClick: (ProductUiModel) -> Unit
+) : RecyclerView.Adapter<ProductsAdapter.VH>() {
 
     private var items: List<ProductUiModel> = emptyList()
 
@@ -26,7 +29,12 @@ class ProductsAdapter : RecyclerView.Adapter<ProductsAdapter.VH>() {
     override fun getItemCount(): Int = items.size
 
     override fun onBindViewHolder(holder: VH, position: Int) {
-        holder.bind(items[position])
+        val product = items[position]
+        holder.bind(product)
+
+        holder.itemView.setOnClickListener {
+            onProductClick(product)
+        }
     }
 
     class VH(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -38,7 +46,11 @@ class ProductsAdapter : RecyclerView.Adapter<ProductsAdapter.VH>() {
         private val tvPrice: TextView = itemView.findViewById(R.id.tvPrice)
 
         fun bind(product: ProductUiModel) {
-            img.setImageResource(product.imageRes)
+            Glide.with(itemView.context)
+                .load(product.imageUrl)
+                .placeholder(android.R.drawable.ic_menu_gallery)
+                .error(android.R.drawable.ic_menu_close_clear_cancel)
+                .into(img)
             tvName.text = product.name
             tvOrigin.text = product.origin
             tvMeta.text = product.meta

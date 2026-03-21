@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:background="@color/cafe_fondo_principal">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -95,6 +95,7 @@
                 android:layout_marginEnd="8dp"
                 app:cardCornerRadius="18dp"
                 app:cardElevation="1dp"
+                app:cardBackgroundColor="@color/cafe_card_fondo"
                 app:strokeWidth="0dp">
 
                 <LinearLayout
@@ -112,6 +113,7 @@
                         android:contentDescription="Producto" />
 
                     <TextView
+                        android:id="@+id/tvRecName1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Colombia La Casita"
@@ -121,6 +123,7 @@
                         android:layout_marginTop="10dp" />
 
                     <TextView
+                        android:id="@+id/tvRecOrigin1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Huila, Colombia"
@@ -129,6 +132,7 @@
                         android:layout_marginTop="4dp" />
 
                     <TextView
+                        android:id="@+id/tvRecMeta1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="250g · En grano"
@@ -137,6 +141,7 @@
                         android:layout_marginTop="2dp" />
 
                     <TextView
+                        android:id="@+id/tvRecPrice1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="$24.90"
@@ -156,6 +161,7 @@
                 android:layout_marginStart="8dp"
                 app:cardCornerRadius="18dp"
                 app:cardElevation="1dp"
+                app:cardBackgroundColor="@color/cafe_card_fondo"
                 app:strokeWidth="0dp">
 
                 <LinearLayout
@@ -173,6 +179,7 @@
                         android:contentDescription="Producto" />
 
                     <TextView
+                        android:id="@+id/tvRecName2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Etiopía Sidamo"
@@ -182,6 +189,7 @@
                         android:layout_marginTop="10dp" />
 
                     <TextView
+                        android:id="@+id/tvRecOrigin2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Sidome, Etiopía"
@@ -190,6 +198,7 @@
                         android:layout_marginTop="4dp" />
 
                     <TextView
+                        android:id="@+id/tvRecMeta2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="250g · En grano"
@@ -198,6 +207,7 @@
                         android:layout_marginTop="2dp" />
 
                     <TextView
+                        android:id="@+id/tvRecPrice2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="$28.90"
@@ -228,8 +238,10 @@
             android:id="@+id/hsvOrigins"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
             android:scrollbars="none"
-            android:layout_marginTop="12dp"
+            android:clipToPadding="false"
+            android:paddingEnd="12dp"
             app:layout_constraintTop_toBottomOf="@id/txtOrigins"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
@@ -238,106 +250,202 @@
                 android:id="@+id/layoutOrigins"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingBottom="4dp">
 
                 <!-- Item origen 1 -->
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:id="@+id/itemOriginCostaRica"
+                    android:layout_width="104dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:layout_marginEnd="18dp">
+                    android:layout_marginEnd="16dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
 
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
-                        android:scaleType="centerCrop"
-                        android:src="@android:drawable/ic_menu_gallery"
-                        android:contentDescription="Costa Rica"
-                        app:shapeAppearanceOverlay="@style/CircleImage" />
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardOriginCostaRica"
+                        android:layout_width="88dp"
+                        android:layout_height="88dp"
+                        app:cardCornerRadius="44dp"
+                        app:cardElevation="6dp"
+                        app:cardBackgroundColor="@color/cafe_card_fondo"
+                        app:strokeWidth="0dp">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/imgOriginCostaRica"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@android:drawable/ic_menu_gallery"
+                            android:contentDescription="Costa Rica"
+                            app:shapeAppearanceOverlay="@style/CircleImage" />
+                    </com.google.android.material.card.MaterialCardView>
 
                     <TextView
+                        android:id="@+id/tvOriginCostaRica"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         android:text="Costa Rica"
-                        android:textSize="12sp"
-                        android:textColor="@android:color/black"
-                        android:layout_marginTop="8dp" />
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black" />
                 </LinearLayout>
 
                 <!-- Item origen 2 -->
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:id="@+id/itemOriginColombia"
+                    android:layout_width="104dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:layout_marginEnd="18dp">
+                    android:layout_marginEnd="16dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
 
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
-                        android:scaleType="centerCrop"
-                        android:src="@android:drawable/ic_menu_gallery"
-                        android:contentDescription="Colombia"
-                        app:shapeAppearanceOverlay="@style/CircleImage" />
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardOriginColombia"
+                        android:layout_width="88dp"
+                        android:layout_height="88dp"
+                        app:cardCornerRadius="44dp"
+                        app:cardElevation="6dp"
+                        app:cardBackgroundColor="@color/cafe_card_fondo"
+                        app:strokeWidth="0dp">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/imgOriginColombia"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@android:drawable/ic_menu_gallery"
+                            android:contentDescription="Colombia"
+                            app:shapeAppearanceOverlay="@style/CircleImage" />
+                    </com.google.android.material.card.MaterialCardView>
 
                     <TextView
+                        android:id="@+id/tvOriginColombia"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         android:text="Colombia"
-                        android:textSize="12sp"
-                        android:textColor="@android:color/black"
-                        android:layout_marginTop="8dp" />
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black" />
                 </LinearLayout>
 
                 <!-- Item origen 3 -->
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:id="@+id/itemOriginEtiopia"
+                    android:layout_width="104dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:layout_marginEnd="18dp">
+                    android:layout_marginEnd="16dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
 
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
-                        android:scaleType="centerCrop"
-                        android:src="@android:drawable/ic_menu_gallery"
-                        android:contentDescription="Etiopia"
-                        app:shapeAppearanceOverlay="@style/CircleImage"/>
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardOriginEtiopia"
+                        android:layout_width="88dp"
+                        android:layout_height="88dp"
+                        app:cardCornerRadius="44dp"
+                        app:cardElevation="6dp"
+                        app:cardBackgroundColor="@color/cafe_card_fondo"
+                        app:strokeWidth="0dp">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/imgOriginEtiopia"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@android:drawable/ic_menu_gallery"
+                            android:contentDescription="Etiopía"
+                            app:shapeAppearanceOverlay="@style/CircleImage" />
+                    </com.google.android.material.card.MaterialCardView>
 
                     <TextView
+                        android:id="@+id/tvOriginEtiopia"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Etiopia"
-                        android:textSize="12sp"
-                        android:textColor="@android:color/black"
-                        android:layout_marginTop="8dp" />
+                        android:layout_marginTop="10dp"
+                        android:text="Etiopía"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black" />
                 </LinearLayout>
 
                 <!-- Item origen 4 -->
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:id="@+id/itemOriginKenia"
+                    android:layout_width="104dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:layout_marginEnd="18dp">
+                    android:layout_marginEnd="16dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
 
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
-                        android:scaleType="centerCrop"
-                        android:src="@android:drawable/ic_menu_gallery"
-                        android:contentDescription="Kenya"
-                        app:shapeAppearanceOverlay="@style/CircleImage"/>
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardOriginKenia"
+                        android:layout_width="88dp"
+                        android:layout_height="88dp"
+                        app:cardCornerRadius="44dp"
+                        app:cardElevation="6dp"
+                        app:cardBackgroundColor="@color/cafe_card_fondo"
+                        app:strokeWidth="0dp">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/imgOriginKenia"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@android:drawable/ic_menu_gallery"
+                            android:contentDescription="Kenia"
+                            app:shapeAppearanceOverlay="@style/CircleImage" />
+                    </com.google.android.material.card.MaterialCardView>
 
                     <TextView
+                        android:id="@+id/tvOriginKenia"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Kenya"
-                        android:textSize="12sp"
-                        android:textColor="@android:color/black"
-                        android:layout_marginTop="8dp" />
+                        android:layout_marginTop="10dp"
+                        android:text="Kenia"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black" />
+                </LinearLayout>
+
+                <!-- Item origen 5 -->
+                <LinearLayout
+                    android:id="@+id/itemOriginLaos"
+                    android:layout_width="104dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardOriginLaos"
+                        android:layout_width="88dp"
+                        android:layout_height="88dp"
+                        app:cardCornerRadius="44dp"
+                        app:cardElevation="6dp"
+                        app:cardBackgroundColor="@color/cafe_card_fondo"
+                        app:strokeWidth="0dp">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/imgOriginLaos"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@android:drawable/ic_menu_gallery"
+                            android:contentDescription="Laos"
+                            app:shapeAppearanceOverlay="@style/CircleImage" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <TextView
+                        android:id="@+id/tvOriginLaos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Laos"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -373,6 +481,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 app:cardCornerRadius="16dp"
+                app:cardBackgroundColor="@color/cafe_card_fondo"
                 app:cardElevation="0dp"
                 app:strokeWidth="0dp">
 
@@ -404,6 +513,7 @@
                 android:layout_marginBottom="12dp"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/cafe_card_fondo"
                 app:strokeWidth="0dp">
 
                 <LinearLayout
@@ -433,6 +543,7 @@
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/cafe_card_fondo"
                 app:strokeWidth="0dp">
 
                 <LinearLayout
