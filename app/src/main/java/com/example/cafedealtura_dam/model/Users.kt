@@ -1,0 +1,15 @@
+package com.example.cafedealtura_dam.model
+
+import java.io.Serializable
+
+data class Users(
+    val id_user: Int,
+    val name: String,
+    val surname: String? = null,
+    val password: String,
+    val user_name: String,
+    val rol: String
+
+): Serializable
+
+
