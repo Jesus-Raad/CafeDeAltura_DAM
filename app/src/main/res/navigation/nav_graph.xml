@@ -20,10 +20,6 @@
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
-
-        <action
-            android:id="@+id/action_registerFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
     </fragment>
 
     <!-- REGISTER -->
@@ -60,7 +56,7 @@
     <!-- PRODUCT DETAIL -->
     <fragment
         android:id="@+id/productDetailFragment"
-        android:name="com.example.cafedealtura_dam.ui.product.ProductDetailFragment"
+        android:name="com.example.cafedealtura_dam.ui.products.ProductDetailFragment"
         android:label="Detalle"
         tools:layout="@layout/fragment_product_detail" />
 
@@ -70,7 +66,5 @@
         android:name="com.example.cafedealtura_dam.ui.profile.ProfileFragment"
         android:label="Perfil"
         tools:layout="@layout/fragment_profile" />
-
-
 
 </navigation>

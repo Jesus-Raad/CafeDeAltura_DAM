@@ -22,30 +22,30 @@ class ProductDetailFragment : Fragment(R.layout.fragment_product_detail) {
 
         val name = arguments?.getString("name") ?: ""
         val origin = arguments?.getString("origin") ?: ""
-        val priceText = arguments?.getString("price") ?: "0 €"
+        val price = arguments?.getDouble("price") ?: 0.0
         val image = arguments?.getString("image") ?: ""
+        val description = arguments?.getString("description") ?: ""
+        val rating = arguments?.getDouble("rating") ?: 0.0
 
-        unitPrice = priceText
-            .replace("€", "")
-            .replace("$", "")
-            .trim()
-            .replace(",", ".")
-            .toDoubleOrNull() ?: 0.0
+        unitPrice = price
 
         val imgProduct = view.findViewById<ImageView>(R.id.imgProduct)
         val tvTitle = view.findViewById<TextView>(R.id.tvTitle)
         val tvOrigin = view.findViewById<TextView>(R.id.tvOrigin)
         val tvPrice = view.findViewById<TextView>(R.id.tvPrice)
         val tvQuantity = view.findViewById<TextView>(R.id.tvQuantity)
+        val tvDescription = view.findViewById<TextView>(R.id.tvDescription)
+        val tvRating = view.findViewById<TextView>(R.id.tvRating)
 
         val btnPlus = view.findViewById<Button>(R.id.btnPlus)
         val btnMinus = view.findViewById<Button>(R.id.btnMinus)
         val btnBack = view.findViewById<ImageButton>(R.id.btnBack)
         val btnFavorite = view.findViewById<ImageButton>(R.id.btnFavorite)
 
-        // 👉 Установка данных
         tvTitle.text = name
         tvOrigin.text = origin
+        tvDescription.text = description
+        tvRating.text = "★ $rating"
         tvQuantity.text = quantity.toString()
         updatePrice(tvPrice)
 
@@ -53,7 +53,6 @@ class ProductDetailFragment : Fragment(R.layout.fragment_product_detail) {
             .load(image)
             .into(imgProduct)
 
-        // 👉 КНОПКИ
         btnPlus.setOnClickListener {
             quantity++
             tvQuantity.text = quantity.toString()
@@ -83,6 +82,6 @@ class ProductDetailFragment : Fragment(R.layout.fragment_product_detail) {
 
     private fun updatePrice(tvPrice: TextView) {
         val total = unitPrice * quantity
-        tvPrice.text = String.format("%.2f €", total)
+        tvPrice.text = String.format("$%.2f", total)
     }
 }

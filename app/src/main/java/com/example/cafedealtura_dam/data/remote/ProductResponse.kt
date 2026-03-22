@@ -1,11 +1,10 @@
 package com.example.cafedealtura_dam.data.remote
 
 data class ProductResponse(
-    val id: Int,
-    val name: String,
-    val origin: String,
+    val id_coffe: Int,
+    val brand: String,
     val price: String,
-    val imageUrl: String,
-    val description: String,
-    val rating: Double
+    val img_url: String,
+    val available: Int,
+    val category: String
 )

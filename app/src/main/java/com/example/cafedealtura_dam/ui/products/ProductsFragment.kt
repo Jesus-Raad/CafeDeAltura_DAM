@@ -8,7 +8,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cafedealtura_dam.R
-
 import com.example.cafedealtura_dam.data.repository.ProductsRepository
 import kotlinx.coroutines.launch
 
@@ -29,13 +28,9 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
         rvProducts.adapter = adapter
 
         lifecycleScope.launch {
-            try {
-                val products = repository.getProducts()
-                adapter.updateData(products)
-                tvCount.text = "${products.size} cafés disponibles"
-            } catch (e: Exception) {
-                tvCount.text = "Error cargando productos"
-            }
+            val products = repository.getProducts()
+            adapter.updateData(products)
+            tvCount.text = "${products.size} cafés disponibles"
         }
     }
 }

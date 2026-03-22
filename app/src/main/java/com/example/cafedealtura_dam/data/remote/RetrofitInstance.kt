@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitInstance {
 
     private val retrofit = Retrofit.Builder()
-        .baseUrl("https://mockapi.io/") // временно
+        .baseUrl("https://jesusraad.alwaysdata.net/mi_api/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 

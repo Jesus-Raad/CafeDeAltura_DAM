@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cafedealtura_dam.R
 
-
 class ProductsAdapter(
     private var products: List<ProductUiModel>
 ) : RecyclerView.Adapter<ProductsAdapter.ProductViewHolder>() {
@@ -38,7 +37,7 @@ class ProductsAdapter(
         holder.name.text = product.name
         holder.origin.text = product.origin
         holder.meta.text = product.description
-        holder.price.text = product.price
+        holder.price.text = String.format("$%.2f", product.price)
 
         Glide.with(holder.itemView.context)
             .load(product.imageUrl)
@@ -48,12 +47,16 @@ class ProductsAdapter(
             val bundle = Bundle().apply {
                 putString("name", product.name)
                 putString("origin", product.origin)
-                putString("price", product.price)
+                putDouble("price", product.price)
                 putString("image", product.imageUrl)
+                putString("description", product.description)
+                putDouble("rating", product.rating)
             }
 
-            holder.itemView.findNavController()
-                .navigate(R.id.action_productsFragment_to_productDetailFragment, bundle)
+            holder.itemView.findNavController().navigate(
+                R.id.action_productsFragment_to_productDetailFragment,
+                bundle
+            )
         }
     }
 
