@@ -8,5 +8,6 @@ data class Orders(
     val id_user: Int,
     val user_name: String,
     val date: Date,
-    val total_amount:  Double
+    val total_amount:  Double,
+    val status_order: Boolean
 ): Serializable

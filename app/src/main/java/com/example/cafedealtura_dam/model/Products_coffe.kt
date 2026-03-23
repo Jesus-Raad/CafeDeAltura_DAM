@@ -10,5 +10,6 @@ data class Products_coffe (
     val available: Boolean,
     val category: String? = null,
     val weight: Int,
-    val origin: String?=null
+    val origin: String?=null,
+    val description: String? = null
     ): Serializable
