@@ -12,6 +12,7 @@ import com.example.cafedealtura_dam.R
 import com.example.cafedealtura_dam.ui.products.ProductData
 import com.example.cafedealtura_dam.ui.products.ProductUiModel
 import com.example.cafedealtura_dam.utils.applyTopInsets
+import com.example.cafedealtura_dam.utils.SessionManager
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -36,6 +37,12 @@ class HomeFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
         view.applyTopInsets()
+
+        val sessionManager = SessionManager(requireContext())
+        val nombre = sessionManager.getUserName()
+
+        val tvSaludo = view.findViewById<TextView>(R.id.tvSaludo)
+        tvSaludo.text = "Hola, $nombre ☕"
 
         val recommended = ProductData.products.shuffled().take(2)
 
