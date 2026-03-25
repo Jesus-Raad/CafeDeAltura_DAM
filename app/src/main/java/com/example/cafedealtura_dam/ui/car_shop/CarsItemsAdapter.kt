@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.cafedealtura_dam.R
 import com.example.cafedealtura_dam.data.CartRepository
 import com.example.cafedealtura_dam.model.CartItem
@@ -53,7 +54,11 @@ class CarsItemsAdapter(
         fun bind(cartItem: CartItem) {
             val product = cartItem.product
 
-            img.setImageResource(product.imgURL ?: R.drawable.ic_launcher_background)
+            Glide.with(itemView.context)
+                .load(product.img_url)
+                .placeholder(R.drawable.ic_launcher_background)
+                .error(R.drawable.ic_launcher_background)
+                .into(img)
             tvName.text = product.brand
             tvOrigin.text = product.origin
             tvCharacteristic.text = "${product.weight}g • ${product.category}"
@@ -61,17 +66,17 @@ class CarsItemsAdapter(
             tvQuantity.text = cartItem.quantity.toString()
 
             btnPlus.setOnClickListener {
-                CartRepository.increaseQuantity(product.idCoffe)
+                CartRepository.increaseQuantity(product.id_coffe)
                 onCartChanged()
             }
 
             btnMinus.setOnClickListener {
-                CartRepository.decreaseQuantity(product.idCoffe)
+                CartRepository.decreaseQuantity(product.id_coffe)
                 onCartChanged()
             }
 
             btnDelete.setOnClickListener {
-                CartRepository.deleteItem(product.idCoffe)
+                CartRepository.deleteItem(product.id_coffe)
                 onCartChanged()
             }
         }

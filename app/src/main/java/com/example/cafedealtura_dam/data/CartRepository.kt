@@ -11,7 +11,7 @@ object CartRepository {
     private const val FREE_SHIPPING_MIN = 50.0
 
     fun addProduct(product: Products_coffe) {
-        val existingItem = items.find { it.product.idCoffe == product.idCoffe }
+        val existingItem = items.find { it.product.id_coffe == product.id_coffe }
 
         if (existingItem != null) {
             existingItem.quantity++
@@ -33,18 +33,18 @@ object CartRepository {
     }
 
     fun removeProduct(productId: Int) {
-        items.removeAll { it.product.idCoffe == productId }
+        items.removeAll { it.product.id_coffe == productId }
     }
 
     fun increaseQuantity(productId: Int) {
-        val item = items.find { it.product.idCoffe == productId }
+        val item = items.find { it.product.id_coffe == productId }
         if (item != null) {
             item.quantity++
         }
     }
 
     fun decreaseQuantity(productId: Int) {
-        val item = items.find { it.product.idCoffe == productId }
+        val item = items.find { it.product.id_coffe == productId }
 
         if (item != null) {
             if (item.quantity > 1) {
