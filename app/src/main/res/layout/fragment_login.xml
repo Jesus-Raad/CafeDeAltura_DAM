@@ -130,19 +130,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <com.google.android.material.button.MaterialButton
+    <ImageView
         android:id="@+id/btnGoogle"
-        android:layout_width="220dp"
-        android:layout_height="48dp"
-        android:text="Google"
-        android:textAllCaps="false"
-        android:textColor="@color/texto_principal"
-        android:backgroundTint="@color/cafe_card_fondo"
-        app:strokeWidth="1dp"
-        app:strokeColor="@color/bottom_nav_background"
-        android:layout_marginTop="16dp"
+        android:layout_width="62dp"
+        android:layout_height="62dp"
+        android:src="@drawable/ic_google"
+        android:contentDescription="Login con Google"
+        android:layout_marginTop="12dp"
+
+        android:clickable="true"
+        android:focusable="true"
+
         app:layout_constraintTop_toBottomOf="@id/tvContinueWith"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "810614249154",
+    "project_id": "cafedealtura-a96eb",
+    "storage_bucket": "cafedealtura-a96eb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:810614249154:android:28aa721bfa00a54f8f8d5b",
+        "android_client_info": {
+          "package_name": "com.example.cafedealtura_dam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "810614249154-22pqmj8mn6cdr5jsscdtlnv82rlc0sog.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cafedealtura_dam",
+            "certificate_hash": "ce5f62008b2bed447fe8cd5106b52e5dfc9c2290"
+          }
+        },
+        {
+          "client_id": "810614249154-f18jrco9mdd951pqs4teus4705bu4rk8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVIqNC1kmXNNCWkf0cm998Uvt5ou1bsxY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "810614249154-f18jrco9mdd951pqs4teus4705bu4rk8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
