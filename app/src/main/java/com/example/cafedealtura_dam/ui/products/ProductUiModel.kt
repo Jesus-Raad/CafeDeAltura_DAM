@@ -6,5 +6,6 @@ data class ProductUiModel(
     val price: Double,
     val imageUrl: String,
     val description: String,
-    val rating: Double
+    val rating: Double,
+    val grindType: String = "grano"
 )

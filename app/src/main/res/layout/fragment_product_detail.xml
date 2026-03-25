@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="@android:color/white">
+    android:background="@color/cafe_fondo_principal">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,157 +14,342 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="320dp">
+            android:layout_height="350dp">
 
             <ImageView
                 android:id="@+id/imgProduct"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop" />
-
+                android:scaleType="centerCrop"
+                android:src="@drawable/logo_cafe_sin_fondo" />
             <ImageButton
-                android:id="@+id/btnBack"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="top|start"
-                android:layout_margin="16dp"
-                android:background="@drawable/bg_circle_white"
-                android:src="@drawable/outline_arrow_back_24" />
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="top|start"
+            android:layout_margin="20dp"
+            android:background="@drawable/bg_circle_white"
+            android:src="@drawable/outline_arrow_back_24"
+            app:tint="@color/cafe_marron_principal"/>
 
             <ImageButton
                 android:id="@+id/btnFavorite"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="top|end"
-                android:layout_margin="16dp"
+                android:layout_margin="20dp"
                 android:background="@drawable/bg_circle_white"
-                android:src="@drawable/ic_favorite_border" />
+                android:src="@drawable/ic_favorite_border"
+                app:tint="@color/cafe_marron_principal"/>
         </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="20dp"
+            android:background="@color/cafe_card_fondo">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tvTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvOrigin"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="#777" />
-                </LinearLayout>
+                    android:text="Colombia Supremo"
+                    android:textColor="@color/cafe_marron_principal"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
+                    android:layout_alignParentEnd="true"
+                    android:text="$24.9"
+                    android:textColor="@color/cafe_marron_principal"
+                    android:textSize="22sp"
                     android:textStyle="bold" />
-            </LinearLayout>
+
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tvOrigin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvTitle"
+                android:text="Huila, Colombia"
+                android:textColor="@color/cafe_marron_suave"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tvRating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp" />
+                android:layout_marginTop="8dp"
+                android:text="★ 4.5"
+                android:textSize="14sp"
+                android:textColor="@color/cafe_marron_suave" />
+
+
+            
+
 
             <TextView
                 android:id="@+id/tvDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:textColor="#444" />
-
+                android:layout_marginTop="20dp"
+                android:text="Un café excepcional cultivado a gran altura..."
+                android:textColor="@color/cafe_negro_suave"
+                android:textSize="16sp"
+                android:lineSpacingExtra="4dp"/>
+            <!-- NOTAS DE SABOR -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Molido"
-                android:textStyle="bold" />
+                android:layout_marginTop="20dp"
+                android:text="Notas de sabor"
+                android:textStyle="bold"
+                android:textColor="@color/cafe_marron_principal" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Chocolate"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:textSize="13sp"
+                    android:textColor="@color/cafe_marron_principal"
+                    android:background="@drawable/bg_flavor_chip" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Caramelo"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:textSize="13sp"
+                    android:textColor="@color/cafe_marron_principal"
+                    android:background="@drawable/bg_flavor_chip" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Nuez"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:textSize="13sp"
+                    android:textColor="@color/cafe_marron_principal"
+                    android:background="@drawable/bg_flavor_chip" />
+            </LinearLayout>
+
+            <!-- DETALLES -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Detalles"
+                android:textStyle="bold"
+                android:textColor="@color/cafe_marron_principal" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:orientation="horizontal">
+                android:background="@drawable/bg_details"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-                <Button
-                    android:id="@+id/btnGrano"
-                    android:layout_width="0dp"
-                    android:layout_height="48dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_unselected"
-                    android:text="En grano" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Altitud"
+                        android:textColor="@color/cafe_marron_suave" />
+                    <TextView
+                        android:id="@+id/tvAltitude"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1,400 - 1,800 msnm"
+                        android:textColor="@color/cafe_marron_principal"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
-                <Button
-                    android:id="@+id/btnMolido"
-                    android:layout_width="0dp"
-                    android:layout_height="48dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_selected"
-                    android:text="Molido" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="#F0EBE3" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Proceso"
+                        android:textColor="@color/cafe_marron_suave" />
+                    <TextView
+                        android:id="@+id/tvProcess"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lavado"
+                        android:textColor="@color/cafe_marron_principal"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="#F0EBE3" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Tueste"
+                        android:textColor="@color/cafe_marron_suave" />
+                    <TextView
+                        android:id="@+id/tvRoast"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Medio"
+                        android:textColor="@color/cafe_marron_principal"
+                        android:textStyle="bold" />
+                </LinearLayout>
             </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Cantidad"
-                android:textStyle="bold" />
+                android:layout_marginTop="24dp"
+                android:text="Tipo de molido"
+                android:textStyle="bold"
+                android:textColor="@color/cafe_marron_principal"/>
 
-            <LinearLayout
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/toggleGroupMolido"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:singleSelection="true"
+                app:selectionRequired="true"
+                app:checkedButton="@+id/btnGrano">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnGrano"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="54dp"
+                    android:layout_weight="1"
+                    android:text="En grano"
+                    android:textAllCaps="false"
+                    android:textColor="@color/cafe_marron_principal"
+                    app:strokeColor="@color/cafe_marron_suave"
+                    app:cornerRadius="12dp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnMolido"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="54dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="12dp"
+                    android:text="Molido"
+                    android:textAllCaps="false"
+                    android:textColor="@color/cafe_marron_principal"
+                    app:strokeColor="@color/cafe_marron_suave"
+                    app:cornerRadius="12dp"/>
+
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal">
+                android:layout_marginTop="20dp"
+                android:text="Cantidad"
+                android:textStyle="bold"
+                android:textColor="@color/cafe_marron_principal" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="12dp">
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnMinus"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:text="-" />
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:text="-"
+                    app:cornerRadius="22dp"
+                    android:textColor="@android:color/black"/>
 
                 <TextView
                     android:id="@+id/tvQuantity"
-                    android:layout_width="wrap_content"
+                    android:layout_width="40dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
-                    android:text="1" />
+                    android:text="1"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/black" />
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnPlus"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:text="+" />
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:text="+"
+                    app:cornerRadius="22dp"
+                    android:textColor="@android:color/black"/>
             </LinearLayout>
-
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAddToCart"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:backgroundTint="#2E4B3F"
+                android:layout_height="60dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="20dp"
                 android:text="Agregar al carrito"
-                android:textColor="@android:color/white" />
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@color/cafe_verde_montana"
+                app:cornerRadius="12dp"
+                app:icon="@drawable/ic_cart"
+                app:iconGravity="textStart" />
 
         </LinearLayout>
     </LinearLayout>
