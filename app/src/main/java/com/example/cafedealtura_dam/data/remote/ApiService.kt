@@ -4,6 +4,6 @@ import retrofit2.http.GET
 
 interface ApiService {
 
-    @GET("mi_api/get_products.php")
-    suspend fun getProducts(): List<ProductResponse>
+    @GET("get_products.php")
+    suspend fun getProducts(): ProductsResponse
 }

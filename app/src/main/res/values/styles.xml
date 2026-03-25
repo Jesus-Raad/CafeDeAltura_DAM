@@ -6,5 +6,15 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
+    <style name="ChipStyle">
+        <item name="android:layout_width">wrap_content</item>   <!-- ← обязательно -->
+        <item name="android:layout_height">wrap_content</item>  <!-- ← обязательно -->
+        <item name="android:background">@drawable/bg_unselected</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:paddingBottom">6dp</item>
+        <item name="android:textSize">13sp</item>
+    </style>
 
 </resources>

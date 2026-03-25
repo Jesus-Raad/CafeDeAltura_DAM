@@ -36,7 +36,7 @@ class ProductsAdapter(
 
         holder.name.text = product.name
         holder.origin.text = product.origin
-        holder.meta.text = product.description
+        holder.meta.text = "250g • En grano"
         holder.price.text = String.format("$%.2f", product.price)
 
         Glide.with(holder.itemView.context)

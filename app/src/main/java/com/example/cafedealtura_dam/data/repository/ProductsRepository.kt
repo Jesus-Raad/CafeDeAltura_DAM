@@ -11,34 +11,26 @@ class ProductsRepository {
 
     suspend fun getProducts(): List<ProductUiModel> {
         return try {
-            RetrofitInstance.api.getProducts().map { apiProduct ->
+            val apiProducts = RetrofitInstance.api.getProducts().products  // ← .products
+            Log.d("REPO", "API OK: ${apiProducts.size} products")
 
+            apiProducts.map { apiProduct ->
                 val localMatch = ProductData.products.find { local ->
                     local.name.equals(apiProduct.brand, ignoreCase = true)
                 }
-
                 ProductUiModel(
                     name = apiProduct.brand,
-                    origin = localMatch?.origin ?: apiProduct.category,
-                    price = apiProduct.price
-                        .replace("$", "")
-                        .replace("€", "")
-                        .replace(",", ".")
-                        .trim()
-                        .toDoubleOrNull() ?: (localMatch?.price ?: 0.0),
-                    imageUrl = if (apiProduct.img_url.isNotBlank()) {
-                        apiProduct.img_url
-                    } else {
-                        localMatch?.imageUrl ?: ""
-                    },
-                    description = localMatch?.description
-                        ?: ProductDescriptions.getDescription(apiProduct.brand),
+                    origin = apiProduct.origin,
+                    price = apiProduct.price.toDoubleOrNull() ?: 0.0,
+                    imageUrl = apiProduct.img_url,
+                    description = apiProduct.description,
                     rating = localMatch?.rating ?: 4.5
                 )
             }
         } catch (e: Exception) {
+            Log.e("REPO", "API FAILED: ${e.message}")
             ProductData.products
         }
-        Log.d("API_TEST", "Products loaded: ${products.size}")
     }
+
 }

@@ -6,5 +6,7 @@ data class ProductResponse(
     val price: String,
     val img_url: String,
     val available: Int,
-    val category: String
+    val category: String,
+    val origin: String,       // ← добавили
+    val description: String   // ← добавили
 )
