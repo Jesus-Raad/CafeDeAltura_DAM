@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.cafedealtura_dam.R
 import com.google.android.material.button.MaterialButton
 import com.example.cafedealtura_dam.utils.applyTopInsets
@@ -23,7 +24,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
 
         view.findViewById<View>(R.id.optionAddress).setOnClickListener {
-            Toast.makeText(requireContext(), "Dirección", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.direccionesFragment)
         }
 
         view.findViewById<View>(R.id.optionPayment).setOnClickListener {

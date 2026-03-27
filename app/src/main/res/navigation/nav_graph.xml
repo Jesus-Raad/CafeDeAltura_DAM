@@ -67,6 +67,13 @@
         android:label="Perfil"
         tools:layout="@layout/fragment_profile" />
 
+    <!-- DIRECCIONES -->
+    <fragment
+        android:id="@+id/direccionesFragment"
+        android:name="com.example.cafedealtura_dam.ui.profile.DireccionesFragment"
+        android:label="Direcciones"
+        tools:layout="@layout/fragment_direcciones" />
+
 
 
 
