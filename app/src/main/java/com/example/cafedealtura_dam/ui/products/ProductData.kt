@@ -4,60 +4,68 @@ object ProductData {
 
     val products = listOf(
         ProductUiModel(
-            "Colombia La Casita",
-            "Colombia",
-            "250g • En grano",
-            "$24.90",
-            "https://res.cloudinary.com/dcfvpqztb/image/upload/v1774027240/cafe_colombia_la_casita_grano_s2yjvm.png"
+            name = "Colombia La Casita",
+            origin = "Colombia",
+            price = 24.90,
+            imageUrl = "https://res.cloudinary.com/dcfvpqztb/image/upload/v1774027240/cafe_colombia_la_casita_grano_s2yjvm.png",
+            description = "Café suave y equilibrado con notas dulces.",
+            rating = 4.8
         ),
         ProductUiModel(
-            "Colombia Los Naranjos",
-            "Colombia",
-            "250g • En grano",
-            "$26.90",
-            "https://res.cloudinary.com/dcfvpqztb/image/upload/v1774027239/cafe_colombia_grano_svlpwn.png"
+            name = "Colombia Los Naranjos",
+            origin = "Colombia",
+            price = 26.90,
+            imageUrl = "https://res.cloudinary.com/dcfvpqztb/image/upload/v1774027239/cafe_colombia_grano_svlpwn.png",
+            description = "Perfil afrutado con acidez brillante.",
+            rating = 4.7
         ),
         ProductUiModel(
-            "Costa Rica Monte Bello",
-            "Costa Rica",
-            "250g • En grano",
-            "$27.90",
-            "https://res.cloudinary.com/dcfvpqztb/image/upload/v1774027240/cafe_costa_rica_monte_bello_grano_xfsb9w.png"
+            name = "Costa Rica Monte Bello",
+            origin = "Costa Rica",
+            price = 27.90,
+            imageUrl = "https://res.cloudinary.com/dcfvpqztb/image/upload/v1774027240/cafe_costa_rica_monte_bello_grano_xfsb9w.png",
+            description = "Notas de chocolate con cuerpo medio.",
+            rating = 4.9
         ),
         ProductUiModel(
-            "Costa Rica Tarrazú",
-            "Costa Rica",
-            "250g • En grano",
-            "$27.90",
-            "https://res.cloudinary.com/dcfvpqztb/image/upload/v1774027240/cafe_costarica_grano_vly4ch.png"
+            name = "Costa Rica Tarrazú",
+            origin = "Costa Rica",
+            price = 27.90,
+            imageUrl = "https://res.cloudinary.com/dcfvpqztb/image/upload/v1774027240/cafe_costarica_grano_vly4ch.png",
+            description = "Café brillante con notas cítricas.",
+            rating = 4.6
         ),
         ProductUiModel(
-            "Etiopía Sidamo",
-            "Etiopía",
-            "250g • En grano",
-            "$25.90",
-            "https://res.cloudinary.com/dcfvpqztb/image/upload/v1774027240/cafe_etiopia_sidamo_grano_ae8abu.png"
+            name = "Etiopía Sidamo",
+            origin = "Etiopía",
+            price = 25.90,
+            imageUrl = "https://res.cloudinary.com/dcfvpqztb/image/upload/v1774027240/cafe_etiopia_sidamo_grano_ae8abu.png",
+            description = "Notas florales y afrutadas.",
+            rating = 4.8
         ),
         ProductUiModel(
-            "Etiopía Yirgacheffe",
-            "Etiopía",
-            "250g • En grano",
-            "$28.90",
-            "https://res.cloudinary.com/dcfvpqztb/image/upload/v1774027239/cafe_etiopia_yrgacheff_grano_l1ga7a.png"
+            name = "Etiopía Yirgacheffe",
+            origin = "Etiopía",
+            price = 28.90,
+            imageUrl = "https://res.cloudinary.com/dcfvpqztb/image/upload/v1774027239/cafe_etiopia_yrgacheff_grano_l1ga7a.png",
+            description = "Café elegante con acidez delicada.",
+            rating = 4.9
         ),
         ProductUiModel(
-            "Kenia Ndunduri",
-            "Kenia",
-            "250g • En grano",
-            "$29.90",
-            "https://res.cloudinary.com/dcfvpqztb/image/upload/v1774027240/cafe_kenia_grano_gvmjoc.png"
+            name = "Kenia Ndunduri",
+            origin = "Kenia",
+            price = 29.90,
+            imageUrl = "https://res.cloudinary.com/dcfvpqztb/image/upload/v1774027240/cafe_kenia_grano_gvmjoc.png",
+            description = "Notas intensas con acidez vibrante.",
+            rating = 4.7
         ),
         ProductUiModel(
-            "Laos Amanecer",
-            "Laos",
-            "250g • En grano",
-            "$23.90",
-            "https://res.cloudinary.com/dcfvpqztb/image/upload/v1774027239/cafe_laos_grano_ss204v.png"
+            name = "Laos Amanecer",
+            origin = "Laos",
+            price = 23.90,
+            imageUrl = "https://res.cloudinary.com/dcfvpqztb/image/upload/v1774027239/cafe_laos_grano_ss204v.png",
+            description = "Café suave con cuerpo ligero.",
+            rating = 4.5
         )
     )
 }

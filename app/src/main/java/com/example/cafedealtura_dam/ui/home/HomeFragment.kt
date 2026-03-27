@@ -131,8 +131,8 @@ class HomeFragment : Fragment() {
 
         nameView.text = product.name
         originView.text = product.origin
-        metaView.text = product.meta
-        priceView.text = product.price
+        metaView.text = product.rating.toString()
+        priceView.text = String.format("$%.2f", product.price)
     }
 
     companion object {

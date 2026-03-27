@@ -4,31 +4,33 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cafedealtura_dam.R
-import androidx.navigation.fragment.findNavController
-import com.example.cafedealtura_dam.utils.applyTopInsets
+import com.example.cafedealtura_dam.data.repository.ProductsRepository
+import kotlinx.coroutines.launch
 
 class ProductsFragment : Fragment(R.layout.fragment_products) {
 
-    private val adapter = ProductsAdapter { product ->
-        findNavController().navigate(R.id.action_productsFragment_to_productDetailFragment)
-    }
+    private lateinit var adapter: ProductsAdapter
+    private val repository = ProductsRepository()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.applyTopInsets()
 
-        val rv = view.findViewById<RecyclerView>(R.id.rvProducts)
+        val rvProducts = view.findViewById<RecyclerView>(R.id.rvProducts)
         val tvCount = view.findViewById<TextView>(R.id.tvCount)
 
-        rv.layoutManager = GridLayoutManager(requireContext(), 2)
-        rv.adapter = adapter
+        adapter = ProductsAdapter(emptyList())
 
-        val products = ProductData.products
+        rvProducts.layoutManager = GridLayoutManager(requireContext(), 2)
+        rvProducts.adapter = adapter
 
-        tvCount.text = "${products.size} cafés disponibles"
-        adapter.submitList(products)
+        lifecycleScope.launch {
+            val products = repository.getProducts()
+            adapter.updateData(products)
+            tvCount.text = "${products.size} cafés disponibles"
+        }
     }
 }
