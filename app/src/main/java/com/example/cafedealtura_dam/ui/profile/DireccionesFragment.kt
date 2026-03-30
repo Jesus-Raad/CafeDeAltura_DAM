@@ -1,7 +1,10 @@
 package com.example.cafedealtura_dam.ui.profile
 
+import android.app.AlertDialog
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
@@ -15,6 +18,8 @@ import com.example.cafedealtura_dam.utils.applyTopInsets
 class DireccionesFragment : Fragment(R.layout.fragment_direcciones) {
 
     private lateinit var adapter: DireccionesAdapter
+    private lateinit var tvContador: TextView
+
     private val listaDirecciones = mutableListOf(
         Direccion(
             id = 1,
@@ -43,49 +48,127 @@ class DireccionesFragment : Fragment(R.layout.fragment_direcciones) {
         view.applyTopInsets()
 
         val rvDirecciones = view.findViewById<RecyclerView>(R.id.rvDirecciones)
-        val tvContador = view.findViewById<TextView>(R.id.tvAddressCount)
+        tvContador = view.findViewById(R.id.tvAddressCount)
         val btnBack = view.findViewById<ImageButton>(R.id.btnBack)
         val btnAddAddress = view.findViewById<ImageButton>(R.id.btnAddAddress)
         val btnAddNew = view.findViewById<View>(R.id.btnAddNewAddress)
 
         adapter = DireccionesAdapter(
-            onEditar = { direccion ->
-                Toast.makeText(requireContext(), "Editar: ${direccion.nombre}", Toast.LENGTH_SHORT).show()
-                // TODO: abrir diálogo de edición
-            },
-            onEliminar = { direccion ->
-                listaDirecciones.removeIf { it.id == direccion.id }
-                adapter.submitList(listaDirecciones.toList())
-                actualizarContador(tvContador)
-                Toast.makeText(requireContext(), "${direccion.nombre} eliminada", Toast.LENGTH_SHORT).show()
-            },
-            onEstablecerPredeterminada = { direccion ->
-                listaDirecciones.replaceAll { it.copy(esPredeterminada = it.id == direccion.id) }
-                adapter.submitList(listaDirecciones.toList())
-                Toast.makeText(requireContext(), "${direccion.nombre} establecida como predeterminada", Toast.LENGTH_SHORT).show()
-            }
+            onEditar = { direccion -> mostrarDialogo(direccion) },
+            onEliminar = { direccion -> eliminarDireccion(direccion) },
+            onEstablecerPredeterminada = { direccion -> establecerPredeterminada(direccion) }
         )
 
         rvDirecciones.layoutManager = LinearLayoutManager(requireContext())
         rvDirecciones.adapter = adapter
-        adapter.submitList(listaDirecciones.toList())
-        actualizarContador(tvContador)
+        refrescarLista()
 
         btnBack.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
-        val anadirNueva = {
-            Toast.makeText(requireContext(), "Añadir nueva dirección", Toast.LENGTH_SHORT).show()
-            // TODO: abrir diálogo de nueva dirección
-        }
-
-        btnAddAddress.setOnClickListener { anadirNueva() }
-        btnAddNew.setOnClickListener { anadirNueva() }
+        btnAddAddress.setOnClickListener { mostrarDialogo(null) }
+        btnAddNew.setOnClickListener { mostrarDialogo(null) }
     }
 
-    private fun actualizarContador(tv: TextView) {
+    private fun mostrarDialogo(direccionExistente: Direccion?) {
+        val dialogView = LayoutInflater.from(requireContext())
+            .inflate(R.layout.dialog_direccion, null)
+
+        val etNombre       = dialogView.findViewById<EditText>(R.id.etNombre)
+        val etNombrePersona = dialogView.findViewById<EditText>(R.id.etNombrePersona)
+        val etCalle        = dialogView.findViewById<EditText>(R.id.etCalle)
+        val etCiudad       = dialogView.findViewById<EditText>(R.id.etCiudad)
+        val etCP           = dialogView.findViewById<EditText>(R.id.etCodigoPostal)
+        val etTelefono     = dialogView.findViewById<EditText>(R.id.etTelefono)
+
+        // Si es edición, rellenar campos con datos existentes
+        direccionExistente?.let {
+            etNombre.setText(it.nombre)
+            etNombrePersona.setText(it.nombrePersona)
+            etCalle.setText(it.calle)
+            etCiudad.setText(it.ciudad)
+            etCP.setText(it.codigoPostal.removePrefix("CP: "))
+            etTelefono.setText(it.telefono)
+        }
+
+        val titulo = if (direccionExistente == null) "Nueva dirección" else "Editar dirección"
+
+        AlertDialog.Builder(requireContext())
+            .setTitle(titulo)
+            .setView(dialogView)
+            .setPositiveButton("Guardar") { _, _ ->
+                val nombre  = etNombre.text.toString().trim()
+                val persona = etNombrePersona.text.toString().trim()
+                val calle   = etCalle.text.toString().trim()
+                val ciudad  = etCiudad.text.toString().trim()
+                val cp      = etCP.text.toString().trim()
+                val tel     = etTelefono.text.toString().trim()
+
+                if (nombre.isEmpty() || calle.isEmpty()) {
+                    Toast.makeText(requireContext(), "Nombre y calle son obligatorios", Toast.LENGTH_SHORT).show()
+                    return@setPositiveButton
+                }
+
+                if (direccionExistente == null) {
+                    // AÑADIR nueva
+                    val nuevoId = (listaDirecciones.maxOfOrNull { it.id } ?: 0) + 1
+                    listaDirecciones.add(
+                        Direccion(
+                            id = nuevoId,
+                            nombre = nombre,
+                            nombrePersona = persona,
+                            calle = calle,
+                            ciudad = ciudad,
+                            codigoPostal = "CP: $cp",
+                            telefono = tel,
+                            esPredeterminada = listaDirecciones.isEmpty()
+                        )
+                    )
+                    Toast.makeText(requireContext(), "Dirección añadida", Toast.LENGTH_SHORT).show()
+                } else {
+                    // EDITAR existente
+                    val index = listaDirecciones.indexOfFirst { it.id == direccionExistente.id }
+                    if (index >= 0) {
+                        listaDirecciones[index] = direccionExistente.copy(
+                            nombre = nombre,
+                            nombrePersona = persona,
+                            calle = calle,
+                            ciudad = ciudad,
+                            codigoPostal = "CP: $cp",
+                            telefono = tel
+                        )
+                    }
+                    Toast.makeText(requireContext(), "Dirección actualizada", Toast.LENGTH_SHORT).show()
+                }
+                refrescarLista()
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
+    }
+
+    private fun eliminarDireccion(direccion: Direccion) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Eliminar dirección")
+            .setMessage("¿Seguro que quieres eliminar \"${direccion.nombre}\"?")
+            .setPositiveButton("Eliminar") { _, _ ->
+                listaDirecciones.removeIf { it.id == direccion.id }
+                refrescarLista()
+                Toast.makeText(requireContext(), "${direccion.nombre} eliminada", Toast.LENGTH_SHORT).show()
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
+    }
+
+    private fun establecerPredeterminada(direccion: Direccion) {
+        listaDirecciones.replaceAll { it.copy(esPredeterminada = it.id == direccion.id) }
+        refrescarLista()
+        Toast.makeText(requireContext(), "${direccion.nombre} es ahora predeterminada", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun refrescarLista() {
+        adapter.submitList(listaDirecciones.toList())
         val n = listaDirecciones.size
-        tv.text = if (n == 1) "1 dirección guardada" else "$n direcciones guardadas"
+        tvContador.text = if (n == 1) "1 dirección guardada" else "$n direcciones guardadas"
     }
 }
