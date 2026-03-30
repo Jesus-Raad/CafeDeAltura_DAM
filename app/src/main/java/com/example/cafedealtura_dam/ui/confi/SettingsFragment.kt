@@ -37,7 +37,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         }
 
         itemChangePassword.setOnClickListener {
-            findNavController().navigate(R.id.action_settingsFragment_to_changePasswordFragment)
+            //findNavController().navigate(R.id.action_settingsFragment_to_changePasswordFragment)
+            // TODO: conectar con ChangePassword cuando esté implementado
         }
 
         btnLogout.setOnClickListener {

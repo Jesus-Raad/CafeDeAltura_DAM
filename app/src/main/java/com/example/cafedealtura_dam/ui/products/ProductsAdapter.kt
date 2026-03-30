@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.cafedealtura_dam.R
 import com.bumptech.glide.Glide
+import com.example.cafedealtura_dam.R
 import com.example.cafedealtura_dam.model.Products_coffe
 
 class ProductsAdapter(
@@ -40,7 +40,7 @@ class ProductsAdapter(
 
     class VH(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        private val img: ImageView = itemView.findViewById(R.id.img)
+        private val img: ImageView = itemView.findViewById(R.id.imgProduct)
         private val tvName: TextView = itemView.findViewById(R.id.tvName)
         private val tvOrigin: TextView = itemView.findViewById(R.id.tvOrigin)
         private val tvMeta: TextView = itemView.findViewById(R.id.tvMeta)
@@ -52,10 +52,11 @@ class ProductsAdapter(
                 .placeholder(android.R.drawable.ic_menu_gallery)
                 .error(android.R.drawable.ic_menu_close_clear_cancel)
                 .into(img)
+
             tvName.text = product.brand
-            tvOrigin.text = product.origin
-            tvMeta.text = product.available.toString()
-            tvPrice.text = product.price.toString()
+            tvOrigin.text = product.origin ?: ""
+            tvMeta.text = "${product.weight}g"
+            tvPrice.text = String.format("$%.2f", product.price)
         }
     }
 }

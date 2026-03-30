@@ -9,8 +9,9 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.cafedealtura_dam.R
-import com.example.cafedealtura_dam.ui.products.ProductData
-import com.example.cafedealtura_dam.ui.products.ProductUiModel
+import com.example.cafedealtura_dam.data.ProductsRepository
+import com.example.cafedealtura_dam.dataAPI.ApiService
+import com.example.cafedealtura_dam.model.Products_coffe
 import com.example.cafedealtura_dam.utils.applyTopInsets
 import com.example.cafedealtura_dam.utils.SessionManager
 
@@ -44,8 +45,6 @@ class HomeFragment : Fragment() {
         val tvSaludo = view.findViewById<TextView>(R.id.tvSaludo)
         tvSaludo.text = "Hola, $nombre ☕"
 
-        val recommended = ProductData.products.shuffled().take(2)
-
         val imgRec1 = view.findViewById<ImageView>(R.id.imgRec1)
         val tvRecName1 = view.findViewById<TextView>(R.id.tvRecName1)
         val tvRecOrigin1 = view.findViewById<TextView>(R.id.tvRecOrigin1)
@@ -58,22 +57,38 @@ class HomeFragment : Fragment() {
         val tvRecMeta2 = view.findViewById<TextView>(R.id.tvRecMeta2)
         val tvRecPrice2 = view.findViewById<TextView>(R.id.tvRecPrice2)
 
-        bindRecommendedProduct(
-            product = recommended[0],
-            imageView = imgRec1,
-            nameView = tvRecName1,
-            originView = tvRecOrigin1,
-            metaView = tvRecMeta1,
-            priceView = tvRecPrice1
-        )
+        ApiService.Get.getProducts(
+            context = requireContext(),
+            onResult = { products ->
+                ProductsRepository.setProducts(products)
 
-        bindRecommendedProduct(
-            product = recommended[1],
-            imageView = imgRec2,
-            nameView = tvRecName2,
-            originView = tvRecOrigin2,
-            metaView = tvRecMeta2,
-            priceView = tvRecPrice2
+                val recommended = products.shuffled().take(2)
+
+                if (recommended.isNotEmpty()) {
+                    bindRecommendedProduct(
+                        product = recommended[0],
+                        imageView = imgRec1,
+                        nameView = tvRecName1,
+                        originView = tvRecOrigin1,
+                        metaView = tvRecMeta1,
+                        priceView = tvRecPrice1
+                    )
+                }
+
+                if (recommended.size > 1) {
+                    bindRecommendedProduct(
+                        product = recommended[1],
+                        imageView = imgRec2,
+                        nameView = tvRecName2,
+                        originView = tvRecOrigin2,
+                        metaView = tvRecMeta2,
+                        priceView = tvRecPrice2
+                    )
+                }
+            },
+            onError = { error ->
+                println("ERROR API: $error")
+            }
         )
 
         val imgOriginCostaRica = view.findViewById<ImageView>(R.id.imgOriginCostaRica)
@@ -116,7 +131,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun bindRecommendedProduct(
-        product: ProductUiModel,
+        product: Products_coffe,
         imageView: ImageView,
         nameView: TextView,
         originView: TextView,
@@ -124,15 +139,15 @@ class HomeFragment : Fragment() {
         priceView: TextView
     ) {
         Glide.with(requireContext())
-            .load(product.imageUrl)
+            .load(product.img_url)
             .placeholder(android.R.drawable.ic_menu_gallery)
             .error(android.R.drawable.ic_menu_close_clear_cancel)
             .into(imageView)
 
-        nameView.text = product.name
+        nameView.text = product.brand
         originView.text = product.origin
-        metaView.text = product.meta
-        priceView.text = product.price
+        metaView.text = product.available.toString()
+        priceView.text = String.format("$%.2f", product.price)
     }
 
     companion object {
