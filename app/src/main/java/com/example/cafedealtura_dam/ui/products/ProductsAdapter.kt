@@ -8,14 +8,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cafedealtura_dam.R
 import com.bumptech.glide.Glide
+import com.example.cafedealtura_dam.model.Products_coffe
 
 class ProductsAdapter(
-    private val onProductClick: (ProductUiModel) -> Unit
+    private val onProductClick: (Products_coffe) -> Unit
 ) : RecyclerView.Adapter<ProductsAdapter.VH>() {
 
-    private var items: List<ProductUiModel> = emptyList()
+    private var items: List<Products_coffe> = emptyList()
 
-    fun submitList(newItems: List<ProductUiModel>) {
+    fun submitList(newItems: List<Products_coffe>) {
         items = newItems
         notifyDataSetChanged()
     }
@@ -45,16 +46,16 @@ class ProductsAdapter(
         private val tvMeta: TextView = itemView.findViewById(R.id.tvMeta)
         private val tvPrice: TextView = itemView.findViewById(R.id.tvPrice)
 
-        fun bind(product: ProductUiModel) {
+        fun bind(product: Products_coffe) {
             Glide.with(itemView.context)
-                .load(product.imageUrl)
+                .load(product.img_url)
                 .placeholder(android.R.drawable.ic_menu_gallery)
                 .error(android.R.drawable.ic_menu_close_clear_cancel)
                 .into(img)
-            tvName.text = product.name
+            tvName.text = product.brand
             tvOrigin.text = product.origin
-            tvMeta.text = product.meta
-            tvPrice.text = product.price
+            tvMeta.text = product.available.toString()
+            tvPrice.text = product.price.toString()
         }
     }
 }

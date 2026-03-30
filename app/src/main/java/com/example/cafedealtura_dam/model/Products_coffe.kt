@@ -7,7 +7,7 @@ data class Products_coffe (
     val brand: String,
     val price: Double,
     val img_url: String? = null,
-    val available: Boolean,
+    val available: Int,
     val category: Int? = null,
     val weight: Int,
     val origin: String?=null,

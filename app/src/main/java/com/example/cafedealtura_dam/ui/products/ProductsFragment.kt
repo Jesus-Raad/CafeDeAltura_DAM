@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cafedealtura_dam.R
 import androidx.navigation.fragment.findNavController
+import com.example.cafedealtura_dam.data.ProductsRepository
+import com.example.cafedealtura_dam.dataAPI.ApiService
 import com.example.cafedealtura_dam.utils.applyTopInsets
 
 class ProductsFragment : Fragment(R.layout.fragment_products) {
@@ -26,9 +28,18 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
         rv.layoutManager = GridLayoutManager(requireContext(), 2)
         rv.adapter = adapter
 
-        val products = ProductData.products
+        ApiService.Get.getProducts(
+            context = requireContext(),
+            onResult = { products ->
+                ProductsRepository.setProducts(products)
 
-        tvCount.text = "${products.size} cafés disponibles"
-        adapter.submitList(products)
+                tvCount.text = "${products.size} cafés disponibles"
+                adapter.submitList(products)
+
+            },
+            onError = { error ->
+                tvCount.text = "0 cafés disponibles"
+            }
+        )
     }
 }

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cafedealtura_dam.R
 import com.example.cafedealtura_dam.data.CartRepository
+import com.example.cafedealtura_dam.data.ProductsRepository
 import com.example.cafedealtura_dam.dataAPI.ApiService
 import com.example.cafedealtura_dam.model.Products_coffe
 import java.util.Locale
@@ -54,22 +55,12 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
     private fun loadTestProductsIfNeeded() {
         if (!CartRepository.isEmpty()) return
 
-        ApiService.Get.getProducts(
-            context = requireContext(),
-            onResult = { listaProductos ->
 
-                for (product in listaProductos) {
+
+                for (product in ProductsRepository.getProducts()) {
                     CartRepository.addProduct(product)
                 }
 
-                // si tienes adapter o recycler, aquí actualizas
-                adapter.submitList(CartRepository.getItems())
-
-            },
-            onError = { error ->
-                println("ERROR API: $error")
-            }
-        )
     }
 
         private fun updateCartUI() {
