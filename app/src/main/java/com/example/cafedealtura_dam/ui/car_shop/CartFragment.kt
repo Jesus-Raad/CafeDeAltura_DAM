@@ -12,6 +12,8 @@ import com.example.cafedealtura_dam.R
 import com.example.cafedealtura_dam.data.CartRepository
 import com.example.cafedealtura_dam.model.Products_coffe
 import java.util.Locale
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.button.MaterialButton
 
 class CartFragment : Fragment(R.layout.fragment_cart) {
 
@@ -43,6 +45,12 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
 
         loadTestProductsIfNeeded()
         updateCartUI()
+
+        val btnCheckout = view.findViewById<MaterialButton>(R.id.btnCheckout)
+
+        btnCheckout.setOnClickListener {
+            findNavController().navigate(R.id.paymentFragment)
+        }
     }
 
     override fun onResume() {
