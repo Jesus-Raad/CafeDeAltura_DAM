@@ -276,8 +276,9 @@
                     android:layout_weight="1"
                     android:text="En grano"
                     android:textAllCaps="false"
-                    android:textColor="@color/cafe_marron_principal"
                     app:strokeColor="@color/cafe_marron_suave"
+                    app:backgroundTint="@color/toggle_selector"
+                    android:textColor="@color/toggle_text_selector"
                     app:cornerRadius="12dp"/>
 
                 <com.google.android.material.button.MaterialButton
@@ -289,8 +290,9 @@
                     android:layout_marginStart="12dp"
                     android:text="Molido"
                     android:textAllCaps="false"
-                    android:textColor="@color/cafe_marron_principal"
                     app:strokeColor="@color/cafe_marron_suave"
+                    app:backgroundTint="@color/toggle_selector"
+                    android:textColor="@color/toggle_text_selector"
                     app:cornerRadius="12dp"/>
 
 

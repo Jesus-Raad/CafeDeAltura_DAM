@@ -139,6 +139,7 @@
         android:label="Mis pedidos"
         tools:layout="@layout/fragment_profile" />
 
+
     <!--
         FAVORITES
         <fragment
@@ -147,6 +148,15 @@
             android:label="Favoritos"
             tools:layout="@layout/fragment_favorites" />
     -->
+
+    <!-- DIRECCIONES -->
+    <fragment
+        android:id="@+id/direccionesFragment"
+        android:name="com.example.cafedealtura_dam.ui.profile.DireccionesFragment"
+        android:label="Direcciones"
+        tools:layout="@layout/fragment_direcciones" />
+
+
 
 
     <!--

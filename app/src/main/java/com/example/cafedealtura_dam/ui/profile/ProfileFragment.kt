@@ -24,7 +24,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
 
         view.findViewById<View>(R.id.optionAddress).setOnClickListener {
+
             Toast.makeText(requireContext(), "Dirección todavía no disponible", Toast.LENGTH_SHORT).show()
+
+            findNavController().navigate(R.id.direccionesFragment)
+
         }
 
         view.findViewById<View>(R.id.optionPayment).setOnClickListener {

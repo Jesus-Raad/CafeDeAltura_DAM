@@ -15,6 +15,9 @@ class ProductsAdapter(
     private var products: List<ProductUiModel>
 ) : RecyclerView.Adapter<ProductsAdapter.ProductViewHolder>() {
 
+    private var allProducts: List<ProductUiModel> = products
+    private var activeFilter: String = "Todos"
+
     class ProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val img: ImageView = view.findViewById(R.id.imgProduct)
         val name: TextView = view.findViewById(R.id.tvName)
@@ -36,7 +39,7 @@ class ProductsAdapter(
 
         holder.name.text = product.name
         holder.origin.text = product.origin
-        holder.meta.text = "250g • En grano"
+        holder.meta.text = "250g • ${product.category.ifEmpty { "En grano" }}"
         holder.price.text = String.format("$%.2f", product.price)
 
         Glide.with(holder.itemView.context)
@@ -52,7 +55,6 @@ class ProductsAdapter(
                 putString("description", product.description)
                 putDouble("rating", product.rating)
             }
-
             holder.itemView.findNavController().navigate(
                 R.id.action_productsFragment_to_productDetailFragment,
                 bundle
@@ -61,7 +63,17 @@ class ProductsAdapter(
     }
 
     fun updateData(newProducts: List<ProductUiModel>) {
-        products = newProducts
+        allProducts = newProducts
+        applyFilter(activeFilter)
+    }
+
+    fun applyFilter(category: String) {
+        activeFilter = category
+        products = if (category == "Todos") {
+            allProducts
+        } else {
+            allProducts.filter { it.category.equals(category, ignoreCase = true) }
+        }
         notifyDataSetChanged()
     }
 }

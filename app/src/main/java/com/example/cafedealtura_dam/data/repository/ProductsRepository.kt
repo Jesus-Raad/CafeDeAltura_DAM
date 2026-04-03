@@ -24,7 +24,13 @@ class ProductsRepository {
                     price = apiProduct.price.toDoubleOrNull() ?: 0.0,
                     imageUrl = apiProduct.img_url,
                     description = apiProduct.description,
-                    rating = localMatch?.rating ?: 4.5
+                    rating = localMatch?.rating ?: 4.5,
+                    category = when (apiProduct.category) {
+                        "1" -> "En grano"
+                        "2" -> "Especial"
+                        "3" -> "Molido"
+                        else -> "En grano"
+                    },
                 )
             }
         } catch (e: Exception) {
