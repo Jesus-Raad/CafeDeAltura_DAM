@@ -49,8 +49,10 @@ class ProductsAdapter(
         fun bind(product: Products_coffe) {
             Glide.with(itemView.context)
                 .load(product.img_url)
-                .placeholder(android.R.drawable.ic_menu_gallery)
+                .placeholder(R.drawable.ic_cafe_placeholder)
                 .error(android.R.drawable.ic_menu_close_clear_cancel)
+                .diskCacheStrategy(com.bumptech.glide.load.engine.DiskCacheStrategy.ALL)
+                .thumbnail(0.1f)
                 .into(img)
 
             tvName.text = product.brand
