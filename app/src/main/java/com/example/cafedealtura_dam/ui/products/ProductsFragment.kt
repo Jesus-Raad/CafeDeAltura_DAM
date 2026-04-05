@@ -19,6 +19,8 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
     private var allProducts: List<Products_coffe> = emptyList()
     private var selectedCategory: Int? = null
 
+    private var currentSort: String = "none"
+
     private val adapter = ProductsAdapter { product ->
         val bundle = Bundle().apply {
             putInt("id_coffe", product.id_coffe)
@@ -44,7 +46,8 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
         rv.adapter = adapter
 
         val filterBtns = listOf(btnTodos, btnGrano, btnMolido, btnEspecial)
-
+        val btnFilter = view.findViewById<android.widget.ImageButton>(R.id.btnFilter)
+        btnFilter.setOnClickListener { showSortMenu(it) }
         btnTodos.setOnClickListener {
             selectedCategory = null
             updateFilterButtons(filterBtns, btnTodos)
@@ -96,8 +99,14 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
         } else {
             allProducts.filter { it.category == selectedCategory }
         }
-        tvCount.text = "${filtered.size} cafés disponibles"
-        adapter.submitList(filtered)
+        val sorted = when (currentSort) {
+            "az" -> filtered.sortedBy { it.brand.lowercase() }
+            "za" -> filtered.sortedByDescending { it.brand.lowercase() }
+            else -> filtered
+        }
+
+        tvCount.text = "${sorted.size} cafés disponibles"
+        adapter.submitList(sorted)
     }
 
     private fun updateFilterButtons(allBtns: List<Button>, active: Button) {
@@ -110,5 +119,24 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
                 btn.setTextColor(resources.getColor(R.color.cafe_marron_suave, null))
             }
         }
+    }
+
+    private fun showSortMenu(anchor: View) {
+        val popup = android.widget.PopupMenu(requireContext(), anchor)
+        popup.menu.apply {
+            add(0, 0, 0, "Nombre: A → Z")
+            add(0, 1, 1, "Nombre: Z → A")
+            add(0, 2, 2, "Sin ordenar")
+        }
+        popup.setOnMenuItemClickListener { item ->
+            currentSort = when (item.itemId) {
+                0 -> "az"
+                1 -> "za"
+                else -> "none"
+            }
+            applyFilter(view?.findViewById(R.id.tvCount) ?: return@setOnMenuItemClickListener true)
+            true
+        }
+        popup.show()
     }
 }
