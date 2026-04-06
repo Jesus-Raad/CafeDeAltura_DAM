@@ -57,13 +57,13 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
 
 
 
-        for (product in ProductsRepository.getProducts()) {
-            CartRepository.addProduct(product)
-        }
+                for (product in ProductsRepository.getProducts()) {
+                    CartRepository.addProduct(product)
+                }
 
     }
 
-    private fun updateCartUI() {
+        private fun updateCartUI() {
         val currentView = view ?: return
 
         val tvCount = currentView.findViewById<TextView>(R.id.tvCartCount)

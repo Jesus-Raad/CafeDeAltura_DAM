@@ -22,44 +22,15 @@
             app:tint="@color/cafe_marron_suave"
             android:contentDescription="Ubicación" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/tvNombreDireccion"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_marginStart="10dp">
-
-            <TextView
-                android:id="@+id/tvNombreDireccion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Casa"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:textColor="@color/cafe_marron_principal" />
-
-            <LinearLayout
-                android:id="@+id/layoutBadgePredeterminada"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:visibility="gone">
-
-                <View
-                    android:layout_width="6dp"
-                    android:layout_height="6dp"
-                    android:background="@drawable/bg_dot_verde"
-                    android:layout_marginEnd="4dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Predeterminada"
-                    android:textSize="11sp"
-                    android:textColor="@color/cafe_verde_montana" />
-            </LinearLayout>
-        </LinearLayout>
+            android:layout_marginStart="10dp"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="@color/cafe_marron_principal" />
 
         <ImageButton
             android:id="@+id/btnEditar"
@@ -127,21 +98,5 @@
             android:textSize="13sp"
             android:textColor="@color/cafe_marron_suave" />
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/btnEstablecerPredeterminada"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Establecer como predeterminada"
-        android:textSize="13sp"
-        android:textStyle="bold"
-        android:textColor="@color/cafe_verde_montana"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="30dp"
-        android:visibility="gone"
-        android:background="?attr/selectableItemBackground"
-        android:padding="4dp"
-        android:clickable="true"
-        android:focusable="true" />
 
 </LinearLayout>
