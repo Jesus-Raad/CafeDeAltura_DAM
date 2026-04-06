@@ -6,8 +6,7 @@ import java.util.Date
 data class Orders(
     val id_order: Int,
     val id_user: Int,
-    val user_name: String,
-    val date: Date,
+    val date: String,
     val total_amount:  Double,
-    val status_order: Boolean
+    val status_order: Int
 ): Serializable
