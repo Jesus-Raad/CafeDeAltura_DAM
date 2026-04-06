@@ -225,5 +225,13 @@
         android:label="Métodos de pago"
         tools:layout="@layout/fragment_payment_methods" />
 
+    <!-- filter products -->
+
+    <fragment
+        android:id="@+id/filteredProductsFragment"
+        android:name="com.example.cafedealtura_dam.ui.home.FilteredProductsFragment"
+        android:label="Productos filtrados"
+        tools:layout="@layout/fragment_filtered_products" />
+
 
 </navigation>

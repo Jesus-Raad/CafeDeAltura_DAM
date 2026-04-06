@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.example.cafedealtura_dam.R
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
+import com.example.cafedealtura_dam.utils.applyTopInsets
 
 class ProductDetailFragment : Fragment() {
 
@@ -31,6 +32,8 @@ class ProductDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        view.applyTopInsets()
 
         val name        = arguments?.getString("name") ?: ""
         val origin      = arguments?.getString("origin") ?: ""

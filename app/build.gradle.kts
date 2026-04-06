@@ -62,6 +62,7 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
 
     implementation("androidx.core:core-splashscreen:1.0.1")
+    implementation("com.google.android.material:material:1.9.0")
 
     // Glide
     implementation("com.github.bumptech.glide:glide:4.16.0")

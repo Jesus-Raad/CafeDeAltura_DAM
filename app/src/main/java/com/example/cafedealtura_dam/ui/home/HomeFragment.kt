@@ -13,6 +13,9 @@ import com.example.cafedealtura_dam.ui.products.ProductData
 import com.example.cafedealtura_dam.ui.products.ProductUiModel
 import com.example.cafedealtura_dam.utils.applyTopInsets
 import com.example.cafedealtura_dam.utils.SessionManager
+import androidx.navigation.fragment.findNavController
+import android.view.inputmethod.EditorInfo
+
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -57,6 +60,9 @@ class HomeFragment : Fragment() {
         val tvRecOrigin2 = view.findViewById<TextView>(R.id.tvRecOrigin2)
         val tvRecMeta2 = view.findViewById<TextView>(R.id.tvRecMeta2)
         val tvRecPrice2 = view.findViewById<TextView>(R.id.tvRecPrice2)
+        val cardRecommended1 = view.findViewById<View>(R.id.cardRecommended1)
+        val cardRecommended2 = view.findViewById<View>(R.id.cardRecommended2)
+        val etSearch = view.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.etSearch)
 
         bindRecommendedProduct(
             product = recommended[0],
@@ -75,12 +81,40 @@ class HomeFragment : Fragment() {
             metaView = tvRecMeta2,
             priceView = tvRecPrice2
         )
+        cardRecommended1.setOnClickListener {
+            val bundle = Bundle().apply {
+                putString("name", recommended[0].name)
+                putString("origin", recommended[0].origin)
+                putDouble("price", recommended[0].price)
+                putDouble("rating", recommended[0].rating)
+                putString("description", recommended[0].description)
+                putString("image", recommended[0].imageUrl)
+            }
+
+            findNavController().navigate(R.id.productDetailFragment, bundle)
+        }
+
+        cardRecommended2.setOnClickListener {
+            val bundle = Bundle().apply {
+                putString("name", recommended[1].name)
+                putString("origin", recommended[1].origin)
+                putDouble("price", recommended[1].price)
+                putDouble("rating", recommended[1].rating)
+                putString("description", recommended[1].description)
+                putString("image", recommended[1].imageUrl)
+            }
+
+            findNavController().navigate(R.id.productDetailFragment, bundle)
+        }
 
         val imgOriginCostaRica = view.findViewById<ImageView>(R.id.imgOriginCostaRica)
         val imgOriginColombia = view.findViewById<ImageView>(R.id.imgOriginColombia)
         val imgOriginEtiopia = view.findViewById<ImageView>(R.id.imgOriginEtiopia)
         val imgOriginKenia = view.findViewById<ImageView>(R.id.imgOriginKenia)
         val imgOriginLaos = view.findViewById<ImageView>(R.id.imgOriginLaos)
+        val cardCategoryGrano = view.findViewById<View>(R.id.cardCategoryGrano)
+        val cardCategoryMolido = view.findViewById<View>(R.id.cardCategoryMolido)
+        val cardCategoryEspecial = view.findViewById<View>(R.id.cardCategoryEspecial)
 
         Glide.with(requireContext())
             .load("https://res.cloudinary.com/dcfvpqztb/image/upload/v1774039781/origen_costarica_urioc7.png")
@@ -112,6 +146,79 @@ class HomeFragment : Fragment() {
             .error(android.R.drawable.ic_menu_close_clear_cancel)
             .into(imgOriginLaos)
 
+        imgOriginCostaRica.setOnClickListener {
+            val bundle = Bundle().apply {
+                putString("origin", "Costa Rica")
+            }
+            findNavController().navigate(R.id.filteredProductsFragment, bundle)
+        }
+
+        imgOriginColombia.setOnClickListener {
+            val bundle = Bundle().apply {
+                putString("origin", "Colombia")
+            }
+            findNavController().navigate(R.id.filteredProductsFragment, bundle)
+        }
+
+        imgOriginEtiopia.setOnClickListener {
+            val bundle = Bundle().apply {
+                putString("origin", "Etiopía")
+            }
+            findNavController().navigate(R.id.filteredProductsFragment, bundle)
+        }
+
+        imgOriginKenia.setOnClickListener {
+            val bundle = Bundle().apply {
+                putString("origin", "Kenia")
+            }
+            findNavController().navigate(R.id.filteredProductsFragment, bundle)
+        }
+
+        imgOriginLaos.setOnClickListener {
+            val bundle = Bundle().apply {
+                putString("origin", "Laos")
+            }
+            findNavController().navigate(R.id.filteredProductsFragment, bundle)
+        }
+
+        cardCategoryGrano.setOnClickListener {
+            val bundle = Bundle().apply {
+                putString("category", "En grano")
+            }
+            findNavController().navigate(R.id.filteredProductsFragment, bundle)
+        }
+
+        cardCategoryMolido.setOnClickListener {
+            val bundle = Bundle().apply {
+                putString("category", "Molido")
+            }
+            findNavController().navigate(R.id.filteredProductsFragment, bundle)
+        }
+
+        cardCategoryEspecial.setOnClickListener {
+            val bundle = Bundle().apply {
+                putString("category", "Especial")
+            }
+            findNavController().navigate(R.id.filteredProductsFragment, bundle)
+        }
+        etSearch.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE) {
+                val query = etSearch.text?.toString()?.trim().orEmpty()
+
+                if (query.isNotEmpty()) {
+                    val bundle = Bundle().apply {
+                        putString("query", query)
+                    }
+                    findNavController().navigate(R.id.filteredProductsFragment, bundle)
+                }
+
+                true
+            } else {
+                false
+            }
+        }
+
+
         return view
     }
 
@@ -122,7 +229,8 @@ class HomeFragment : Fragment() {
         originView: TextView,
         metaView: TextView,
         priceView: TextView
-    ) {
+    )
+    {
         Glide.with(requireContext())
             .load(product.imageUrl)
             .placeholder(android.R.drawable.ic_menu_gallery)
@@ -134,6 +242,7 @@ class HomeFragment : Fragment() {
         metaView.text = product.rating.toString()
         priceView.text = String.format("$%.2f", product.price)
     }
+
 
     companion object {
         @JvmStatic

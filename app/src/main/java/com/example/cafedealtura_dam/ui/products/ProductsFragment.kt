@@ -12,7 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cafedealtura_dam.R
 import com.example.cafedealtura_dam.data.repository.ProductsRepository
 import kotlinx.coroutines.launch
-
+import com.example.cafedealtura_dam.utils.applyTopInsets
+import androidx.navigation.fragment.findNavController
 class ProductsFragment : Fragment(R.layout.fragment_products) {
 
     private lateinit var adapter: ProductsAdapter
@@ -22,6 +23,8 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        view.applyTopInsets()
+
         val rvProducts = view.findViewById<RecyclerView>(R.id.rvProducts)
         val tvCount = view.findViewById<TextView>(R.id.tvCount)
 
@@ -30,8 +33,24 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
         val btnMolido = view.findViewById<Button>(R.id.btnMolido)
         val btnEspecial = view.findViewById<Button>(R.id.btnEspecial)
         val filterButtons = listOf(btnTodos, btnGrano, btnMolido, btnEspecial)
+        val initialCategory = arguments?.getString("category")
+        val initialOrigin = arguments?.getString("origin")
 
-        adapter = ProductsAdapter(emptyList())
+        adapter = ProductsAdapter(emptyList()) { product ->
+            val bundle = Bundle().apply {
+                putString("name", product.name)
+                putString("origin", product.origin)
+                putDouble("price", product.price)
+                putString("image", product.imageUrl)
+                putString("description", product.description)
+                putDouble("rating", product.rating)
+            }
+
+            findNavController().navigate(
+                R.id.action_productsFragment_to_productDetailFragment,
+                bundle
+            )
+        }
         rvProducts.layoutManager = GridLayoutManager(requireContext(), 2)
         rvProducts.adapter = adapter
 

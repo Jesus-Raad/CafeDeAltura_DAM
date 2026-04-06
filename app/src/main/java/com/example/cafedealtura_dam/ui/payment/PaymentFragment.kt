@@ -8,11 +8,14 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.cafedealtura_dam.R
 import com.google.android.material.button.MaterialButton
+import com.example.cafedealtura_dam.utils.applyTopInsets
 
 class PaymentFragment : Fragment(R.layout.fragment_payment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        view.applyTopInsets()
 
         val btnBack = view.findViewById<ImageView>(R.id.btnBack)
         val btnPay = view.findViewById<MaterialButton>(R.id.btnPayNow)

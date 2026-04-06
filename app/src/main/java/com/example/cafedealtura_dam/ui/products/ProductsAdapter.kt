@@ -1,18 +1,17 @@
 package com.example.cafedealtura_dam.ui.products
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cafedealtura_dam.R
 
 class ProductsAdapter(
-    private var products: List<ProductUiModel>
+    private var products: List<ProductUiModel>,
+    private val onProductClick: (ProductUiModel) -> Unit
 ) : RecyclerView.Adapter<ProductsAdapter.ProductViewHolder>() {
 
     private var allProducts: List<ProductUiModel> = products
@@ -47,18 +46,7 @@ class ProductsAdapter(
             .into(holder.img)
 
         holder.itemView.setOnClickListener {
-            val bundle = Bundle().apply {
-                putString("name", product.name)
-                putString("origin", product.origin)
-                putDouble("price", product.price)
-                putString("image", product.imageUrl)
-                putString("description", product.description)
-                putDouble("rating", product.rating)
-            }
-            holder.itemView.findNavController().navigate(
-                R.id.action_productsFragment_to_productDetailFragment,
-                bundle
-            )
+            onProductClick(product)
         }
     }
 
