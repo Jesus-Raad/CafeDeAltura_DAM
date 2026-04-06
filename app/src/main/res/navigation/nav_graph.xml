@@ -74,6 +74,11 @@
         android:label="Direcciones"
         tools:layout="@layout/fragment_direcciones" />
 
+    <!-- CARRITO -->
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="com.example.cafedealtura_dam.ui.car_shop.CartFragment"
+        android:label="Carrito" />
 
 
 

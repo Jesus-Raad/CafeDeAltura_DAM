@@ -7,8 +7,8 @@ data class Users(
     val name: String,
     val surname: String? = null,
     val password: String,
-    val user_name: String,
-    val rol: String
+    val rol: String,
+    val email: String
 
 ): Serializable
 

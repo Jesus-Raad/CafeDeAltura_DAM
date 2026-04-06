@@ -140,3 +140,14 @@ class LoginFragment : Fragment() {
         }
     }
 }
+//ApiService.Post.loginUser(
+//context = this,
+//email = email,
+//password = password,
+//onResult = { user ->
+//    UserSession.setUser(user)
+//},
+//onError = { error ->
+//    println(error)
+//}
+//)

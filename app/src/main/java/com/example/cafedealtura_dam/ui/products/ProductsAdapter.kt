@@ -1,79 +1,62 @@
 package com.example.cafedealtura_dam.ui.products
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cafedealtura_dam.R
+import com.example.cafedealtura_dam.model.Products_coffe
 
 class ProductsAdapter(
-    private var products: List<ProductUiModel>
-) : RecyclerView.Adapter<ProductsAdapter.ProductViewHolder>() {
+    private val onProductClick: (Products_coffe) -> Unit
+) : RecyclerView.Adapter<ProductsAdapter.VH>() {
 
-    private var allProducts: List<ProductUiModel> = products
-    private var activeFilter: String = "Todos"
+    private var items: List<Products_coffe> = emptyList()
 
-    class ProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val img: ImageView = view.findViewById(R.id.imgProduct)
-        val name: TextView = view.findViewById(R.id.tvName)
-        val origin: TextView = view.findViewById(R.id.tvOrigin)
-        val meta: TextView = view.findViewById(R.id.tvMeta)
-        val price: TextView = view.findViewById(R.id.tvPrice)
+    fun submitList(newItems: List<Products_coffe>) {
+        items = newItems
+        notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_product, parent, false)
-        return ProductViewHolder(view)
+        return VH(view)
     }
 
-    override fun getItemCount(): Int = products.size
+    override fun getItemCount(): Int = items.size
 
-    override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        val product = products[position]
-
-        holder.name.text = product.name
-        holder.origin.text = product.origin
-        holder.meta.text = "250g • ${product.category.ifEmpty { "En grano" }}"
-        holder.price.text = String.format("$%.2f", product.price)
-
-        Glide.with(holder.itemView.context)
-            .load(product.imageUrl)
-            .into(holder.img)
+    override fun onBindViewHolder(holder: VH, position: Int) {
+        val product = items[position]
+        holder.bind(product)
 
         holder.itemView.setOnClickListener {
-            val bundle = Bundle().apply {
-                putString("name", product.name)
-                putString("origin", product.origin)
-                putDouble("price", product.price)
-                putString("image", product.imageUrl)
-                putString("description", product.description)
-                putDouble("rating", product.rating)
-            }
-            holder.itemView.findNavController().navigate(
-                R.id.action_productsFragment_to_productDetailFragment,
-                bundle
-            )
+            onProductClick(product)
         }
     }
 
-    fun updateData(newProducts: List<ProductUiModel>) {
-        allProducts = newProducts
-        applyFilter(activeFilter)
-    }
+    class VH(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    fun applyFilter(category: String) {
-        activeFilter = category
-        products = if (category == "Todos") {
-            allProducts
-        } else {
-            allProducts.filter { it.category.equals(category, ignoreCase = true) }
+        private val img: ImageView = itemView.findViewById(R.id.imgProduct)
+        private val tvName: TextView = itemView.findViewById(R.id.tvName)
+        private val tvOrigin: TextView = itemView.findViewById(R.id.tvOrigin)
+        private val tvMeta: TextView = itemView.findViewById(R.id.tvMeta)
+        private val tvPrice: TextView = itemView.findViewById(R.id.tvPrice)
+
+        fun bind(product: Products_coffe) {
+            Glide.with(itemView.context)
+                .load(product.img_url)
+                .placeholder(android.R.drawable.ic_menu_gallery)
+                .error(android.R.drawable.ic_menu_close_clear_cancel)
+                .into(img)
+
+            tvName.text = product.brand
+            tvOrigin.text = product.origin ?: ""
+            tvMeta.text = "${product.weight}g"
+            tvPrice.text = String.format("$%.2f", product.price)
         }
-        notifyDataSetChanged()
     }
 }
