@@ -44,7 +44,7 @@
                     android:layout_height="80dp"
                     android:gravity="center"
                     android:background="@drawable/bg_profile_initial"
-                    android:text="M"
+                    android:text=""
                     android:textColor="@android:color/white"
                     android:textSize="22sp"
                     android:textStyle="bold" />
@@ -60,7 +60,7 @@
                         android:id="@+id/tvUserName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="María García"
+                        android:text=""
                         android:textColor="@color/cafe_marron_principal"
                         android:textSize="24sp"
                         android:textStyle="bold" />
@@ -70,7 +70,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
-                        android:text="maria.garcia@email.com"
+                        android:text=""
                         android:textColor="@color/cafe_marron_suave"
                         android:textSize="15sp" />
 

@@ -28,6 +28,9 @@ import com.google.firebase.auth.GoogleAuthProvider
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import com.example.cafedealtura_dam.utils.SessionManager
+import com.google.android.material.textfield.TextInputEditText
+import com.example.cafedealtura_dam.dataAPI.ApiService
+import android.widget.Toast
 
 class LoginFragment : Fragment() {
 
@@ -56,9 +59,30 @@ class LoginFragment : Fragment() {
         val btnGoogle = view.findViewById<ImageView>(R.id.btnGoogle)
 
         btnLogin.setOnClickListener {
-            findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
-        }
 
+            val email = view.findViewById<TextInputEditText>(R.id.etEmail).text.toString()
+            val password = view.findViewById<TextInputEditText>(R.id.etPassword).text.toString()
+
+            ApiService.Post.loginUser(
+                context = requireContext(),
+                email = email,
+                password = password,
+                onResult = { user ->
+                    val sessionManager = SessionManager(requireContext())
+                    sessionManager.saveUserName(user.name)
+                    sessionManager.saveUserEmail(user.email)
+
+                    requireActivity().runOnUiThread {
+                        findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+                    }
+                },
+                onError = { error ->
+                    requireActivity().runOnUiThread {
+                        Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            )
+        }
         tvRegister.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
@@ -119,9 +143,11 @@ class LoginFragment : Fragment() {
                             val firebaseUser = auth.currentUser
                             val fullName = firebaseUser?.displayName ?: "Usuario"
                             val firstName = fullName.split(" ").firstOrNull() ?: "Usuario"
+                            val email = firebaseUser?.email ?: ""
 
                             val sessionManager = SessionManager(requireContext())
-                            sessionManager.saveUserName(firstName)
+                            sessionManager.saveUserName(fullName)
+                            sessionManager.saveUserEmail(email)
 
                             findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                         } else {

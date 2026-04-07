@@ -17,4 +17,12 @@ public class SessionManager(context: Context) {
     public fun clearSession() {
         prefs.edit().clear().apply()
     }
+
+    fun saveUserEmail(email: String) {
+        prefs.edit().putString("user_email", email).apply()
+    }
+
+    fun getUserEmail(): String {
+        return prefs.getString("user_email", "") ?: ""
+    }
 }
