@@ -35,22 +35,26 @@ class DireccionesAdapter(
 
     inner class VH(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        private val tvNombre: TextView   = itemView.findViewById(R.id.tvNombreDireccion)
-        private val tvPersona: TextView  = itemView.findViewById(R.id.tvNombrePersona)
-        private val tvCalle: TextView    = itemView.findViewById(R.id.tvCalle)
-        private val tvCiudad: TextView   = itemView.findViewById(R.id.tvCiudad)
-        private val tvCP: TextView       = itemView.findViewById(R.id.tvCodigoPostal)
+        private val tvNombre: TextView = itemView.findViewById(R.id.tvNombreDireccion)
+        private val tvPredeterminada: TextView = itemView.findViewById(R.id.tvPredeterminada)
+        private val tvPersona: TextView = itemView.findViewById(R.id.tvNombrePersona)
+        private val tvCalle: TextView = itemView.findViewById(R.id.tvCalle)
+        private val tvCiudad: TextView = itemView.findViewById(R.id.tvCiudad)
+        private val tvCP: TextView = itemView.findViewById(R.id.tvCodigoPostal)
         private val tvTelefono: TextView = itemView.findViewById(R.id.tvTelefono)
-        private val btnEditar: ImageButton   = itemView.findViewById(R.id.btnEditar)
+        private val btnEditar: ImageButton = itemView.findViewById(R.id.btnEditar)
         private val btnEliminar: ImageButton = itemView.findViewById(R.id.btnEliminar)
 
         fun bind(direccion: Direccion) {
-            tvNombre.text   = direccion.location
-            tvPersona.text  = direccion.receptor
-            tvCalle.text    = direccion.street
-            tvCiudad.text   = direccion.city
-            tvCP.text       = direccion.poste_code
+            tvNombre.text = direccion.label
+            tvPersona.text = direccion.receiver
+            tvCalle.text = direccion.street
+            tvCiudad.text = direccion.city
+            tvCP.text = "CP: ${direccion.postal_code}"
             tvTelefono.text = direccion.phone
+
+            tvPredeterminada.visibility =
+                if (direccion.is_default == 1) View.VISIBLE else View.GONE
 
             btnEditar.setOnClickListener { onEditar(direccion) }
             btnEliminar.setOnClickListener { onEliminar(direccion) }
