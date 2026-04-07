@@ -18,13 +18,13 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
 
     private var allProducts: List<Products_coffe> = emptyList()
     private var selectedCategory: Int? = null
-
     private var currentSort: String = "none"
 
     private val adapter = ProductsAdapter { product ->
         val bundle = Bundle().apply {
             putInt("id_coffe", product.id_coffe)
         }
+
         findNavController().navigate(
             R.id.action_productsFragment_to_productDetailFragment,
             bundle
@@ -41,40 +41,43 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
         val btnGrano = view.findViewById<Button>(R.id.btnGrano)
         val btnMolido = view.findViewById<Button>(R.id.btnMolido)
         val btnEspecial = view.findViewById<Button>(R.id.btnEspecial)
+        val btnFilter = view.findViewById<android.widget.ImageButton>(R.id.btnFilter)
 
         rv.layoutManager = GridLayoutManager(requireContext(), 2)
         rv.adapter = adapter
 
         val filterBtns = listOf(btnTodos, btnGrano, btnMolido, btnEspecial)
-        val btnFilter = view.findViewById<android.widget.ImageButton>(R.id.btnFilter)
+
         btnFilter.setOnClickListener { showSortMenu(it) }
+
         btnTodos.setOnClickListener {
             selectedCategory = null
             updateFilterButtons(filterBtns, btnTodos)
             applyFilter(tvCount)
         }
+
         btnGrano.setOnClickListener {
             selectedCategory = 1
             updateFilterButtons(filterBtns, btnGrano)
             applyFilter(tvCount)
         }
+
         btnMolido.setOnClickListener {
             selectedCategory = 2
             updateFilterButtons(filterBtns, btnMolido)
             applyFilter(tvCount)
         }
+
         btnEspecial.setOnClickListener {
             selectedCategory = 3
             updateFilterButtons(filterBtns, btnEspecial)
             applyFilter(tvCount)
         }
 
-        // si información está en cache, la cargamos
         if (!ProductsRepository.isEmpty()) {
             allProducts = ProductsRepository.getProducts()
             applyFilter(tvCount)
         } else {
-            // descargamos información de api
             ApiService.Get.getProducts(
                 context = requireContext(),
                 onResult = { products ->
@@ -84,7 +87,7 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
                         applyFilter(tvCount)
                     }
                 },
-                onError = { error ->
+                onError = {
                     requireActivity().runOnUiThread {
                         tvCount.text = "Error al cargar productos"
                     }
@@ -99,6 +102,7 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
         } else {
             allProducts.filter { it.category == selectedCategory }
         }
+
         val sorted = when (currentSort) {
             "az" -> filtered.sortedBy { it.brand.lowercase() }
             "za" -> filtered.sortedByDescending { it.brand.lowercase() }
