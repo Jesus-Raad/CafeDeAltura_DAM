@@ -236,7 +236,12 @@
         android:id="@+id/filteredProductsFragment"
         android:name="com.example.cafedealtura_dam.ui.home.FilteredProductsFragment"
         android:label="Productos filtrados"
-        tools:layout="@layout/fragment_filtered_products" />
+        tools:layout="@layout/fragment_filtered_products" >
+
+    <action
+        android:id="@+id/action_filteredProductsFragment_to_productDetailFragment"
+        app:destination="@id/productDetailFragment" />
+    </fragment>
 
 
 </navigation>

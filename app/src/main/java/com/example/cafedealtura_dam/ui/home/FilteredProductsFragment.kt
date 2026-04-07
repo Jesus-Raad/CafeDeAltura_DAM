@@ -5,7 +5,6 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,16 +12,15 @@ import com.example.cafedealtura_dam.R
 import com.example.cafedealtura_dam.data.ProductsRepository
 import com.example.cafedealtura_dam.ui.products.ProductsAdapter
 import com.example.cafedealtura_dam.utils.applyTopInsets
-import kotlinx.coroutines.launch
 import java.text.Normalizer
-
 
 class FilteredProductsFragment : Fragment(R.layout.fragment_filtered_products) {
 
     private var category: String? = null
     private var origin: String? = null
-
     private var query: String? = null
+
+    private lateinit var adapter: ProductsAdapter
 
     private fun normalizeText(text: String): String {
         return Normalizer.normalize(text, Normalizer.Form.NFD)
@@ -30,9 +28,6 @@ class FilteredProductsFragment : Fragment(R.layout.fragment_filtered_products) {
             .lowercase()
             .trim()
     }
-
-    private lateinit var adapter: ProductsAdapter
-    private val repository = ProductsRepository()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,21 +50,17 @@ class FilteredProductsFragment : Fragment(R.layout.fragment_filtered_products) {
             findNavController().navigateUp()
         }
 
-        adapter = ProductsAdapter(emptyList()) { product ->
+        adapter = ProductsAdapter { product ->
             val bundle = Bundle().apply {
-                putString("name", product.name)
-                putString("origin", product.origin)
-                putDouble("price", product.price)
-                putString("image", product.imageUrl)
-                putString("description", product.description)
-                putDouble("rating", product.rating)
+                putInt("id_coffe", product.id_coffe)
             }
 
             findNavController().navigate(
-                R.id.productDetailFragment,
+                R.id.action_filteredProductsFragment_to_productDetailFragment,
                 bundle
             )
         }
+
         rvProducts.layoutManager = GridLayoutManager(requireContext(), 2)
         rvProducts.adapter = adapter
 
@@ -79,34 +70,36 @@ class FilteredProductsFragment : Fragment(R.layout.fragment_filtered_products) {
             else -> "Productos"
         }
 
-        lifecycleScope.launch {
-            val allProducts = repository.getProducts()
+        val allProducts = ProductsRepository.getProducts()
+        val normalizedQuery = query?.let { normalizeText(it) }
 
-            val normalizedQuery = query?.let { normalizeText(it) }
+        val filteredProducts = allProducts.filter { product ->
 
-            val filteredProducts = allProducts.filter { product ->
+            val productName = normalizeText(product.brand)
+            val productOrigin = normalizeText(product.origin ?: "")
+            val productDescription = normalizeText(product.description ?: "")
 
-                val productName = normalizeText(product.name)
-                val productOrigin = normalizeText(product.origin)
-                val productDescription = normalizeText(product.description)
-                val productCategory = normalizeText(product.category)
+            val matchesCategory = category.isNullOrBlank() ||
+                    when (normalizeText(category!!)) {
+                        "en grano", "grano" -> product.category == 1
+                        "molido" -> product.category == 2
+                        "especial" -> product.category == 3
+                        else -> true
+                    }
 
-                val matchesCategory = category.isNullOrBlank() ||
-                        productCategory == normalizeText(category!!)
+            val matchesOrigin = origin.isNullOrBlank() ||
+                    productOrigin.contains(normalizeText(origin!!)) ||
+                    productName.contains(normalizeText(origin!!))
 
-                val matchesOrigin = origin.isNullOrBlank() ||
-                        productOrigin.contains(normalizeText(origin!!)) ||
-                        productName.contains(normalizeText(origin!!))
+            val matchesQuery = normalizedQuery.isNullOrBlank() ||
+                    productName.contains(normalizedQuery) ||
+                    productOrigin.contains(normalizedQuery) ||
+                    productDescription.contains(normalizedQuery)
 
-                val matchesQuery = normalizedQuery.isNullOrBlank() ||
-                        productName.contains(normalizedQuery) ||
-                        productOrigin.contains(normalizedQuery) ||
-                        productDescription.contains(normalizedQuery)
-
-                matchesCategory && matchesOrigin && matchesQuery
-            }
-            adapter.updateData(filteredProducts)
-            tvCount.text = "${filteredProducts.size} cafés disponibles"
+            matchesCategory && matchesOrigin && matchesQuery
         }
+
+        adapter.submitList(filteredProducts)
+        tvCount.text = "${filteredProducts.size} cafés disponibles"
     }
 }
