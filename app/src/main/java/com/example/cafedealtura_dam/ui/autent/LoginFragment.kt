@@ -29,8 +29,7 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import com.example.cafedealtura_dam.utils.SessionManager
 import com.google.android.material.textfield.TextInputEditText
-import com.example.cafedealtura_dam.data.remote.RetrofitInstance
-import com.example.cafedealtura_dam.data.remote.LoginRequest
+import com.example.cafedealtura_dam.dataAPI.ApiService
 import android.widget.Toast
 
 class LoginFragment : Fragment() {
@@ -64,27 +63,25 @@ class LoginFragment : Fragment() {
             val email = view.findViewById<TextInputEditText>(R.id.etEmail).text.toString()
             val password = view.findViewById<TextInputEditText>(R.id.etPassword).text.toString()
 
-            lifecycleScope.launch {
-                try {
-                    val request = LoginRequest(email, password)
-                    val response = RetrofitInstance.api.loginUser(request)
+            ApiService.Post.loginUser(
+                context = requireContext(),
+                email = email,
+                password = password,
+                onResult = { user ->
+                    val sessionManager = SessionManager(requireContext())
+                    sessionManager.saveUserName(user.name)
+                    sessionManager.saveUserEmail(user.email)
 
-                    if (response.success && response.user != null) {
-                        val user = response.user
-
-                        val sessionManager = SessionManager(requireContext())
-                        sessionManager.saveUserName(user.name)
-                        sessionManager.saveUserEmail(user.user_name)
-
+                    requireActivity().runOnUiThread {
                         findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
-                    } else {
-                        Toast.makeText(requireContext(), "Login incorrecto", Toast.LENGTH_SHORT).show()
                     }
-                } catch (e: Exception) {
-                    Toast.makeText(requireContext(), e.message ?: "Error de conexión", Toast.LENGTH_LONG).show()
-                    e.printStackTrace()
+                },
+                onError = { error ->
+                    requireActivity().runOnUiThread {
+                        Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
+                    }
                 }
-            }
+            )
         }
         tvRegister.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
@@ -169,3 +166,14 @@ class LoginFragment : Fragment() {
         }
     }
 }
+//ApiService.Post.loginUser(
+//context = this,
+//email = email,
+//password = password,
+//onResult = { user ->
+//    UserSession.setUser(user)
+//},
+//onError = { error ->
+//    println(error)
+//}
+//)

@@ -10,9 +10,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cafedealtura_dam.R
-import com.example.cafedealtura_dam.data.repository.ProductsRepository
+import com.example.cafedealtura_dam.data.ProductsRepository
 import com.example.cafedealtura_dam.ui.products.ProductsAdapter
-import com.example.cafedealtura_dam.ui.products.ProductUiModel
 import com.example.cafedealtura_dam.utils.applyTopInsets
 import kotlinx.coroutines.launch
 import java.text.Normalizer
