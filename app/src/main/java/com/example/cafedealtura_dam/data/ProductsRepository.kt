@@ -10,7 +10,7 @@ object ProductsRepository {
         products.addAll(newProducts)
     }
 
-    fun getProducts(): List<Products_coffe> {º
+    fun getProducts(): List<Products_coffe> {
         return products.toList()
     }
 

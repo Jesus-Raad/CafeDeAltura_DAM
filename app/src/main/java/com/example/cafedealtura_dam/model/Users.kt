@@ -9,7 +9,4 @@ data class Users(
     val password: String? = null,
     val rol: String,
     val email: String
-
-): Serializable
-
-
+) : Serializable

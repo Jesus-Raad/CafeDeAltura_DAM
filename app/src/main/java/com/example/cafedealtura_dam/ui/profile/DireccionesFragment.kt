@@ -23,23 +23,23 @@ class DireccionesFragment : Fragment(R.layout.fragment_direcciones) {
     private val listaDirecciones = mutableListOf(
         Direccion(
             id = 1,
-            nombre = "Casa",
-            nombrePersona = "María García",
-            calle = "Calle Principal #123",
-            ciudad = "Bogotá, Colombia",
-            codigoPostal = "CP: 110111",
-            telefono = "+57 300 123 4567",
-            esPredeterminada = true
+            id_user = 1,
+            location = "Casa",
+            receptor = "María García",
+            street = "Calle Principal #123",
+            city = "Bogotá, Colombia",
+            poste_code = "110111",
+            phone = "+57 300 123 4567"
         ),
         Direccion(
             id = 2,
-            nombre = "Oficina",
-            nombrePersona = "María García",
-            calle = "Av. El Dorado #45-67",
-            ciudad = "Bogotá, Colombia",
-            codigoPostal = "CP: 110221",
-            telefono = "+57 300 123 4567",
-            esPredeterminada = false
+            id_user = 1,
+            location = "Trabajo",
+            receptor = "María García",
+            street = "Avenida Central #456",
+            city = "Bogotá, Colombia",
+            poste_code = "110222",
+            phone = "+57 333 123 4567"
         )
     )
 
@@ -55,8 +55,7 @@ class DireccionesFragment : Fragment(R.layout.fragment_direcciones) {
 
         adapter = DireccionesAdapter(
             onEditar = { direccion -> mostrarDialogo(direccion) },
-            onEliminar = { direccion -> eliminarDireccion(direccion) },
-            onEstablecerPredeterminada = { direccion -> establecerPredeterminada(direccion) }
+            onEliminar = { direccion -> eliminarDireccion(direccion) }
         )
 
         rvDirecciones.layoutManager = LinearLayoutManager(requireContext())
@@ -66,7 +65,6 @@ class DireccionesFragment : Fragment(R.layout.fragment_direcciones) {
         btnBack.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
-
         btnAddAddress.setOnClickListener { mostrarDialogo(null) }
         btnAddNew.setOnClickListener { mostrarDialogo(null) }
     }
@@ -75,21 +73,20 @@ class DireccionesFragment : Fragment(R.layout.fragment_direcciones) {
         val dialogView = LayoutInflater.from(requireContext())
             .inflate(R.layout.dialog_direccion, null)
 
-        val etNombre       = dialogView.findViewById<EditText>(R.id.etNombre)
-        val etNombrePersona = dialogView.findViewById<EditText>(R.id.etNombrePersona)
-        val etCalle        = dialogView.findViewById<EditText>(R.id.etCalle)
-        val etCiudad       = dialogView.findViewById<EditText>(R.id.etCiudad)
-        val etCP           = dialogView.findViewById<EditText>(R.id.etCodigoPostal)
-        val etTelefono     = dialogView.findViewById<EditText>(R.id.etTelefono)
+        val etLocation  = dialogView.findViewById<EditText>(R.id.etLocation)
+        val etReceptor  = dialogView.findViewById<EditText>(R.id.etReceptor)
+        val etStreet    = dialogView.findViewById<EditText>(R.id.etStreet)
+        val etCity      = dialogView.findViewById<EditText>(R.id.etCity)
+        val etCP        = dialogView.findViewById<EditText>(R.id.etCodigoPostal)
+        val etTelefono  = dialogView.findViewById<EditText>(R.id.etTelefono)
 
-        // Si es edición, rellenar campos con datos existentes
         direccionExistente?.let {
-            etNombre.setText(it.nombre)
-            etNombrePersona.setText(it.nombrePersona)
-            etCalle.setText(it.calle)
-            etCiudad.setText(it.ciudad)
-            etCP.setText(it.codigoPostal.removePrefix("CP: "))
-            etTelefono.setText(it.telefono)
+            etLocation.setText(it.location)
+            etReceptor.setText(it.receptor)
+            etStreet.setText(it.street)
+            etCity.setText(it.city)
+            etCP.setText(it.poste_code.removePrefix("CP: "))
+            etTelefono.setText(it.phone)
         }
 
         val titulo = if (direccionExistente == null) "Nueva dirección" else "Editar dirección"
@@ -98,45 +95,43 @@ class DireccionesFragment : Fragment(R.layout.fragment_direcciones) {
             .setTitle(titulo)
             .setView(dialogView)
             .setPositiveButton("Guardar") { _, _ ->
-                val nombre  = etNombre.text.toString().trim()
-                val persona = etNombrePersona.text.toString().trim()
-                val calle   = etCalle.text.toString().trim()
-                val ciudad  = etCiudad.text.toString().trim()
-                val cp      = etCP.text.toString().trim()
-                val tel     = etTelefono.text.toString().trim()
+                val location = etLocation.text.toString().trim()
+                val receptor = etReceptor.text.toString().trim()
+                val street   = etStreet.text.toString().trim()
+                val city     = etCity.text.toString().trim()
+                val cp       = etCP.text.toString().trim()
+                val tel      = etTelefono.text.toString().trim()
 
-                if (nombre.isEmpty() || calle.isEmpty()) {
-                    Toast.makeText(requireContext(), "Nombre y calle son obligatorios", Toast.LENGTH_SHORT).show()
+                if (location.isEmpty() || street.isEmpty()) {
+                    Toast.makeText(requireContext(), "Location y street son obligatorios", Toast.LENGTH_SHORT).show()
                     return@setPositiveButton
                 }
 
                 if (direccionExistente == null) {
-                    // AÑADIR nueva
                     val nuevoId = (listaDirecciones.maxOfOrNull { it.id } ?: 0) + 1
                     listaDirecciones.add(
                         Direccion(
                             id = nuevoId,
-                            nombre = nombre,
-                            nombrePersona = persona,
-                            calle = calle,
-                            ciudad = ciudad,
-                            codigoPostal = "CP: $cp",
-                            telefono = tel,
-                            esPredeterminada = listaDirecciones.isEmpty()
+                            id_user = 1,
+                            location = location,
+                            receptor = receptor,
+                            street = street,
+                            city = city,
+                            poste_code = "CP: $cp",
+                            phone = tel
                         )
                     )
                     Toast.makeText(requireContext(), "Dirección añadida", Toast.LENGTH_SHORT).show()
                 } else {
-                    // EDITAR existente
                     val index = listaDirecciones.indexOfFirst { it.id == direccionExistente.id }
                     if (index >= 0) {
                         listaDirecciones[index] = direccionExistente.copy(
-                            nombre = nombre,
-                            nombrePersona = persona,
-                            calle = calle,
-                            ciudad = ciudad,
-                            codigoPostal = "CP: $cp",
-                            telefono = tel
+                            location = location,
+                            receptor = receptor,
+                            street = street,
+                            city = city,
+                            poste_code = "CP: $cp",
+                            phone = tel
                         )
                     }
                     Toast.makeText(requireContext(), "Dirección actualizada", Toast.LENGTH_SHORT).show()
@@ -150,20 +145,14 @@ class DireccionesFragment : Fragment(R.layout.fragment_direcciones) {
     private fun eliminarDireccion(direccion: Direccion) {
         AlertDialog.Builder(requireContext())
             .setTitle("Eliminar dirección")
-            .setMessage("¿Seguro que quieres eliminar \"${direccion.nombre}\"?")
+            .setMessage("¿Seguro que quieres eliminar \"${direccion.location}\"?")
             .setPositiveButton("Eliminar") { _, _ ->
                 listaDirecciones.removeIf { it.id == direccion.id }
                 refrescarLista()
-                Toast.makeText(requireContext(), "${direccion.nombre} eliminada", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "${direccion.location} eliminada", Toast.LENGTH_SHORT).show()
             }
             .setNegativeButton("Cancelar", null)
             .show()
-    }
-
-    private fun establecerPredeterminada(direccion: Direccion) {
-        listaDirecciones.replaceAll { it.copy(esPredeterminada = it.id == direccion.id) }
-        refrescarLista()
-        Toast.makeText(requireContext(), "${direccion.nombre} es ahora predeterminada", Toast.LENGTH_SHORT).show()
     }
 
     private fun refrescarLista() {

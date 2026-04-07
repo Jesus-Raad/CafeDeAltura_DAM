@@ -12,4 +12,4 @@ data class Products_coffe (
     val weight: Int,
     val origin: String?=null,
     val description: String? = null
-    ): Serializable
+): Serializable
