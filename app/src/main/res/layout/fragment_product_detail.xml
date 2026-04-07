@@ -22,15 +22,16 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:src="@drawable/logo_cafe_sin_fondo" />
+
             <ImageButton
-            android:id="@+id/btnBack"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="top|start"
-            android:layout_margin="20dp"
-            android:background="@drawable/bg_circle_white"
-            android:src="@drawable/outline_arrow_back_24"
-            app:tint="@color/cafe_marron_principal"/>
+                android:id="@+id/btnBack"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="top|start"
+                android:layout_margin="20dp"
+                android:background="@drawable/bg_circle_white"
+                android:src="@drawable/outline_arrow_back_24"
+                app:tint="@color/cafe_marron_principal" />
 
             <ImageButton
                 android:id="@+id/btnFavorite"
@@ -40,7 +41,7 @@
                 android:layout_margin="20dp"
                 android:background="@drawable/bg_circle_white"
                 android:src="@drawable/ic_favorite_border"
-                app:tint="@color/cafe_marron_principal"/>
+                app:tint="@color/cafe_marron_principal" />
         </FrameLayout>
 
         <LinearLayout
@@ -68,12 +69,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:text="$24.9"
+                    android:text="24.90 €"
                     android:textColor="@color/cafe_marron_principal"
                     android:textSize="22sp"
                     android:textStyle="bold" />
-
-
             </RelativeLayout>
 
             <TextView
@@ -90,13 +89,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="★ 4.5"
+                android:text=""
                 android:textSize="14sp"
                 android:textColor="@color/cafe_marron_suave" />
-
-
-            
-
 
             <TextView
                 android:id="@+id/tvDescription"
@@ -106,8 +101,8 @@
                 android:text="Un café excepcional cultivado a gran altura..."
                 android:textColor="@color/cafe_negro_suave"
                 android:textSize="16sp"
-                android:lineSpacingExtra="4dp"/>
-            <!-- NOTAS DE SABOR -->
+                android:lineSpacingExtra="4dp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -161,7 +156,6 @@
                     android:background="@drawable/bg_flavor_chip" />
             </LinearLayout>
 
-            <!-- DETALLES -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -182,12 +176,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Altitud"
                         android:textColor="@color/cafe_marron_suave" />
+
                     <TextView
                         android:id="@+id/tvAltitude"
                         android:layout_width="wrap_content"
@@ -208,12 +204,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Proceso"
                         android:textColor="@color/cafe_marron_suave" />
+
                     <TextView
                         android:id="@+id/tvProcess"
                         android:layout_width="wrap_content"
@@ -234,12 +232,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Tueste"
                         android:textColor="@color/cafe_marron_suave" />
+
                     <TextView
                         android:id="@+id/tvRoast"
                         android:layout_width="wrap_content"
@@ -253,57 +253,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="Tipo de molido"
-                android:textStyle="bold"
-                android:textColor="@color/cafe_marron_principal"/>
-
-
-            <com.google.android.material.button.MaterialButtonToggleGroup
-                android:id="@+id/toggleGroupMolido"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                app:singleSelection="true"
-                app:selectionRequired="true"
-                app:checkedButton="@+id/btnGrano">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnGrano"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="0dp"
-                    android:layout_height="54dp"
-                    android:layout_weight="1"
-                    android:text="En grano"
-                    android:textAllCaps="false"
-                    app:strokeColor="@color/cafe_marron_suave"
-                    app:backgroundTint="@color/toggle_selector"
-                    android:textColor="@color/toggle_text_selector"
-                    app:cornerRadius="12dp"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnMolido"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="0dp"
-                    android:layout_height="54dp"
-                    android:layout_weight="1"
-                    android:layout_marginStart="12dp"
-                    android:text="Molido"
-                    android:textAllCaps="false"
-                    app:strokeColor="@color/cafe_marron_suave"
-                    app:backgroundTint="@color/toggle_selector"
-                    android:textColor="@color/toggle_text_selector"
-                    app:cornerRadius="12dp"/>
-
-
-            </com.google.android.material.button.MaterialButtonToggleGroup>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Cantidad"
                 android:textStyle="bold"
                 android:textColor="@color/cafe_marron_principal" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -318,7 +272,7 @@
                     android:layout_height="44dp"
                     android:text="-"
                     app:cornerRadius="22dp"
-                    android:textColor="@android:color/black"/>
+                    android:textColor="@android:color/black" />
 
                 <TextView
                     android:id="@+id/tvQuantity"
@@ -336,8 +290,9 @@
                     android:layout_height="44dp"
                     android:text="+"
                     app:cornerRadius="22dp"
-                    android:textColor="@android:color/black"/>
+                    android:textColor="@android:color/black" />
             </LinearLayout>
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAddToCart"
                 android:layout_width="match_parent"

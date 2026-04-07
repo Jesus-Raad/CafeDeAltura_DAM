@@ -6,9 +6,10 @@ data class Users(
     val id_user: Int,
     val name: String,
     val surname: String? = null,
-    val password: String,
+    val password: String?=null,
     val rol: String,
-    val email: String
+    val email: String,
+    val phone: String? = null,
 
 ): Serializable
 

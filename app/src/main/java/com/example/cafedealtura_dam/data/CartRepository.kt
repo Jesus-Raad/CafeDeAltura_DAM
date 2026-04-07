@@ -10,13 +10,15 @@ object CartRepository {
     private const val SHIPPING_COST = 5.0
     private const val FREE_SHIPPING_MIN = 50.0
 
-    fun addProduct(product: Products_coffe) {
+    fun addProduct(product: Products_coffe, quantity: Int = 1) {
+        if (quantity <= 0) return
+
         val existingItem = items.find { it.product.id_coffe == product.id_coffe }
 
         if (existingItem != null) {
-            existingItem.quantity++
+            existingItem.quantity += quantity
         } else {
-            items.add(CartItem(product, 1))
+            items.add(CartItem(product, quantity))
         }
     }
 
@@ -68,7 +70,7 @@ object CartRepository {
     }
 
     fun getShippingCost(): Double {
-        return if (getSubtotal() > FREE_SHIPPING_MIN) 0.0 else SHIPPING_COST
+        return if (getSubtotal() >= FREE_SHIPPING_MIN) 0.0 else SHIPPING_COST
     }
 
     fun hasFreeShipping(): Boolean {

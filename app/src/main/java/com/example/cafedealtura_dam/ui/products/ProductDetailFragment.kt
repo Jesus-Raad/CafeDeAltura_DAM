@@ -7,21 +7,22 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.cafedealtura_dam.R
+import com.example.cafedealtura_dam.data.CartRepository
 import com.example.cafedealtura_dam.data.ProductsRepository
 import com.example.cafedealtura_dam.model.Products_coffe
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.button.MaterialButtonToggleGroup
+import java.util.Locale
 
 class ProductDetailFragment : Fragment() {
 
     private var quantity = 1
     private var unitPrice = 0.0
     private var isFavorite = false
-    private var selectedGrindType = "grano"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,8 +58,6 @@ class ProductDetailFragment : Fragment() {
         val btnAddToCart = view.findViewById<MaterialButton>(R.id.btnAddToCart)
         val btnBack = view.findViewById<ImageButton>(R.id.btnBack)
         val btnFavorite = view.findViewById<ImageButton>(R.id.btnFavorite)
-
-        val toggleGroup = view.findViewById<MaterialButtonToggleGroup>(R.id.toggleGroupMolido)
 
         bindProduct(
             product = product,
@@ -98,18 +97,13 @@ class ProductDetailFragment : Fragment() {
             )
         }
 
-        toggleGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
-            if (isChecked) {
-                selectedGrindType = when (checkedId) {
-                    R.id.btnGrano -> "grano"
-                    R.id.btnMolido -> "molido"
-                    else -> "grano"
-                }
-            }
-        }
-
         btnAddToCart.setOnClickListener {
-            // TODO: añadir al carrito usando product, quantity y selectedGrindType
+            CartRepository.addProduct(product, quantity)
+            Toast.makeText(
+                requireContext(),
+                "Añadido al carrito: ${product.brand} x$quantity",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -130,8 +124,6 @@ class ProductDetailFragment : Fragment() {
         }
 
         tvDescription.text = product.description ?: ""
-
-        // Tu modelo actual no tiene rating
         tvRating.text = ""
 
         if (!product.img_url.isNullOrEmpty()) {
@@ -145,7 +137,7 @@ class ProductDetailFragment : Fragment() {
 
     private fun updatePrice(tvPrice: TextView, btnAddToCart: MaterialButton) {
         val total = unitPrice * quantity
-        val priceText = String.format("$%.2f", total)
+        val priceText = String.format(Locale.US, "%.2f €", total)
         tvPrice.text = priceText
         btnAddToCart.text = "Agregar al carrito · $priceText"
     }

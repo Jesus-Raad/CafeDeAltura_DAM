@@ -43,7 +43,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
         rv.layoutManager = LinearLayoutManager(requireContext())
         rv.adapter = adapter
 
-        loadTestProductsIfNeeded()
+
         updateCartUI()
     }
 
@@ -52,16 +52,6 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
         updateCartUI()
     }
 
-    private fun loadTestProductsIfNeeded() {
-        if (!CartRepository.isEmpty()) return
-
-
-
-                for (product in ProductsRepository.getProducts()) {
-                    CartRepository.addProduct(product)
-                }
-
-    }
 
         private fun updateCartUI() {
         val currentView = view ?: return

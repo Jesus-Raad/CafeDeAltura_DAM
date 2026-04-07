@@ -4,23 +4,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:layout_marginBottom="12dp"
     android:background="@drawable/bg_card"
-    android:padding="16dp"
-    android:layout_marginBottom="12dp">
+    android:orientation="vertical"
+    android:padding="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
+            android:contentDescription="Ubicación"
             android:src="@drawable/outline_location_on_24"
-            app:tint="@color/cafe_marron_suave"
-            android:contentDescription="Ubicación" />
+            app:tint="@color/cafe_marron_suave" />
 
         <TextView
             android:id="@+id/tvNombreDireccion"
@@ -28,75 +28,87 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="10dp"
+            android:textColor="@color/cafe_marron_principal"
             android:textSize="15sp"
-            android:textStyle="bold"
-            android:textColor="@color/cafe_marron_principal" />
+            android:textStyle="bold" />
 
         <ImageButton
             android:id="@+id/btnEditar"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/outline_edit_24"
-            app:tint="@color/cafe_marron_suave"
             android:contentDescription="Editar dirección"
-            android:padding="4dp" />
+            android:padding="4dp"
+            android:src="@drawable/outline_edit_24"
+            app:tint="@color/cafe_marron_suave" />
 
         <ImageButton
             android:id="@+id/btnEliminar"
             android:layout_width="32dp"
             android:layout_height="32dp"
+            android:layout_marginStart="4dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/outline_delete_24"
-            app:tint="@color/cafe_marron_suave"
             android:contentDescription="Eliminar dirección"
             android:padding="4dp"
-            android:layout_marginStart="4dp" />
+            android:src="@drawable/outline_delete_24"
+            app:tint="@color/cafe_marron_suave" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvPredeterminada"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="6dp"
+        android:text="Predeterminada"
+        android:textColor="@color/cafe_marron_suave"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="8dp"
-        android:layout_marginStart="30dp">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvNombrePersona"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/cafe_marron_principal"
             android:textSize="13sp"
-            android:textStyle="bold"
-            android:textColor="@color/cafe_marron_principal" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvCalle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="13sp"
+            android:layout_marginTop="2dp"
             android:textColor="@color/cafe_marron_suave"
-            android:layout_marginTop="2dp" />
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/tvCiudad"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="13sp"
-            android:textColor="@color/cafe_marron_suave" />
+            android:textColor="@color/cafe_marron_suave"
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/tvCodigoPostal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="13sp"
-            android:textColor="@color/cafe_marron_suave" />
+            android:textColor="@color/cafe_marron_suave"
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/tvTelefono"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="13sp"
-            android:textColor="@color/cafe_marron_suave" />
+            android:textColor="@color/cafe_marron_suave"
+            android:textSize="13sp" />
     </LinearLayout>
 
 </LinearLayout>
