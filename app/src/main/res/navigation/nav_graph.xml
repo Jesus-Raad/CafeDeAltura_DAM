@@ -11,15 +11,15 @@
         android:id="@+id/loginFragment"
         android:name="com.example.cafedealtura_dam.ui.autent.LoginFragment"
         android:label="Login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
 
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
-
     </fragment>
 
     <!-- REGISTER -->
@@ -27,12 +27,11 @@
         android:id="@+id/registerFragment"
         android:name="com.example.cafedealtura_dam.ui.autent.RegisterFragment"
         android:label="Register"
-        tools:layout="@layout/fragment_register" >
+        tools:layout="@layout/fragment_register">
 
         <action
             android:id="@+id/action_registerFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
-
     </fragment>
 
     <!-- HOME -->
@@ -40,18 +39,23 @@
         android:id="@+id/homeFragment"
         android:name="com.example.cafedealtura_dam.ui.home.HomeFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
 
         <action
             android:id="@+id/action_homeFragment_to_productsFragment"
             app:destination="@id/productsFragment" />
+
         <action
             android:id="@+id/action_homeFragment_to_cartFragment"
             app:destination="@id/cartFragment" />
+
         <action
             android:id="@+id/action_homeFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
 
+        <action
+            android:id="@+id/action_homeFragment_to_filteredProductsFragment"
+            app:destination="@id/filteredProductsFragment" />
     </fragment>
 
     <!-- PRODUCTS -->
@@ -59,18 +63,39 @@
         android:id="@+id/productsFragment"
         android:name="com.example.cafedealtura_dam.ui.products.ProductsFragment"
         android:label="Productos"
-        tools:layout="@layout/fragment_products" >
+        tools:layout="@layout/fragment_products">
 
         <action
             android:id="@+id/action_productsFragment_to_productDetailFragment"
             app:destination="@id/productDetailFragment" />
+
         <action
             android:id="@+id/action_productsFragment_to_cartFragment"
             app:destination="@id/cartFragment" />
+
         <action
             android:id="@+id/action_productsFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+    </fragment>
 
+    <!-- FILTERED PRODUCTS -->
+    <fragment
+        android:id="@+id/filteredProductsFragment"
+        android:name="com.example.cafedealtura_dam.ui.home.FilteredProductsFragment"
+        android:label="Productos filtrados"
+        tools:layout="@layout/fragment_filtered_products">
+
+        <action
+            android:id="@+id/action_filteredProductsFragment_to_productDetailFragment"
+            app:destination="@id/productDetailFragment" />
+
+        <action
+            android:id="@+id/action_filteredProductsFragment_to_cartFragment"
+            app:destination="@id/cartFragment" />
+
+        <action
+            android:id="@+id/action_filteredProductsFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
 
     <!-- PRODUCT DETAIL -->
@@ -78,15 +103,15 @@
         android:id="@+id/productDetailFragment"
         android:name="com.example.cafedealtura_dam.ui.products.ProductDetailFragment"
         android:label="Detalle"
-        tools:layout="@layout/fragment_product_detail" >
+        tools:layout="@layout/fragment_product_detail">
 
         <action
             android:id="@+id/action_productDetailFragment_to_cartFragment"
             app:destination="@id/cartFragment" />
+
         <action
             android:id="@+id/action_productDetailFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
-
     </fragment>
 
     <!-- CART -->
@@ -94,15 +119,19 @@
         android:id="@+id/cartFragment"
         android:name="com.example.cafedealtura_dam.ui.car_shop.CartFragment"
         android:label="Carrito"
-        tools:layout="@layout/fragment_cart" >
+        tools:layout="@layout/fragment_cart">
 
-        <action
-            android:id="@+id/action_cartFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
         <action
             android:id="@+id/action_cartFragment_to_productsFragment"
             app:destination="@id/productsFragment" />
 
+        <action
+            android:id="@+id/action_cartFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+
+        <action
+            android:id="@+id/action_cartFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
     </fragment>
 
     <!-- PROFILE -->
@@ -110,44 +139,31 @@
         android:id="@+id/profileFragment"
         android:name="com.example.cafedealtura_dam.ui.profile.ProfileFragment"
         android:label="Perfil"
-        tools:layout="@layout/fragment_profile" >
+        tools:layout="@layout/fragment_profile">
 
         <action
             android:id="@+id/action_profileFragment_to_ordersFragment"
             app:destination="@id/ordersFragment" />
-        <!-- PROFILE
+
         <action
-            android:id="@+id/action_profileFragment_to_favoritesFragment"
-            app:destination="@id/favoritesFragment" />
+            android:id="@+id/action_profileFragment_to_direccionesFragment"
+            app:destination="@id/direccionesFragment" />
+
         <action
-            android:id="@+id/action_profileFragment_to_addressFragment"
-            app:destination="@id/addressFragment" />
-        <action
-            android:id="@+id/action_profileFragment_to_paymentFragment"
-            app:destination="@id/paymentFragment" />
-            -->
+            android:id="@+id/action_profileFragment_to_paymentMethodsFragment"
+            app:destination="@id/paymentMethodsFragment" />
+
         <action
             android:id="@+id/action_profileFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
-
     </fragment>
 
     <!-- ORDERS -->
     <fragment
         android:id="@+id/ordersFragment"
-        android:name="com.example.cafedealtura_dam.ui.profile.ProfileFragment"
+        android:name="com.example.cafedealtura_dam.ui.profile.OrdersFragment"
         android:label="Mis pedidos"
-        tools:layout="@layout/fragment_profile" />
-
-
-    <!--
-        FAVORITES
-        <fragment
-            android:id="@+id/favoritesFragment"
-            android:name="com.example.cafedealtura_dam.ui.profile.FavoritesFragment"
-            android:label="Favoritos"
-            tools:layout="@layout/fragment_favorites" />
-    -->
+        tools:layout="@layout/fragment_orders" />
 
     <!-- DIRECCIONES -->
     <fragment
@@ -156,45 +172,16 @@
         android:label="Direcciones"
         tools:layout="@layout/fragment_direcciones" />
 
-    <!-- CARRITO -->
-    <fragment
-        android:id="@+id/cartFragment"
-        android:name="com.example.cafedealtura_dam.ui.car_shop.CartFragment"
-        android:label="Carrito" />
-
-
-
-    <!--
-        ADDRESS
-        <fragment
-            android:id="@+id/addressFragment"
-            android:name="com.example.cafedealtura_dam.ui.profile.AddressFragment"
-            android:label="Dirección"
-            tools:layout="@layout/fragment_address" />
-    -->
-
-
-    <!--
-        PAYMENT
-        <fragment
-            android:id="@+id/paymentFragment"
-            android:name="com.example.cafedealtura_dam.ui.profile.PaymentFragment"
-            android:label="Método de pago"
-            tools:layout="@layout/fragment_payment" />
-    -->
-
-
     <!-- SETTINGS -->
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.cafedealtura_dam.ui.confi.SettingsFragment"
         android:label="Configuración"
-        tools:layout="@layout/fragment_settings" >
+        tools:layout="@layout/fragment_settings">
 
         <action
             android:id="@+id/action_settingsFragment_to_changePasswordFragment"
             app:destination="@id/changePasswordFragment" />
-
     </fragment>
 
     <!-- CHANGE PASSWORD -->
@@ -204,7 +191,7 @@
         android:label="Cambiar contraseña"
         tools:layout="@layout/fragment_change_password" />
 
-    <!-- payment -->
+    <!-- PAYMENT -->
     <fragment
         android:id="@+id/paymentFragment"
         android:name="com.example.cafedealtura_dam.ui.payment.PaymentFragment"
@@ -216,32 +203,18 @@
             app:destination="@id/paymentSuccessFragment" />
     </fragment>
 
-    <!-- payment success -->
-
+    <!-- PAYMENT SUCCESS -->
     <fragment
         android:id="@+id/paymentSuccessFragment"
         android:name="com.example.cafedealtura_dam.ui.payment.PaymentSuccessFragment"
         android:label="Pago completado"
         tools:layout="@layout/fragment_payment_success" />
 
+    <!-- PAYMENT METHODS -->
     <fragment
         android:id="@+id/paymentMethodsFragment"
         android:name="com.example.cafedealtura_dam.ui.payment.PaymentMethodsFragment"
         android:label="Métodos de pago"
         tools:layout="@layout/fragment_payment_methods" />
-
-    <!-- filter products -->
-
-    <fragment
-        android:id="@+id/filteredProductsFragment"
-        android:name="com.example.cafedealtura_dam.ui.home.FilteredProductsFragment"
-        android:label="Productos filtrados"
-        tools:layout="@layout/fragment_filtered_products" >
-
-    <action
-        android:id="@+id/action_filteredProductsFragment_to_productDetailFragment"
-        app:destination="@id/productDetailFragment" />
-    </fragment>
-
 
 </navigation>
