@@ -21,6 +21,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
+                android:clickable="false"
+                android:focusable="false"
                 android:src="@drawable/logo_cafe_sin_fondo" />
 
             <ImageButton
@@ -28,7 +30,9 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="top|start"
-                android:layout_margin="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="60dp"
                 android:background="@drawable/bg_circle_white"
                 android:src="@drawable/outline_arrow_back_24"
                 app:tint="@color/cafe_marron_principal" />
@@ -38,7 +42,9 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="top|end"
-                android:layout_margin="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="60dp"
                 android:background="@drawable/bg_circle_white"
                 android:src="@drawable/ic_favorite_border"
                 app:tint="@color/cafe_marron_principal" />
@@ -79,7 +85,6 @@
                 android:id="@+id/tvOrigin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tvTitle"
                 android:text="Huila, Colombia"
                 android:textColor="@color/cafe_marron_suave"
                 android:textSize="16sp" />
