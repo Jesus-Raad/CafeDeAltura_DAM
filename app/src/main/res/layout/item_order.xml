@@ -62,8 +62,8 @@
                     android:id="@+id/ivOrderStatus"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
-                    android:src="@drawable/ic_check_circle"
                     android:contentDescription="@null"
+                    android:src="@drawable/ic_check_circle"
                     app:tint="@color/cafe_verde_montana" />
 
                 <TextView
@@ -86,8 +86,9 @@
 
             <ImageView
                 android:id="@+id/ivOrderProduct"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginEnd="12dp"
                 android:background="@drawable/bg_order_image"
                 android:contentDescription="@null"
                 android:padding="4dp"
@@ -98,7 +99,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginStart="12dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -107,7 +107,8 @@
                     android:layout_height="wrap_content"
                     android:text="Colombia Supremo"
                     android:textColor="@color/cafe_marron_principal"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvOrderQuantity"
@@ -120,10 +121,17 @@
             </LinearLayout>
         </LinearLayout>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvOrderItems"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:nestedScrollingEnabled="false" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:background="#EEE7DE" />
 
@@ -137,6 +145,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginEnd="8dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -152,43 +161,46 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="$53.80"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="€53.80"
                     android:textColor="@color/cafe_marron_principal"
-                    android:textSize="28sp" />
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnOrderDetail"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
-                android:layout_height="48dp"
+                android:layout_height="44dp"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
                 android:minWidth="0dp"
-                android:paddingStart="18dp"
-                android:paddingEnd="18dp"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
                 android:text="Ver detalle"
                 android:textAllCaps="false"
                 android:textColor="@color/cafe_marron_principal"
-                app:cornerRadius="24dp"
+                app:cornerRadius="22dp"
                 app:strokeColor="#DCD3C9"
                 app:strokeWidth="1dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnOrderRepeat"
                 android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:layout_marginStart="10dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="8dp"
                 android:backgroundTint="@color/cafe_verde_montana"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
                 android:minWidth="0dp"
-                android:paddingStart="18dp"
-                android:paddingEnd="18dp"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
                 android:text="Volver a pedir"
                 android:textAllCaps="false"
                 android:textColor="@color/cafe_texto_boton"
-                app:cornerRadius="24dp" />
+                app:cornerRadius="22dp" />
 
         </LinearLayout>
 

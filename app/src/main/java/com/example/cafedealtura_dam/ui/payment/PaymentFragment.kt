@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.cafedealtura_dam.R
+import com.example.cafedealtura_dam.data.CartRepository
 import com.google.android.material.button.MaterialButton
 import com.example.cafedealtura_dam.utils.applyTopInsets
 
@@ -24,13 +25,12 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
         val tvShipping = view.findViewById<TextView>(R.id.tvShippingValue)
         val tvTotal = view.findViewById<TextView>(R.id.tvTotalValue)
 
-        // Datos DEMO
-        val subtotal = 24.90
-        val shipping = 3.50
-        val total = subtotal + shipping
+        val subtotal = CartRepository.getSubtotal()
+        val shipping = CartRepository.getShippingCost()
+        val total = CartRepository.getTotal()
 
         tvSubtotal.text = "€%.2f".format(subtotal)
-        tvShipping.text = "€%.2f".format(shipping)
+        tvShipping.text = if (shipping == 0.0) "Gratis" else "€%.2f".format(shipping)
         tvTotal.text = "€%.2f".format(total)
 
         btnBack.setOnClickListener {
