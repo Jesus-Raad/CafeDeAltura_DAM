@@ -156,6 +156,10 @@
         <action
             android:id="@+id/action_profileFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+
+        <action
+            android:id="@+id/action_profileFragment_to_favoritosFragment"
+            app:destination="@id/favoritosFragment" />
     </fragment>
 
     <!-- ORDERS -->
@@ -222,5 +226,18 @@
         android:name="com.example.cafedealtura_dam.ui.profile.OrderDetailFragment"
         android:label="Detalle del pedido"
         tools:layout="@layout/fragment_order_detail" />
+
+    <!-- FAVORITOS -->
+    <fragment
+        android:id="@+id/favoritosFragment"
+        android:name="com.example.cafedealtura_dam.ui.profile.FavoritosFragment"
+        android:label="Favoritos"
+        tools:layout="@layout/fragment_favoritos">
+
+        <action
+            android:id="@+id/action_favoritosFragment_to_productDetailFragment"
+            app:destination="@id/productDetailFragment" />
+
+    </fragment>
 
 </navigation>

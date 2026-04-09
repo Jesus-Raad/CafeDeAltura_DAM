@@ -38,7 +38,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
 
         view.findViewById<View>(R.id.optionFavorites).setOnClickListener {
-            Toast.makeText(requireContext(), "Favoritos todavía no disponible", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.action_profileFragment_to_favoritosFragment)
         }
 
         view.findViewById<View>(R.id.optionAddress).setOnClickListener {

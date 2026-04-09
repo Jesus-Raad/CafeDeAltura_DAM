@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.cafedealtura_dam.R
 import com.example.cafedealtura_dam.data.CartRepository
+import com.example.cafedealtura_dam.data.FavoritosRepository
 import com.example.cafedealtura_dam.data.ProductsRepository
 import com.example.cafedealtura_dam.model.Products_coffe
 import com.google.android.material.button.MaterialButton
@@ -44,6 +45,7 @@ class ProductDetailFragment : Fragment() {
         }
 
         unitPrice = product.price
+        isFavorite = FavoritosRepository.isFavorito(product.id_coffe)
 
         val imgProduct = view.findViewById<ImageView>(R.id.imgProduct)
         val tvTitle = view.findViewById<TextView>(R.id.tvTitle)
@@ -89,8 +91,14 @@ class ProductDetailFragment : Fragment() {
             findNavController().navigateUp()
         }
 
+        btnFavorite.setImageResource(
+            if (isFavorite) R.drawable.ic_favorite
+            else R.drawable.ic_favorite_border
+        )
+
         btnFavorite.setOnClickListener {
-            isFavorite = !isFavorite
+            FavoritosRepository.toggle(product.id_coffe)
+            isFavorite = FavoritosRepository.isFavorito(product.id_coffe)
             btnFavorite.setImageResource(
                 if (isFavorite) R.drawable.ic_favorite
                 else R.drawable.ic_favorite_border

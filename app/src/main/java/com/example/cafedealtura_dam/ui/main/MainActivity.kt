@@ -119,13 +119,11 @@ class MainActivity : AppCompatActivity() {
         val options = NavOptions.Builder()
             .setLaunchSingleTop(true)
             .setRestoreState(false)
-            .setPopUpTo(navController.graph.startDestinationId, false)
+            .setPopUpTo(destinationId, false)
             .build()
 
         if (navController.currentDestination?.id != destinationId) {
             navController.navigate(destinationId, null, options)
-        } else {
-            navController.popBackStack(destinationId, false)
         }
     }
 }
