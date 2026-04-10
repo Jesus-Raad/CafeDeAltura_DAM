@@ -12,29 +12,15 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.cafedealtura_dam.R
 import com.example.cafedealtura_dam.data.ProductsRepository
+import com.example.cafedealtura_dam.data.UserSession
 import com.example.cafedealtura_dam.dataAPI.ApiService
 import com.example.cafedealtura_dam.model.Products_coffe
-import com.example.cafedealtura_dam.utils.SessionManager
 import com.example.cafedealtura_dam.utils.applyTopInsets
 import com.google.android.material.textfield.TextInputEditText
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 class HomeFragment : Fragment() {
 
-    private var param1: String? = null
-    private var param2: String? = null
-
     private var recommendedProducts: List<Products_coffe> = emptyList()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,15 +28,46 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-
         view.applyTopInsets()
 
-        val sessionManager = SessionManager(requireContext())
-        val nombre = sessionManager.getUserName()
+        setupGreeting(view)
+        setupRecommendedViews(view)
+        setupOriginNavigation(view)
+        setupCategoryNavigation(view)
+        setupSearch(view)
 
+        loadProductsAndRecommendations(view)
+
+        return view
+    }
+
+    private fun setupGreeting(view: View) {
+        val nombre = UserSession.getUser()?.name ?: "Usuario"
         val tvSaludo = view.findViewById<TextView>(R.id.tvSaludo)
         tvSaludo.text = "Hola, $nombre ☕"
+    }
 
+    private fun loadProductsAndRecommendations(view: View) {
+        if (!ProductsRepository.isEmpty()) {
+            val products = ProductsRepository.getProducts()
+            showRecommendedProducts(view, products)
+        } else {
+            ApiService.Get.getProducts(
+                context = requireContext(),
+                onResult = { products ->
+                    ProductsRepository.setProducts(products)
+                    requireActivity().runOnUiThread {
+                        showRecommendedProducts(view, products)
+                    }
+                },
+                onError = { error ->
+                    println("ERROR API: $error")
+                }
+            )
+        }
+    }
+
+    private fun showRecommendedProducts(view: View, products: List<Products_coffe>) {
         val imgRec1 = view.findViewById<ImageView>(R.id.imgRec1)
         val tvRecName1 = view.findViewById<TextView>(R.id.tvRecName1)
         val tvRecOrigin1 = view.findViewById<TextView>(R.id.tvRecOrigin1)
@@ -63,43 +80,34 @@ class HomeFragment : Fragment() {
         val tvRecMeta2 = view.findViewById<TextView>(R.id.tvRecMeta2)
         val tvRecPrice2 = view.findViewById<TextView>(R.id.tvRecPrice2)
 
+        recommendedProducts = products.shuffled().take(2)
+
+        if (recommendedProducts.isNotEmpty()) {
+            bindRecommendedProduct(
+                product = recommendedProducts[0],
+                imageView = imgRec1,
+                nameView = tvRecName1,
+                originView = tvRecOrigin1,
+                metaView = tvRecMeta1,
+                priceView = tvRecPrice1
+            )
+        }
+
+        if (recommendedProducts.size > 1) {
+            bindRecommendedProduct(
+                product = recommendedProducts[1],
+                imageView = imgRec2,
+                nameView = tvRecName2,
+                originView = tvRecOrigin2,
+                metaView = tvRecMeta2,
+                priceView = tvRecPrice2
+            )
+        }
+    }
+
+    private fun setupRecommendedViews(view: View) {
         val cardRecommended1 = view.findViewById<View>(R.id.cardRecommended1)
         val cardRecommended2 = view.findViewById<View>(R.id.cardRecommended2)
-        val etSearch = view.findViewById<TextInputEditText>(R.id.etSearch)
-
-        ApiService.Get.getProducts(
-            context = requireContext(),
-            onResult = { products ->
-                ProductsRepository.setProducts(products)
-
-                recommendedProducts = products.shuffled().take(2)
-
-                if (recommendedProducts.isNotEmpty()) {
-                    bindRecommendedProduct(
-                        product = recommendedProducts[0],
-                        imageView = imgRec1,
-                        nameView = tvRecName1,
-                        originView = tvRecOrigin1,
-                        metaView = tvRecMeta1,
-                        priceView = tvRecPrice1
-                    )
-                }
-
-                if (recommendedProducts.size > 1) {
-                    bindRecommendedProduct(
-                        product = recommendedProducts[1],
-                        imageView = imgRec2,
-                        nameView = tvRecName2,
-                        originView = tvRecOrigin2,
-                        metaView = tvRecMeta2,
-                        priceView = tvRecPrice2
-                    )
-                }
-            },
-            onError = { error ->
-                println("ERROR API: $error")
-            }
-        )
 
         cardRecommended1.setOnClickListener {
             if (recommendedProducts.isNotEmpty()) {
@@ -118,16 +126,14 @@ class HomeFragment : Fragment() {
                 findNavController().navigate(R.id.productDetailFragment, bundle)
             }
         }
+    }
 
+    private fun setupOriginNavigation(view: View) {
         val imgOriginCostaRica = view.findViewById<ImageView>(R.id.imgOriginCostaRica)
         val imgOriginColombia = view.findViewById<ImageView>(R.id.imgOriginColombia)
         val imgOriginEtiopia = view.findViewById<ImageView>(R.id.imgOriginEtiopia)
         val imgOriginKenia = view.findViewById<ImageView>(R.id.imgOriginKenia)
         val imgOriginLaos = view.findViewById<ImageView>(R.id.imgOriginLaos)
-
-        val cardCategoryGrano = view.findViewById<View>(R.id.cardCategoryGrano)
-        val cardCategoryMolido = view.findViewById<View>(R.id.cardCategoryMolido)
-        val cardCategoryEspecial = view.findViewById<View>(R.id.cardCategoryEspecial)
 
         Glide.with(requireContext())
             .load("https://res.cloudinary.com/dcfvpqztb/image/upload/v1774039781/origen_costarica_urioc7.png")
@@ -160,70 +166,53 @@ class HomeFragment : Fragment() {
             .into(imgOriginLaos)
 
         imgOriginCostaRica.setOnClickListener {
-            val bundle = Bundle().apply {
-                putString("origin", "Costa Rica")
-            }
-            findNavController().navigate(R.id.filteredProductsFragment, bundle)
+            navigateToFilteredProducts("origin", "Costa Rica")
         }
 
         imgOriginColombia.setOnClickListener {
-            val bundle = Bundle().apply {
-                putString("origin", "Colombia")
-            }
-            findNavController().navigate(R.id.filteredProductsFragment, bundle)
+            navigateToFilteredProducts("origin", "Colombia")
         }
 
         imgOriginEtiopia.setOnClickListener {
-            val bundle = Bundle().apply {
-                putString("origin", "Etiopía")
-            }
-            findNavController().navigate(R.id.filteredProductsFragment, bundle)
+            navigateToFilteredProducts("origin", "Etiopía")
         }
 
         imgOriginKenia.setOnClickListener {
-            val bundle = Bundle().apply {
-                putString("origin", "Kenia")
-            }
-            findNavController().navigate(R.id.filteredProductsFragment, bundle)
+            navigateToFilteredProducts("origin", "Kenia")
         }
 
         imgOriginLaos.setOnClickListener {
-            val bundle = Bundle().apply {
-                putString("origin", "Laos")
-            }
-            findNavController().navigate(R.id.filteredProductsFragment, bundle)
+            navigateToFilteredProducts("origin", "Laos")
         }
+    }
+
+    private fun setupCategoryNavigation(view: View) {
+        val cardCategoryGrano = view.findViewById<View>(R.id.cardCategoryGrano)
+        val cardCategoryMolido = view.findViewById<View>(R.id.cardCategoryMolido)
+        val cardCategoryEspecial = view.findViewById<View>(R.id.cardCategoryEspecial)
 
         cardCategoryGrano.setOnClickListener {
-            val bundle = Bundle().apply {
-                putString("category", "En grano")
-            }
-            findNavController().navigate(R.id.filteredProductsFragment, bundle)
+            navigateToFilteredProducts("category", "En grano")
         }
 
         cardCategoryMolido.setOnClickListener {
-            val bundle = Bundle().apply {
-                putString("category", "Molido")
-            }
-            findNavController().navigate(R.id.filteredProductsFragment, bundle)
+            navigateToFilteredProducts("category", "Molido")
         }
 
         cardCategoryEspecial.setOnClickListener {
-            val bundle = Bundle().apply {
-                putString("category", "Especial")
-            }
-            findNavController().navigate(R.id.filteredProductsFragment, bundle)
+            navigateToFilteredProducts("category", "Especial")
         }
+    }
+
+    private fun setupSearch(view: View) {
+        val etSearch = view.findViewById<TextInputEditText>(R.id.etSearch)
 
         etSearch.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE) {
                 val query = etSearch.text?.toString()?.trim().orEmpty()
 
                 if (query.isNotEmpty()) {
-                    val bundle = Bundle().apply {
-                        putString("query", query)
-                    }
-                    findNavController().navigate(R.id.filteredProductsFragment, bundle)
+                    navigateToFilteredProducts("query", query)
                 }
 
                 true
@@ -231,8 +220,13 @@ class HomeFragment : Fragment() {
                 false
             }
         }
+    }
 
-        return view
+    private fun navigateToFilteredProducts(key: String, value: String) {
+        val bundle = Bundle().apply {
+            putString(key, value)
+        }
+        findNavController().navigate(R.id.filteredProductsFragment, bundle)
     }
 
     private fun bindRecommendedProduct(
@@ -253,16 +247,5 @@ class HomeFragment : Fragment() {
         originView.text = product.origin ?: "Origen desconocido"
         metaView.text = "Disponibles: ${product.available}"
         priceView.text = String.format("$%.2f", product.price)
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }
