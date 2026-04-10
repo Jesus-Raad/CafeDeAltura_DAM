@@ -19,10 +19,10 @@
             android:id="@+id/btnBack"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/outline_arrow_back_24"
-            android:padding="8dp"
             android:contentDescription="Volver"
-            android:tint="@color/cafe_marron_principal" />
+            android:padding="8dp"
+            android:src="@drawable/outline_arrow_back_24"
+            app:tint="@color/cafe_marron_principal" />
 
         <ImageView
             android:id="@+id/imgLogo"
@@ -30,8 +30,8 @@
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"
-            android:src="@drawable/logo_cafe_sin_fondo"
-            android:contentDescription="Logo Café de Altura" />
+            android:contentDescription="Logo Café de Altura"
+            android:src="@drawable/logo_cafe_sin_fondo" />
 
         <TextView
             android:id="@+id/tvTitle"
@@ -55,133 +55,197 @@
             android:textColor="@color/cafe_marron_suave"
             android:textSize="14sp" />
 
-        <TextView
+        <!-- Nombre -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Nombre completo"
-            android:textColor="@color/cafe_marron_principal"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/etName"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/bg_edittext_register"
-            android:hint="María García"
-            android:inputType="textPersonName"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textColor="@color/cafe_marron_principal"
-            android:textColorHint="@color/cafe_marron_suave" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Nombre"
+                android:textColor="@color/cafe_marron_principal"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Correo electrónico"
-            android:textColor="@color/cafe_marron_principal"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/etEmail"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/bg_edittext_register"
-            android:hint="tu@email.com"
-            android:inputType="textEmailAddress"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textColor="@color/cafe_marron_principal"
-            android:textColorHint="@color/cafe_marron_suave" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Teléfono"
-            android:textColor="@color/cafe_marron_principal"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/etPhone"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/bg_edittext_register"
-            android:hint="+1 (555) 123-4567"
-            android:inputType="phone"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textColor="@color/cafe_marron_principal"
-            android:textColorHint="@color/cafe_marron_suave" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Contraseña"
-            android:textColor="@color/cafe_marron_principal"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            app:endIconMode="password_toggle"
-            app:boxBackgroundMode="none">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etPassword"
+            <EditText
+                android:id="@+id/etName"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:background="@drawable/bg_edittext_register"
-                android:hint="••••••••"
-                android:inputType="textPassword"
+                android:hint="María"
+                android:inputType="textPersonName"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:textColor="@color/cafe_marron_principal"
                 android:textColorHint="@color/cafe_marron_suave" />
+        </LinearLayout>
 
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
+        <!-- Apellidos -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Confirmar contraseña"
-            android:textColor="@color/cafe_marron_principal"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Apellidos"
+                android:textColor="@color/cafe_marron_principal"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            app:endIconMode="password_toggle"
-            app:boxBackgroundMode="none">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etConfirmPassword"
+            <EditText
+                android:id="@+id/etSurname"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:background="@drawable/bg_edittext_register"
-                android:hint="••••••••"
-                android:inputType="textPassword"
+                android:hint="García López"
+                android:inputType="textPersonName"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:textColor="@color/cafe_marron_principal"
                 android:textColorHint="@color/cafe_marron_suave" />
+        </LinearLayout>
 
-        </com.google.android.material.textfield.TextInputLayout>
+        <!-- Correo -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Correo electrónico"
+                android:textColor="@color/cafe_marron_principal"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/etEmail"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@drawable/bg_edittext_register"
+                android:hint="tu@email.com"
+                android:inputType="textEmailAddress"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textColor="@color/cafe_marron_principal"
+                android:textColorHint="@color/cafe_marron_suave" />
+        </LinearLayout>
+
+        <!-- Teléfono -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Teléfono"
+                android:textColor="@color/cafe_marron_principal"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/etPhone"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@drawable/bg_edittext_register"
+                android:hint="+34 600 000 000"
+                android:inputType="phone"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textColor="@color/cafe_marron_principal"
+                android:textColorHint="@color/cafe_marron_suave" />
+        </LinearLayout>
+
+        <!-- Contraseña -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Contraseña"
+                android:textColor="@color/cafe_marron_principal"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxBackgroundMode="none"
+                app:endIconMode="password_toggle"
+                app:errorIconDrawable="@null"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:background="@drawable/bg_edittext_register"
+                    android:inputType="textPassword"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="48dp"
+                    android:textColor="@color/cafe_marron_principal" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <!-- Confirmar contraseña -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Confirmar contraseña"
+                android:textColor="@color/cafe_marron_principal"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilConfirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxBackgroundMode="none"
+                app:endIconMode="password_toggle"
+                app:errorIconDrawable="@null"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etConfirmPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:background="@drawable/bg_edittext_register"
+                    android:inputType="textPassword"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="48dp"
+                    android:textColor="@color/cafe_marron_principal" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <!-- Términos -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -193,7 +257,7 @@
                 android:id="@+id/cbTerms"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="1dp"
                 android:buttonTint="@color/cafe_verde_montana"
                 android:minWidth="0dp"
                 android:minHeight="0dp"
@@ -203,7 +267,7 @@
                 android:id="@+id/tvTerms"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="10dp"
                 android:layout_weight="1"
                 android:lineSpacingExtra="2dp"
                 android:text="Acepto los términos y condiciones y la política de privacidad"

@@ -7,30 +7,26 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import com.example.cafedealtura_dam.R
-import com.example.cafedealtura_dam.utils.applyTopInsets
-
+import android.widget.Toast
 import androidx.credentials.CredentialManager
+import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.GetCredentialResponse
-import androidx.credentials.CustomCredential
 import androidx.credentials.exceptions.GetCredentialException
-
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.example.cafedealtura_dam.R
+import com.example.cafedealtura_dam.data.UserSession
+import com.example.cafedealtura_dam.dataAPI.ApiService
+import com.example.cafedealtura_dam.utils.applyTopInsets
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
-
+import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-
-import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
-import com.example.cafedealtura_dam.utils.SessionManager
-import com.google.android.material.textfield.TextInputEditText
-import com.example.cafedealtura_dam.dataAPI.ApiService
-import android.widget.Toast
 
 class LoginFragment : Fragment() {
 
@@ -46,7 +42,7 @@ class LoginFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
@@ -59,18 +55,15 @@ class LoginFragment : Fragment() {
         val btnGoogle = view.findViewById<ImageView>(R.id.btnGoogle)
 
         btnLogin.setOnClickListener {
-
-            val email = view.findViewById<TextInputEditText>(R.id.etEmail).text.toString()
-            val password = view.findViewById<TextInputEditText>(R.id.etPassword).text.toString()
+            val email = view.findViewById<TextInputEditText>(R.id.etEmail).text.toString().trim()
+            val password = view.findViewById<TextInputEditText>(R.id.etPassword).text.toString().trim()
 
             ApiService.Post.loginUser(
                 context = requireContext(),
                 email = email,
                 password = password,
                 onResult = { user ->
-                    val sessionManager = SessionManager(requireContext())
-                    sessionManager.saveUserName(user.name)
-                    sessionManager.saveUserEmail(user.email)
+                    UserSession.setUser(user)
 
                     requireActivity().runOnUiThread {
                         findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
@@ -83,12 +76,13 @@ class LoginFragment : Fragment() {
                 }
             )
         }
+
         tvRegister.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
 
         btnGoogle.setOnClickListener {
-            android.widget.Toast.makeText(requireContext(), "Click Google", android.widget.Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Click Google", Toast.LENGTH_SHORT).show()
             signInWithGoogle()
         }
     }
@@ -113,10 +107,10 @@ class LoginFragment : Fragment() {
                 handleSignIn(result)
             } catch (e: GetCredentialException) {
                 e.printStackTrace()
-                android.widget.Toast.makeText(
+                Toast.makeText(
                     requireContext(),
                     "Error Google: ${e.message}",
-                    android.widget.Toast.LENGTH_LONG
+                    Toast.LENGTH_LONG
                 ).show()
             }
         }
@@ -140,22 +134,13 @@ class LoginFragment : Fragment() {
                 auth.signInWithCredential(firebaseCredential)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            val firebaseUser = auth.currentUser
-                            val fullName = firebaseUser?.displayName ?: "Usuario"
-                            val firstName = fullName.split(" ").firstOrNull() ?: "Usuario"
-                            val email = firebaseUser?.email ?: ""
-
-                            val sessionManager = SessionManager(requireContext())
-                            sessionManager.saveUserName(fullName)
-                            sessionManager.saveUserEmail(email)
-
                             findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                         } else {
                             task.exception?.printStackTrace()
-                            android.widget.Toast.makeText(
+                            Toast.makeText(
                                 requireContext(),
                                 "Firebase error: ${task.exception?.message}",
-                                android.widget.Toast.LENGTH_LONG
+                                Toast.LENGTH_LONG
                             ).show()
                         }
                     }
@@ -166,14 +151,3 @@ class LoginFragment : Fragment() {
         }
     }
 }
-//ApiService.Post.loginUser(
-//context = this,
-//email = email,
-//password = password,
-//onResult = { user ->
-//    UserSession.setUser(user)
-//},
-//onError = { error ->
-//    println(error)
-//}
-//)
