@@ -13,6 +13,19 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        //PRUEBA
+        UserSession.setUser(
+            Users(
+                id_user = 3,
+                name = "Jesus",
+                surname = "Raad",
+                password = "123456",
+                rol = "admin",
+                email = "jesus2026@gmail.com",
+                phone = "+34634482312"
+            )
+        )
+        ///////
         installSplashScreen()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
