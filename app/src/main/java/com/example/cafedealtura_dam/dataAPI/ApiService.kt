@@ -6,6 +6,7 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.example.cafedealtura_dam.dataAPI.responses.AddressActionResponse
 import com.example.cafedealtura_dam.dataAPI.responses.AddressesResponse
+import com.example.cafedealtura_dam.dataAPI.responses.CheckEmailResponse
 import com.example.cafedealtura_dam.dataAPI.responses.CreateUserResponse
 import com.example.cafedealtura_dam.dataAPI.responses.LoginResponse
 import com.example.cafedealtura_dam.dataAPI.responses.ProductsResponse
@@ -104,6 +105,47 @@ object ApiService {
                             onResult(result.user)
                         } else {
                             onError(result.error ?: "Error en login")
+                        }
+
+                    } catch (e: Exception) {
+                        onError("Error parseando: ${e.message}")
+                    }
+                },
+                { error ->
+                    onError(error.message ?: "Error en la petición")
+                }
+            )
+
+            VolleySingleton.getInstance(context).addToRequestQueue(request)
+        }
+
+        fun checkEmail(
+            context: Context,
+            email: String,
+            onResult: (Boolean) -> Unit,
+            onError: (String) -> Unit
+        ) {
+            val url = ApiConfig.BASE_URL + "check_email.php"
+
+            val jsonBody = JSONObject().apply {
+                put("email", email)
+            }
+
+            val request = JsonObjectRequest(
+                Request.Method.POST,
+                url,
+                jsonBody,
+                { response ->
+                    try {
+                        val result = Gson().fromJson(
+                            response.toString(),
+                            CheckEmailResponse::class.java
+                        )
+
+                        if (result.success) {
+                            onResult(result.exists)
+                        } else {
+                            onError(result.error ?: "Error comprobando email")
                         }
 
                     } catch (e: Exception) {
