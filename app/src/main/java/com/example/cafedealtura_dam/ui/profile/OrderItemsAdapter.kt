@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cafedealtura_dam.R
-
-// adapter secundario
+import com.example.cafedealtura_dam.data.ProductsRepository
+import com.example.cafedealtura_dam.model.Orders_item
 
 class OrderItemsAdapter(
-    private val items: List<OrderItemUiModel>
+    private val items: List<Orders_item>
 ) : RecyclerView.Adapter<OrderItemsAdapter.OrderItemViewHolder>() {
 
     inner class OrderItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -26,7 +26,9 @@ class OrderItemsAdapter(
 
     override fun onBindViewHolder(holder: OrderItemViewHolder, position: Int) {
         val item = items[position]
-        holder.tvItemName.text = item.productName
+        val product = ProductsRepository.getProductById(item.id_product)
+
+        holder.tvItemName.text = product?.brand ?: "Producto #${item.id_product}"
         holder.tvItemQuantity.text = "x${item.quantity}"
     }
 
