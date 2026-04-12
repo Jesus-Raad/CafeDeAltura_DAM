@@ -13,8 +13,9 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.cafedealtura_dam.R
 import com.example.cafedealtura_dam.data.CartRepository
-import com.example.cafedealtura_dam.data.FavoritosRepository
 import com.example.cafedealtura_dam.data.ProductsRepository
+import com.example.cafedealtura_dam.data.UserSession
+import com.example.cafedealtura_dam.dataAPI.ApiService
 import com.example.cafedealtura_dam.model.Products_coffe
 import com.google.android.material.button.MaterialButton
 import java.util.Locale
@@ -24,6 +25,10 @@ class ProductDetailFragment : Fragment() {
     private var quantity = 1
     private var unitPrice = 0.0
     private var isFavorite = false
+    private var isProcessingFavorite = false
+
+    private var currentProduct: Products_coffe? = null
+    private var btnFavorite: ImageButton? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,8 +49,8 @@ class ProductDetailFragment : Fragment() {
             return
         }
 
+        currentProduct = product
         unitPrice = product.price
-        isFavorite = FavoritosRepository.isFavorito(product.id_coffe)
 
         val imgProduct = view.findViewById<ImageView>(R.id.imgProduct)
         val tvTitle = view.findViewById<TextView>(R.id.tvTitle)
@@ -59,7 +64,7 @@ class ProductDetailFragment : Fragment() {
         val btnMinus = view.findViewById<MaterialButton>(R.id.btnMinus)
         val btnAddToCart = view.findViewById<MaterialButton>(R.id.btnAddToCart)
         val btnBack = view.findViewById<ImageButton>(R.id.btnBack)
-        val btnFavorite = view.findViewById<ImageButton>(R.id.btnFavorite)
+        btnFavorite = view.findViewById(R.id.btnFavorite)
 
         bindProduct(
             product = product,
@@ -72,6 +77,9 @@ class ProductDetailFragment : Fragment() {
 
         tvQuantity.text = quantity.toString()
         updatePrice(tvPrice, btnAddToCart)
+        updateFavoriteIcon()
+
+        loadFavoriteState(product.id_coffe)
 
         btnPlus.setOnClickListener {
             quantity++
@@ -91,18 +99,10 @@ class ProductDetailFragment : Fragment() {
             findNavController().navigateUp()
         }
 
-        btnFavorite.setImageResource(
-            if (isFavorite) R.drawable.ic_favorite
-            else R.drawable.ic_favorite_border
-        )
-
-        btnFavorite.setOnClickListener {
-            FavoritosRepository.toggle(product.id_coffe)
-            isFavorite = FavoritosRepository.isFavorito(product.id_coffe)
-            btnFavorite.setImageResource(
-                if (isFavorite) R.drawable.ic_favorite
-                else R.drawable.ic_favorite_border
-            )
+        btnFavorite?.setOnClickListener {
+            if (!isProcessingFavorite) {
+                toggleFavorite()
+            }
         }
 
         btnAddToCart.setOnClickListener {
@@ -113,6 +113,120 @@ class ProductDetailFragment : Fragment() {
                 Toast.LENGTH_SHORT
             ).show()
         }
+    }
+
+    private fun loadFavoriteState(productId: Int) {
+        val user = UserSession.getUser()
+
+        if (user == null) {
+            isFavorite = false
+            updateFavoriteIcon()
+            return
+        }
+
+        btnFavorite?.isEnabled = false
+
+        ApiService.Get.getFavorites(
+            context = requireContext(),
+            idUser = user.id_user,
+            onResult = { favorites ->
+                isFavorite = favorites.any { it.id_coffe == productId }
+                updateFavoriteIcon()
+                btnFavorite?.isEnabled = true
+            },
+            onError = {
+                isFavorite = false
+                updateFavoriteIcon()
+                btnFavorite?.isEnabled = true
+                Toast.makeText(
+                    requireContext(),
+                    "No se pudo comprobar favoritos",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        )
+    }
+
+    private fun toggleFavorite() {
+        val user = UserSession.getUser()
+        val product = currentProduct
+
+        if (user == null || product == null) {
+            Toast.makeText(
+                requireContext(),
+                "Debes iniciar sesión",
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
+
+        isProcessingFavorite = true
+        btnFavorite?.isEnabled = false
+
+        if (isFavorite) {
+            ApiService.Post.deleteFavorite(
+                context = requireContext(),
+                idUser = user.id_user,
+                idCoffe = product.id_coffe,
+                onResult = {
+                    isFavorite = false
+                    updateFavoriteIcon()
+                    isProcessingFavorite = false
+                    btnFavorite?.isEnabled = true
+
+                    Toast.makeText(
+                        requireContext(),
+                        "Eliminado de favoritos",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                },
+                onError = { error ->
+                    isProcessingFavorite = false
+                    btnFavorite?.isEnabled = true
+
+                    Toast.makeText(
+                        requireContext(),
+                        error,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            )
+        } else {
+            ApiService.Post.createFavorite(
+                context = requireContext(),
+                idUser = user.id_user,
+                idCoffe = product.id_coffe,
+                onResult = {
+                    isFavorite = true
+                    updateFavoriteIcon()
+                    isProcessingFavorite = false
+                    btnFavorite?.isEnabled = true
+
+                    Toast.makeText(
+                        requireContext(),
+                        "Añadido a favoritos",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                },
+                onError = { error ->
+                    isProcessingFavorite = false
+                    btnFavorite?.isEnabled = true
+
+                    Toast.makeText(
+                        requireContext(),
+                        error,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            )
+        }
+    }
+
+    private fun updateFavoriteIcon() {
+        btnFavorite?.setImageResource(
+            if (isFavorite) R.drawable.ic_favorite
+            else R.drawable.ic_favorite_border
+        )
     }
 
     private fun bindProduct(

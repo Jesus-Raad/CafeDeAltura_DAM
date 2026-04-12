@@ -6,20 +6,18 @@ import android.widget.TextView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cafedealtura_dam.R
 import com.example.cafedealtura_dam.data.CartRepository
-import com.example.cafedealtura_dam.data.ProductsRepository
-import com.example.cafedealtura_dam.dataAPI.ApiService
-import com.example.cafedealtura_dam.model.Products_coffe
-import java.util.Locale
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
+import java.util.Locale
 
 class CartFragment : Fragment(R.layout.fragment_cart) {
 
     private lateinit var adapter: CarsItemsAdapter
+    private lateinit var btnCheckout: MaterialButton
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -45,14 +43,15 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
         rv.layoutManager = LinearLayoutManager(requireContext())
         rv.adapter = adapter
 
-
-        updateCartUI()
-
-        val btnCheckout = view.findViewById<MaterialButton>(R.id.btnCheckout)
+        btnCheckout = view.findViewById(R.id.btnCheckout)
 
         btnCheckout.setOnClickListener {
-            findNavController().navigate(R.id.paymentFragment)
+            if (CartRepository.getItems().isNotEmpty()) {
+                findNavController().navigate(R.id.paymentFragment)
+            }
         }
+
+        updateCartUI()
     }
 
     override fun onResume() {
@@ -60,8 +59,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
         updateCartUI()
     }
 
-
-        private fun updateCartUI() {
+    private fun updateCartUI() {
         val currentView = view ?: return
 
         val tvCount = currentView.findViewById<TextView>(R.id.tvCartCount)
@@ -69,7 +67,9 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
         val tvShippingValue = currentView.findViewById<TextView>(R.id.tvShippingValue)
         val tvTotalValue = currentView.findViewById<TextView>(R.id.tvTotalValue)
 
-        adapter.submitList(CartRepository.getItems())
+        val items = CartRepository.getItems()
+
+        adapter.submitList(items)
 
         tvCount.text = "${CartRepository.getTotalItemsCount()} cafés seleccionados"
         tvSubtotalValue.text = formatPrice(CartRepository.getSubtotal())
@@ -79,6 +79,13 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
             formatPrice(CartRepository.getShippingCost())
         }
         tvTotalValue.text = formatPrice(CartRepository.getTotal())
+
+        updateCheckoutButtonState(items.isEmpty())
+    }
+
+    private fun updateCheckoutButtonState(isEmpty: Boolean) {
+        btnCheckout.isEnabled = !isEmpty
+        btnCheckout.alpha = if (isEmpty) 0.5f else 1f
     }
 
     private fun formatPrice(value: Double): String {

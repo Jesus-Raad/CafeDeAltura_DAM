@@ -9,14 +9,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cafedealtura_dam.R
+import com.example.cafedealtura_dam.data.ProductsRepository
+import com.example.cafedealtura_dam.model.Orders
+import com.example.cafedealtura_dam.model.Orders_item
 
 class OrdersAdapter(
-    private val orders: List<OrderUiModel>,
-    private val onDetailClick: (OrderUiModel) -> Unit
+    private val orders: List<Orders>,
+    private val itemsByOrderId: Map<Int, List<Orders_item>>,
+    private val onDetailClick: (Orders) -> Unit
 ) : RecyclerView.Adapter<OrdersAdapter.OrderViewHolder>() {
 
     inner class OrderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
         val tvOrderDate: TextView = view.findViewById(R.id.tvOrderDate)
         val tvOrderCode: TextView = view.findViewById(R.id.tvOrderCode)
         val tvOrderStatus: TextView = view.findViewById(R.id.tvOrderStatus)
@@ -40,23 +43,25 @@ class OrdersAdapter(
 
     override fun onBindViewHolder(holder: OrderViewHolder, position: Int) {
         val order = orders[position]
+        val orderItems = itemsByOrderId[order.id_order].orEmpty()
 
-        // Datos básicos
         holder.tvOrderDate.text = order.date
-        holder.tvOrderCode.text = order.orderCode
-        holder.tvOrderStatus.text = order.status
-        holder.tvOrderTotal.text = "€%.2f".format(order.total)
+        holder.tvOrderCode.text = "Pedido #${order.id_order}"
+        holder.tvOrderStatus.text = getStatusText(order.status_order)
+        holder.tvOrderTotal.text = "€%.2f".format(order.total_amount)
 
-        // Primer producto del pedido
-        val firstItem = order.items.firstOrNull()
+        val firstItem = orderItems.firstOrNull()
 
         if (firstItem != null) {
-            holder.tvOrderProductName.text = firstItem.productName
+            val product = ProductsRepository.getProductById(firstItem.id_product)
+
+            holder.tvOrderProductName.text = product?.brand ?: "Producto #${firstItem.id_product}"
             holder.tvOrderQuantity.text = "Cantidad: ${firstItem.quantity}"
 
             Glide.with(holder.itemView.context)
-                .load(firstItem.imageUrl)
+                .load(product?.img_url)
                 .placeholder(R.drawable.ic_launcher_foreground)
+                .error(R.drawable.ic_launcher_foreground)
                 .into(holder.ivOrderProduct)
         } else {
             holder.tvOrderProductName.text = "Sin productos"
@@ -67,12 +72,10 @@ class OrdersAdapter(
                 .into(holder.ivOrderProduct)
         }
 
-        // Recycler interno (productos del pedido)
         holder.rvOrderItems.layoutManager = LinearLayoutManager(holder.itemView.context)
-        holder.rvOrderItems.adapter = OrderItemsAdapter(order.items)
+        holder.rvOrderItems.adapter = OrderItemsAdapter(orderItems)
         holder.rvOrderItems.isNestedScrollingEnabled = false
 
-        // Botones
         holder.btnOrderDetail.visibility = View.VISIBLE
         holder.btnOrderRepeat.visibility = View.VISIBLE
 
@@ -86,4 +89,13 @@ class OrdersAdapter(
     }
 
     override fun getItemCount(): Int = orders.size
+
+    private fun getStatusText(status: Int): String {
+        return when (status) {
+            0 -> "Pendiente"
+            1 -> "Completado"
+            2 -> "Cancelado"
+            else -> "Desconocido"
+        }
+    }
 }

@@ -16,10 +16,13 @@ class OrderDetailFragment : Fragment(R.layout.fragment_order_detail) {
         view.applyTopInsets()
 
         val btnBack = view.findViewById<ImageView>(R.id.btnBack)
-        val orderCode = arguments?.getString("orderCode")
+        val idOrder = arguments?.getInt("id_order", -1)
 
         btnBack.setOnClickListener {
             findNavController().navigateUp()
         }
+
+        // De momento queda preparado para la siguiente fase
+        // donde cargarás el detalle real usando idOrder
     }
 }
