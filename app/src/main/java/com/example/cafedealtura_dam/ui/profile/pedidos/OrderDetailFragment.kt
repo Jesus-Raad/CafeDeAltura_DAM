@@ -1,4 +1,4 @@
-package com.example.cafedealtura_dam.ui.profile
+package com.example.cafedealtura_dam.ui.profile.pedidos
 
 import android.os.Bundle
 import android.view.View

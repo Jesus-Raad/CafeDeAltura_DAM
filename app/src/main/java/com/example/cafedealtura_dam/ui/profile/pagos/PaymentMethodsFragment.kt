@@ -1,4 +1,4 @@
-package com.example.cafedealtura_dam.ui.payment
+package com.example.cafedealtura_dam.ui.profile.pagos
 
 import android.os.Bundle
 import android.view.View

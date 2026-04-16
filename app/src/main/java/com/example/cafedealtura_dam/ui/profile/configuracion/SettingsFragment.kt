@@ -1,4 +1,4 @@
-package com.example.cafedealtura_dam.ui.confi
+package com.example.cafedealtura_dam.ui.profile.configuracion
 
 import android.os.Bundle
 import android.view.View
@@ -8,12 +8,27 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.cafedealtura_dam.R
+import com.example.cafedealtura_dam.utils.applyTopInsets
 import com.google.android.material.button.MaterialButton
 
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        view.applyTopInsets()
+
+        val cardHelpCenter = view.findViewById<View>(R.id.cardHelpCenter)
+
+        cardHelpCenter.setOnClickListener {
+            findNavController().navigate(R.id.action_settingsFragment_to_helpCenterFragment)
+        }
+
+        val cardSupport = view.findViewById<View>(R.id.cardSupport)
+
+        cardSupport.setOnClickListener {
+            findNavController().navigate(R.id.action_settingsFragment_to_supportFragment)
+        }
+
 
         ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

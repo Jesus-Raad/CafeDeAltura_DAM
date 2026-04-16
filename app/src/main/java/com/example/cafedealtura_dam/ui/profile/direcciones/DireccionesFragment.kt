@@ -1,4 +1,4 @@
-package com.example.cafedealtura_dam.ui.profile
+package com.example.cafedealtura_dam.ui.profile.direcciones
 
 import android.app.AlertDialog
 import android.os.Bundle
