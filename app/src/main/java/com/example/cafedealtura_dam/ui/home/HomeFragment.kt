@@ -9,18 +9,20 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cafedealtura_dam.R
 import com.example.cafedealtura_dam.data.ProductsRepository
 import com.example.cafedealtura_dam.data.UserSession
 import com.example.cafedealtura_dam.dataAPI.ApiService
-import com.example.cafedealtura_dam.model.Products_coffe
+import com.example.cafedealtura_dam.ui.products.ProductsAdapter
 import com.example.cafedealtura_dam.utils.applyTopInsets
 import com.google.android.material.textfield.TextInputEditText
 
 class HomeFragment : Fragment() {
 
-    private var recommendedProducts: List<Products_coffe> = emptyList()
+    private lateinit var recommendedAdapter: ProductsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,12 +33,12 @@ class HomeFragment : Fragment() {
         view.applyTopInsets()
 
         setupGreeting(view)
-        setupRecommendedViews(view)
+        setupRecommendedRecycler(view)
         setupOriginNavigation(view)
         setupCategoryNavigation(view)
         setupSearch(view)
 
-        loadProductsAndRecommendations(view)
+        loadProductsAndRecommendations()
 
         return view
     }
@@ -47,17 +49,36 @@ class HomeFragment : Fragment() {
         tvSaludo.text = "Hola, $nombre ☕"
     }
 
-    private fun loadProductsAndRecommendations(view: View) {
+    private fun setupRecommendedRecycler(view: View) {
+        val rvRecommended = view.findViewById<RecyclerView>(R.id.rvRecommended)
+
+        recommendedAdapter = ProductsAdapter { product ->
+            val bundle = Bundle().apply {
+                putInt("id_coffe", product.id_coffe)
+            }
+
+            findNavController().navigate(
+                R.id.productDetailFragment,
+                bundle
+            )
+        }
+
+        rvRecommended.layoutManager = GridLayoutManager(requireContext(), 2)
+        rvRecommended.adapter = recommendedAdapter
+        rvRecommended.isNestedScrollingEnabled = false
+    }
+
+    private fun loadProductsAndRecommendations() {
         if (!ProductsRepository.isEmpty()) {
             val products = ProductsRepository.getProducts()
-            showRecommendedProducts(view, products)
+            showRecommendedProducts(products)
         } else {
             ApiService.Get.getProducts(
                 context = requireContext(),
                 onResult = { products ->
                     ProductsRepository.setProducts(products)
                     requireActivity().runOnUiThread {
-                        showRecommendedProducts(view, products)
+                        showRecommendedProducts(products)
                     }
                 },
                 onError = { error ->
@@ -67,65 +88,9 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun showRecommendedProducts(view: View, products: List<Products_coffe>) {
-        val imgRec1 = view.findViewById<ImageView>(R.id.imgRec1)
-        val tvRecName1 = view.findViewById<TextView>(R.id.tvRecName1)
-        val tvRecOrigin1 = view.findViewById<TextView>(R.id.tvRecOrigin1)
-        val tvRecMeta1 = view.findViewById<TextView>(R.id.tvRecMeta1)
-        val tvRecPrice1 = view.findViewById<TextView>(R.id.tvRecPrice1)
-
-        val imgRec2 = view.findViewById<ImageView>(R.id.imgRec2)
-        val tvRecName2 = view.findViewById<TextView>(R.id.tvRecName2)
-        val tvRecOrigin2 = view.findViewById<TextView>(R.id.tvRecOrigin2)
-        val tvRecMeta2 = view.findViewById<TextView>(R.id.tvRecMeta2)
-        val tvRecPrice2 = view.findViewById<TextView>(R.id.tvRecPrice2)
-
-        recommendedProducts = products.shuffled().take(2)
-
-        if (recommendedProducts.isNotEmpty()) {
-            bindRecommendedProduct(
-                product = recommendedProducts[0],
-                imageView = imgRec1,
-                nameView = tvRecName1,
-                originView = tvRecOrigin1,
-                metaView = tvRecMeta1,
-                priceView = tvRecPrice1
-            )
-        }
-
-        if (recommendedProducts.size > 1) {
-            bindRecommendedProduct(
-                product = recommendedProducts[1],
-                imageView = imgRec2,
-                nameView = tvRecName2,
-                originView = tvRecOrigin2,
-                metaView = tvRecMeta2,
-                priceView = tvRecPrice2
-            )
-        }
-    }
-
-    private fun setupRecommendedViews(view: View) {
-        val cardRecommended1 = view.findViewById<View>(R.id.cardRecommended1)
-        val cardRecommended2 = view.findViewById<View>(R.id.cardRecommended2)
-
-        cardRecommended1.setOnClickListener {
-            if (recommendedProducts.isNotEmpty()) {
-                val bundle = Bundle().apply {
-                    putInt("id_coffe", recommendedProducts[0].id_coffe)
-                }
-                findNavController().navigate(R.id.productDetailFragment, bundle)
-            }
-        }
-
-        cardRecommended2.setOnClickListener {
-            if (recommendedProducts.size > 1) {
-                val bundle = Bundle().apply {
-                    putInt("id_coffe", recommendedProducts[1].id_coffe)
-                }
-                findNavController().navigate(R.id.productDetailFragment, bundle)
-            }
-        }
+    private fun showRecommendedProducts(products: List<com.example.cafedealtura_dam.model.Products_coffe>) {
+        val recommendedProducts = products.shuffled().take(2)
+        recommendedAdapter.submitList(recommendedProducts)
     }
 
     private fun setupOriginNavigation(view: View) {
@@ -227,25 +192,5 @@ class HomeFragment : Fragment() {
             putString(key, value)
         }
         findNavController().navigate(R.id.filteredProductsFragment, bundle)
-    }
-
-    private fun bindRecommendedProduct(
-        product: Products_coffe,
-        imageView: ImageView,
-        nameView: TextView,
-        originView: TextView,
-        metaView: TextView,
-        priceView: TextView
-    ) {
-        Glide.with(requireContext())
-            .load(product.img_url)
-            .placeholder(android.R.drawable.ic_menu_gallery)
-            .error(android.R.drawable.ic_menu_close_clear_cancel)
-            .into(imageView)
-
-        nameView.text = product.brand
-        originView.text = product.origin ?: "Origen desconocido"
-        metaView.text = "Disponibles: ${product.available}"
-        priceView.text = String.format("$%.2f", product.price)
     }
 }
