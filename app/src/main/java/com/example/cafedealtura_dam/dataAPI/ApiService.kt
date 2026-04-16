@@ -15,6 +15,7 @@ import com.example.cafedealtura_dam.dataAPI.responses.LoginResponse
 import com.example.cafedealtura_dam.dataAPI.responses.OrderItemsResponse
 import com.example.cafedealtura_dam.dataAPI.responses.OrdersResponse
 import com.example.cafedealtura_dam.dataAPI.responses.ProductsResponse
+import com.example.cafedealtura_dam.dataAPI.responses.UpdatePasswordResponse
 import com.example.cafedealtura_dam.model.CartItem
 import com.example.cafedealtura_dam.model.Direccion
 import com.example.cafedealtura_dam.model.Orders
@@ -599,6 +600,50 @@ object ApiService {
                 },
                 { error ->
                     onError(error.message ?: "Error en la petición al crear pedido")
+                }
+            )
+
+            VolleySingleton.getInstance(context).addToRequestQueue(request)
+        }
+
+        fun updatePassword(
+            context: Context,
+            idUser: Int,
+            currentPassword: String,
+            newPassword: String,
+            onResult: (UpdatePasswordResponse) -> Unit,
+            onError: (String) -> Unit
+        ) {
+            val url = ApiConfig.BASE_URL + "update_password.php"
+
+            val jsonBody = JSONObject().apply {
+                put("id_user", idUser)
+                put("current_password", currentPassword)
+                put("new_password", newPassword)
+            }
+
+            val request = JsonObjectRequest(
+                Request.Method.POST,
+                url,
+                jsonBody,
+                { response ->
+                    try {
+                        val result = Gson().fromJson(
+                            response.toString(),
+                            UpdatePasswordResponse::class.java
+                        )
+
+                        if (result.success) {
+                            onResult(result)
+                        } else {
+                            onError(result.error ?: "Error al actualizar contraseña")
+                        }
+                    } catch (e: Exception) {
+                        onError("Error parseando: ${e.message}")
+                    }
+                },
+                { error ->
+                    onError(error.message ?: "Error en la petición")
                 }
             )
 

@@ -9,6 +9,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.cafedealtura_dam.R
+import com.example.cafedealtura_dam.data.UserSession
+import com.example.cafedealtura_dam.dataAPI.ApiService
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -70,7 +72,8 @@ class ChangePasswordFragment : Fragment(R.layout.fragment_change_password) {
                 }
 
                 !isValidPassword(newPassword) -> {
-                    tilNewPassword.error = "La contraseña no cumple los requisitos"
+                    tilNewPassword.error =
+                        "Debe tener mínimo 8 caracteres, mayúscula, minúscula y número"
                 }
 
                 confirmPassword.isEmpty() -> {
@@ -86,7 +89,44 @@ class ChangePasswordFragment : Fragment(R.layout.fragment_change_password) {
                 }
 
                 else -> {
-                    Toast.makeText(requireContext(), "Pantalla lista para conectar con la API", Toast.LENGTH_SHORT).show()
+                    val idUser = UserSession.getUserId()
+
+                    if (idUser == null) {
+                        Toast.makeText(
+                            requireContext(),
+                            "No hay un usuario logueado",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        return@setOnClickListener
+                    }
+
+                    btnUpdatePassword.isEnabled = false
+
+                    ApiService.Post.updatePassword(
+                        context = requireContext(),
+                        idUser = idUser,
+                        currentPassword = currentPassword,
+                        newPassword = newPassword,
+                        onResult = { result ->
+                            btnUpdatePassword.isEnabled = true
+
+                            Toast.makeText(
+                                requireContext(),
+                                result.message ?: "Contraseña actualizada correctamente",
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                            etCurrentPassword.text?.clear()
+                            etNewPassword.text?.clear()
+                            etConfirmPassword.text?.clear()
+
+                            findNavController().popBackStack()
+                        },
+                        onError = { error ->
+                            btnUpdatePassword.isEnabled = true
+                            Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
+                        }
+                    )
                 }
             }
         }

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cafedealtura_dam.R
 import com.example.cafedealtura_dam.model.Products_coffe
+import com.google.android.material.card.MaterialCardView
 
 class ProductsAdapter(
     private val onProductClick: (Products_coffe) -> Unit
@@ -33,18 +34,33 @@ class ProductsAdapter(
         val product = items[position]
         holder.bind(product)
 
-        holder.itemView.setOnClickListener {
-            onProductClick(product)
+        val isAvailable = product.available == 1
+
+        holder.cardProduct.setOnClickListener(null)
+        holder.cardProduct.isClickable = isAvailable
+        holder.cardProduct.isFocusable = isAvailable
+        holder.cardProduct.isEnabled = isAvailable
+
+        if (isAvailable) {
+            holder.cardProduct.setOnClickListener {
+                onProductClick(product)
+            }
         }
     }
 
     class VH(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        val cardProduct: MaterialCardView = itemView.findViewById(R.id.cardProduct)
 
         private val img: ImageView = itemView.findViewById(R.id.imgProduct)
         private val tvName: TextView = itemView.findViewById(R.id.tvName)
         private val tvOrigin: TextView = itemView.findViewById(R.id.tvOrigin)
         private val tvMeta: TextView = itemView.findViewById(R.id.tvMeta)
         private val tvPrice: TextView = itemView.findViewById(R.id.tvPrice)
+
+        private val overlayUnavailable: View = itemView.findViewById(R.id.overlayUnavailable)
+        private val tvUnavailable: TextView = itemView.findViewById(R.id.tvUnavailable)
+        private val contentContainer: View = itemView.findViewById(R.id.contentContainer)
 
         fun bind(product: Products_coffe) {
             Glide.with(itemView.context)
@@ -57,6 +73,18 @@ class ProductsAdapter(
             tvOrigin.text = product.origin ?: ""
             tvMeta.text = "${product.weight}g"
             tvPrice.text = String.format("$%.2f", product.price)
+
+            val isAvailable = product.available == 1
+
+            if (isAvailable) {
+                overlayUnavailable.visibility = View.GONE
+                tvUnavailable.visibility = View.GONE
+                contentContainer.alpha = 1f
+            } else {
+                overlayUnavailable.visibility = View.VISIBLE
+                tvUnavailable.visibility = View.VISIBLE
+                contentContainer.alpha = 0.55f
+            }
         }
     }
 }
