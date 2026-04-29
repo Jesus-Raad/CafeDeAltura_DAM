@@ -131,7 +131,18 @@
         <action
             android:id="@+id/action_cartFragment_to_paymentFragment"
             app:destination="@id/paymentFragment" />
+
+        <action
+            android:id="@+id/action_cartFragment_to_direccionPagosFragment"
+            app:destination="@id/direccionPagosFragment" />
+
     </fragment>
+
+    <fragment
+        android:id="@+id/direccionPagosFragment"
+        android:name="com.example.cafedealtura_dam.ui.profile.pagos.DireccionPagosFragment"
+        android:label="Dirección de envío"
+        tools:layout="@layout/fragment_direccion_pagos" />
 
     <!-- PROFILE -->
     <fragment
