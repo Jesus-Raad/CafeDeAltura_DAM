@@ -26,12 +26,13 @@
 
         <ImageView
             android:id="@+id/imgLogo"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="8dp"
-            android:contentDescription="Logo Café de Altura"
-            android:src="@drawable/logo_cafe_sin_fondo" />
+            android:layout_marginTop="16dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/logo_registre" />
 
         <TextView
             android:id="@+id/tvTitle"

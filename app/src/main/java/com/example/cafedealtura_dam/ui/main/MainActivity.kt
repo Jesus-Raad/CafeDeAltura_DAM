@@ -11,7 +11,18 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        installSplashScreen()
+        val splashScreen = installSplashScreen()
+
+        var keepSplash = true
+
+        splashScreen.setKeepOnScreenCondition {
+            keepSplash
+        }
+
+        android.os.Handler(mainLooper).postDelayed({
+            keepSplash = false
+        }, 5000) // 5 segundos para hacer pantallazo
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 

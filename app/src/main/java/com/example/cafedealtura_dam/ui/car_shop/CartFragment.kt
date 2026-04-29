@@ -47,7 +47,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
 
         btnCheckout.setOnClickListener {
             if (CartRepository.getItems().isNotEmpty()) {
-                findNavController().navigate(R.id.paymentFragment)
+                findNavController().navigate(R.id.action_cartFragment_to_direccionPagosFragment)
             }
         }
 
