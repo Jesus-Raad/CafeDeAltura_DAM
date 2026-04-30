@@ -185,6 +185,10 @@
         android:name="com.example.cafedealtura_dam.ui.profile.direcciones.DireccionesFragment"
         android:label="Direcciones"
         tools:layout="@layout/fragment_direcciones" />
+    <fragment
+        android:id="@+id/seleccionarUbicacionFragment"
+        android:name="com.example.cafedealtura_dam.ui.profile.direcciones.SeleccionarUbicacionFragment"
+        android:label="SeleccionarUbicacion" />
 
     <!-- SETTINGS -->
     <fragment
