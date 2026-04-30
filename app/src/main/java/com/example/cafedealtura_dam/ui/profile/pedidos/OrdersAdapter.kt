@@ -16,7 +16,8 @@ import com.example.cafedealtura_dam.model.Orders_item
 class OrdersAdapter(
     private val orders: List<Orders>,
     private val itemsByOrderId: Map<Int, List<Orders_item>>,
-    private val onDetailClick: (Orders) -> Unit
+    private val onDetailClick: (Orders) -> Unit,
+    private val onRepeatClick: (List<Orders_item>) -> Unit
 ) : RecyclerView.Adapter<OrdersAdapter.OrderViewHolder>() {
 
     inner class OrderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -84,7 +85,7 @@ class OrdersAdapter(
         }
 
         holder.btnOrderRepeat.setOnClickListener {
-            // Aquí luego puedes implementar repetir pedido
+            onRepeatClick(orderItems)
         }
     }
 

@@ -18,13 +18,13 @@
         <!-- Color de fondo del splash -->
         <item name="windowSplashScreenBackground">@color/cafe_fondo_principal</item>
 
-        <!-- Tu logo -->
-        <item name="windowSplashScreenAnimatedIcon">@drawable/logo_cafe_sin_fondo</item>
+        <!-- logo -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/cafe_de_altura</item>
 
         <!-- Duración  -->
         <item name="windowSplashScreenAnimationDuration">800</item>
 
-        <!-- A qué tema pasa después del splash -->
+        <!-- A donde pasa después del splash -->
         <item name="postSplashScreenTheme">@style/Theme.CafeDeAltura_DAM</item>
     </style>
 

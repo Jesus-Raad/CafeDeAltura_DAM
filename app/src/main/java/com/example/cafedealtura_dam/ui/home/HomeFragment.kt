@@ -157,11 +157,11 @@ class HomeFragment : Fragment() {
         val cardCategoryEspecial = view.findViewById<View>(R.id.cardCategoryEspecial)
 
         cardCategoryGrano.setOnClickListener {
-            navigateToFilteredProducts("category", "En grano")
+            navigateToFilteredProducts("category", "Origen")
         }
 
         cardCategoryMolido.setOnClickListener {
-            navigateToFilteredProducts("category", "Molido")
+            navigateToFilteredProducts("category", "Orgánico")
         }
 
         cardCategoryEspecial.setOnClickListener {

@@ -10,23 +10,106 @@
         android:orientation="vertical"
         android:padding="20dp">
 
+        <!-- BACK -->
         <ImageView
             android:id="@+id/btnBack"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/outline_arrow_back_24"
-            android:layout_marginBottom="20dp" />
+            android:layout_marginBottom="16dp" />
 
+        <!-- TITLE -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pago con PayPal"
+            android:text="Método de pago"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="#2B1B17"
-            android:layout_marginBottom="20dp" />
+            android:textColor="#2B1B17" />
 
-        <!-- BLOQUE PAYPAL -->
+        <!-- SUBTITLE -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Selecciona cómo deseas pagar"
+            android:textColor="#7A6A58"
+            android:textSize="13sp"
+            android:layout_marginBottom="14dp" />
+
+        <!-- STEPS -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="4dp"
+                    android:layout_weight="1"
+                    android:background="#2F4F44" />
+
+                <Space
+                    android:layout_width="8dp"
+                    android:layout_height="4dp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="4dp"
+                    android:layout_weight="1"
+                    android:background="#2F4F44" />
+
+                <Space
+                    android:layout_width="8dp"
+                    android:layout_height="4dp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="4dp"
+                    android:layout_weight="1"
+                    android:background="#E6E0DA" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Dirección"
+                    android:textColor="#2B1B17"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Pago"
+                    android:textColor="#2B1B17"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="Confirmar"
+                    android:textColor="#2B1B17"
+                    android:textSize="11sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- PAYPAL BLOCK -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -142,6 +225,7 @@
             </LinearLayout>
         </LinearLayout>
 
+        <!-- BUTTON -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnPayNow"
             android:layout_width="match_parent"

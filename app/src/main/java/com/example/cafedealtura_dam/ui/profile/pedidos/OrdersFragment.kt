@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cafedealtura_dam.R
+import com.example.cafedealtura_dam.data.CartRepository
 import com.example.cafedealtura_dam.data.ProductsRepository
 import com.example.cafedealtura_dam.data.UserSession
 import com.example.cafedealtura_dam.dataAPI.ApiService
@@ -42,7 +43,7 @@ class OrdersFragment : Fragment(R.layout.fragment_orders) {
         if (user == null) {
             Toast.makeText(requireContext(), "No hay usuario logueado", Toast.LENGTH_SHORT).show()
             tvSubtitle.text = "0 pedidos"
-            rvOrders.adapter = OrdersAdapter(emptyList(), emptyMap()) { }
+            showOrders(emptyList(), emptyMap())
             return
         }
 
@@ -60,7 +61,7 @@ class OrdersFragment : Fragment(R.layout.fragment_orders) {
                 onError = { error ->
                     Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
                     tvSubtitle.text = "0 pedidos"
-                    rvOrders.adapter = OrdersAdapter(emptyList(), emptyMap()) { }
+                    showOrders(emptyList(), emptyMap())
                 }
             )
         } else {
@@ -75,7 +76,7 @@ class OrdersFragment : Fragment(R.layout.fragment_orders) {
             onResult = { orders ->
                 if (orders.isEmpty()) {
                     tvSubtitle.text = "0 pedidos"
-                    rvOrders.adapter = OrdersAdapter(emptyList(), emptyMap()) { }
+                    showOrders(emptyList(), emptyMap())
                 } else {
                     tvSubtitle.text = if (orders.size == 1) "1 pedido" else "${orders.size} pedidos"
                     loadItemsForOrders(orders)
@@ -84,7 +85,7 @@ class OrdersFragment : Fragment(R.layout.fragment_orders) {
             onError = { error ->
                 Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
                 tvSubtitle.text = "0 pedidos"
-                rvOrders.adapter = OrdersAdapter(emptyList(), emptyMap()) { }
+                showOrders(emptyList(), emptyMap())
             }
         )
     }
@@ -129,6 +130,34 @@ class OrdersFragment : Fragment(R.layout.fragment_orders) {
                     putInt("id_order", selectedOrder.id_order)
                 }
                 findNavController().navigate(R.id.orderDetailFragment, bundle)
+            },
+            onRepeatClick = { orderItems ->
+                var addedCount = 0
+
+                orderItems.forEach { item ->
+                    val product = ProductsRepository.getProductById(item.id_product)
+
+                    if (product != null) {
+                        CartRepository.addProduct(product, item.quantity)
+                        addedCount += item.quantity
+                    }
+                }
+
+                if (addedCount > 0) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Productos añadidos al carrito",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    findNavController().navigate(R.id.cartFragment)
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "No se pudieron añadir los productos",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         )
     }

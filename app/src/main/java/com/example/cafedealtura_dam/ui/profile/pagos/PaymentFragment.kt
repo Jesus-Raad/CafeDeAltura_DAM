@@ -13,6 +13,7 @@ import com.example.cafedealtura_dam.data.UserSession
 import com.example.cafedealtura_dam.dataAPI.ApiService
 import com.example.cafedealtura_dam.utils.applyTopInsets
 import com.google.android.material.button.MaterialButton
+import com.example.cafedealtura_dam.data.CheckoutSession
 
 class PaymentFragment : Fragment(R.layout.fragment_payment) {
 
@@ -64,6 +65,8 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
                 items = CartRepository.getItems(),
                 shippingCost = CartRepository.getShippingCost(),
                 onResult = {
+                    CheckoutSession.saveOrderSnapshot()
+
                     CartRepository.clearCart()
 
                     isProcessingPayment = false

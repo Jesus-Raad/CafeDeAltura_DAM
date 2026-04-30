@@ -61,7 +61,14 @@ class DireccionesFragment : Fragment(R.layout.fragment_direcciones) {
         val btnAddNew = view.findViewById<View>(R.id.btnAddNewAddress)
 
         adapter = DireccionesAdapter(
-            onEditar = { direccion -> mostrarDialogo(direccion) },
+            onEditar = { direccion ->
+                AddressDialogHelper.showAddressDialog(
+                    context = requireContext(),
+                    userId = currentUserId ?: return@DireccionesAdapter,
+                    direccionExistente = direccion,
+                    onSaved = { cargarDirecciones() }
+                )
+            },
             onEliminar = { direccion -> confirmarEliminarDireccion(direccion) }
         )
 
@@ -73,11 +80,21 @@ class DireccionesFragment : Fragment(R.layout.fragment_direcciones) {
         }
 
         btnAddAddress.setOnClickListener {
-            mostrarDialogo(null)
+            AddressDialogHelper.showAddressDialog(
+                context = requireContext(),
+                userId = currentUserId ?: return@setOnClickListener,
+                direccionExistente = null,
+                onSaved = { cargarDirecciones() }
+            )
         }
 
         btnAddNew.setOnClickListener {
-            mostrarDialogo(null)
+            AddressDialogHelper.showAddressDialog(
+                context = requireContext(),
+                userId = currentUserId ?: return@setOnClickListener,
+                direccionExistente = null,
+                onSaved = { cargarDirecciones() }
+            )
         }
 
         //  RECIBIR DATOS DEL MAPA

@@ -134,6 +134,18 @@ class LoginFragment : Fragment() {
                 auth.signInWithCredential(firebaseCredential)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
+                            val firebaseUser = auth.currentUser
+
+                            val googleUser = com.example.cafedealtura_dam.model.Users(
+                                id_user = 0,
+                                name = firebaseUser?.displayName ?: "Usuario",
+                                surname = "",
+                                rol = "cliente",
+                                email = firebaseUser?.email ?: ""
+                            )
+
+                            UserSession.setUser(googleUser)
+
                             findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                         } else {
                             task.exception?.printStackTrace()
