@@ -2,10 +2,7 @@ package com.example.cafedealtura_dam.ui.profile.direcciones
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.CheckBox
-import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
@@ -28,18 +25,7 @@ class DireccionesFragment : Fragment(R.layout.fragment_direcciones) {
     private var currentUserId: Int? = null
     private var listaDirecciones: List<Direccion> = emptyList()
 
-    //  NUEVO: guardar estado temporal del formulario
-    private data class DireccionDraft(
-        val label: String = "",
-        val receiver: String = "",
-        val street: String = "",
-        val city: String = "",
-        val postalCode: String = "",
-        val phone: String = "",
-        val isDefault: Boolean = false
-    )
-
-    private var draftDireccion: DireccionDraft? = null
+    private var draftDireccion: AddressDialogHelper.AddressFormDraft? = null
     private var direccionTemporal: Direccion? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,14 +47,7 @@ class DireccionesFragment : Fragment(R.layout.fragment_direcciones) {
         val btnAddNew = view.findViewById<View>(R.id.btnAddNewAddress)
 
         adapter = DireccionesAdapter(
-            onEditar = { direccion ->
-                AddressDialogHelper.showAddressDialog(
-                    context = requireContext(),
-                    userId = currentUserId ?: return@DireccionesAdapter,
-                    direccionExistente = direccion,
-                    onSaved = { cargarDirecciones() }
-                )
-            },
+            onEditar = { direccion -> mostrarDialogo(direccion) },
             onEliminar = { direccion -> confirmarEliminarDireccion(direccion) }
         )
 
@@ -80,26 +59,15 @@ class DireccionesFragment : Fragment(R.layout.fragment_direcciones) {
         }
 
         btnAddAddress.setOnClickListener {
-            AddressDialogHelper.showAddressDialog(
-                context = requireContext(),
-                userId = currentUserId ?: return@setOnClickListener,
-                direccionExistente = null,
-                onSaved = { cargarDirecciones() }
-            )
+            mostrarDialogo(null)
         }
 
         btnAddNew.setOnClickListener {
-            AddressDialogHelper.showAddressDialog(
-                context = requireContext(),
-                userId = currentUserId ?: return@setOnClickListener,
-                direccionExistente = null,
-                onSaved = { cargarDirecciones() }
-            )
+            mostrarDialogo(null)
         }
 
-        //  RECIBIR DATOS DEL MAPA
         parentFragmentManager.setFragmentResultListener("location_result", viewLifecycleOwner) { _, bundle ->
-            val draftActual = draftDireccion ?: DireccionDraft()
+            val draftActual = draftDireccion ?: AddressDialogHelper.AddressFormDraft()
 
             draftDireccion = draftActual.copy(
                 street = bundle.getString("street").orEmpty(),
@@ -115,120 +83,52 @@ class DireccionesFragment : Fragment(R.layout.fragment_direcciones) {
 
     private fun mostrarDialogo(
         direccionExistente: Direccion?,
-        draft: DireccionDraft? = null
+        draft: AddressDialogHelper.AddressFormDraft? = null
     ) {
-        val userId = currentUserId ?: return
-
-        val dialogView = LayoutInflater.from(requireContext())
-            .inflate(R.layout.dialog_direccion, null)
-
-        val btnSelectLocation = dialogView.findViewById<View>(R.id.btnSelectLocation)
-        val etLabel = dialogView.findViewById<EditText>(R.id.etLocation)
-        val etReceiver = dialogView.findViewById<EditText>(R.id.etReceptor)
-        val etStreet = dialogView.findViewById<EditText>(R.id.etStreet)
-        val etCity = dialogView.findViewById<EditText>(R.id.etCity)
-        val etPostalCode = dialogView.findViewById<EditText>(R.id.etCodigoPostal)
-        val etPhone = dialogView.findViewById<EditText>(R.id.etTelefono)
-        val cbDefault = dialogView.findViewById<CheckBox>(R.id.cbDefault)
-
-        //  RELLENAR DATOS
-        if (draft != null) {
-            etLabel.setText(draft.label)
-            etReceiver.setText(draft.receiver)
-            etStreet.setText(draft.street)
-            etCity.setText(draft.city)
-            etPostalCode.setText(draft.postalCode)
-            etPhone.setText(draft.phone)
-            cbDefault.isChecked = draft.isDefault
-        } else {
-            direccionExistente?.let { direccion ->
-                etLabel.setText(direccion.label)
-                etReceiver.setText(direccion.receiver)
-                etStreet.setText(direccion.street)
-                etCity.setText(direccion.city)
-                etPostalCode.setText(direccion.postal_code)
-                etPhone.setText(direccion.phone)
-                cbDefault.isChecked = direccion.is_default == 1
-            }
-        }
-
-        val titulo = if (direccionExistente == null) {
-            "Nueva dirección"
-        } else {
-            "Editar dirección"
-        }
-
-        val dialog = AlertDialog.Builder(requireContext())
-            .setTitle(titulo)
-            .setView(dialogView)
-            .setPositiveButton("Guardar", null)
-            .setNegativeButton("Cancelar", null)
-            .create()
-
-        dialog.setOnShowListener {
-            val btnGuardar = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
-
-            //  BOTÓN MAPA
-            btnSelectLocation.setOnClickListener {
-                draftDireccion = DireccionDraft(
-                    label = etLabel.text.toString(),
-                    receiver = etReceiver.text.toString(),
-                    street = etStreet.text.toString(),
-                    city = etCity.text.toString(),
-                    postalCode = etPostalCode.text.toString(),
-                    phone = etPhone.text.toString(),
-                    isDefault = cbDefault.isChecked
-                )
-
+        AddressDialogHelper.showAddressDialog(
+            context = requireContext(),
+            direccionExistente = direccionExistente,
+            draft = draft,
+            onSelectLocation = { currentDraft ->
+                draftDireccion = currentDraft
                 direccionTemporal = direccionExistente
-
-                dialog.dismiss()
                 findNavController().navigate(R.id.seleccionarUbicacionFragment)
-            }
-
-            btnGuardar.setOnClickListener {
-                val label = etLabel.text.toString().trim()
-                val receiver = etReceiver.text.toString().trim()
-                val street = etStreet.text.toString().trim()
-                val city = etCity.text.toString().trim()
-                val postalCode = etPostalCode.text.toString().trim()
-                val phone = etPhone.text.toString().trim()
-                val isDefault = if (cbDefault.isChecked) 1 else 0
-
-                if (
-                    label.isEmpty() ||
-                    receiver.isEmpty() ||
-                    street.isEmpty() ||
-                    city.isEmpty() ||
-                    postalCode.isEmpty() ||
-                    phone.isEmpty()
-                ) {
-                    Toast.makeText(
-                        requireContext(),
-                        "Todos los campos son obligatorios",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    return@setOnClickListener
-                }
+            },
+            onSave = { formData ->
+                val userId = currentUserId ?: return@showAddressDialog
 
                 if (direccionExistente == null) {
                     crearDireccion(
-                        userId, label, receiver, street, city, postalCode, phone, isDefault
-                    ) {
-                        dialog.dismiss()
-                    }
+                        userId = userId,
+                        label = formData.label,
+                        receiver = formData.receiver,
+                        street = formData.street,
+                        city = formData.city,
+                        postalCode = formData.postalCode,
+                        phone = formData.phone,
+                        isDefault = formData.isDefault,
+                        onSuccess = {
+                            limpiarEstadoTemporal()
+                        }
+                    )
                 } else {
                     actualizarDireccion(
-                        direccionExistente.id_address,
-                        userId, label, receiver, street, city, postalCode, phone, isDefault
-                    ) {
-                        dialog.dismiss()
-                    }
+                        idAddress = direccionExistente.id_address,
+                        userId = userId,
+                        label = formData.label,
+                        receiver = formData.receiver,
+                        street = formData.street,
+                        city = formData.city,
+                        postalCode = formData.postalCode,
+                        phone = formData.phone,
+                        isDefault = formData.isDefault,
+                        onSuccess = {
+                            limpiarEstadoTemporal()
+                        }
+                    )
                 }
             }
-        }
-
-        dialog.show()
+        )
     }
 
     private fun cargarDirecciones() {
@@ -272,13 +172,21 @@ class DireccionesFragment : Fragment(R.layout.fragment_direcciones) {
             postalCode = postalCode,
             phone = phone,
             isDefault = isDefault,
-            onResult = {
-                Toast.makeText(requireContext(), "Dirección creada", Toast.LENGTH_SHORT).show()
+            onResult = { response ->
+                Toast.makeText(
+                    requireContext(),
+                    response.message ?: "Dirección creada correctamente",
+                    Toast.LENGTH_SHORT
+                ).show()
                 cargarDirecciones()
                 onSuccess()
             },
-            onError = {
-                Toast.makeText(requireContext(), "Error creando dirección", Toast.LENGTH_LONG).show()
+            onError = { error ->
+                Toast.makeText(
+                    requireContext(),
+                    "Error creando dirección: $error",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         )
     }
@@ -306,13 +214,21 @@ class DireccionesFragment : Fragment(R.layout.fragment_direcciones) {
             postalCode = postalCode,
             phone = phone,
             isDefault = isDefault,
-            onResult = {
-                Toast.makeText(requireContext(), "Dirección actualizada", Toast.LENGTH_SHORT).show()
+            onResult = { response ->
+                Toast.makeText(
+                    requireContext(),
+                    response.message ?: "Dirección actualizada correctamente",
+                    Toast.LENGTH_SHORT
+                ).show()
                 cargarDirecciones()
                 onSuccess()
             },
-            onError = {
-                Toast.makeText(requireContext(), "Error actualizando dirección", Toast.LENGTH_LONG).show()
+            onError = { error ->
+                Toast.makeText(
+                    requireContext(),
+                    "Error actualizando dirección: $error",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         )
     }
@@ -328,12 +244,20 @@ class DireccionesFragment : Fragment(R.layout.fragment_direcciones) {
                     context = requireContext(),
                     idAddress = direccion.id_address,
                     idUser = userId,
-                    onResult = {
-                        Toast.makeText(requireContext(), "Dirección eliminada", Toast.LENGTH_SHORT).show()
+                    onResult = { response ->
+                        Toast.makeText(
+                            requireContext(),
+                            response.message ?: "Dirección eliminada correctamente",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         cargarDirecciones()
                     },
-                    onError = {
-                        Toast.makeText(requireContext(), "Error eliminando dirección", Toast.LENGTH_LONG).show()
+                    onError = { error ->
+                        Toast.makeText(
+                            requireContext(),
+                            "Error eliminando dirección: $error",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 )
             }
@@ -350,5 +274,10 @@ class DireccionesFragment : Fragment(R.layout.fragment_direcciones) {
         } else {
             "$n direcciones guardadas"
         }
+    }
+
+    private fun limpiarEstadoTemporal() {
+        draftDireccion = null
+        direccionTemporal = null
     }
 }

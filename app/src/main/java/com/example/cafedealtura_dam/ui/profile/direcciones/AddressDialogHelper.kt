@@ -3,24 +3,46 @@ package com.example.cafedealtura_dam.ui.profile.direcciones
 import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import com.example.cafedealtura_dam.R
-import com.example.cafedealtura_dam.dataAPI.ApiService
 import com.example.cafedealtura_dam.model.Direccion
 
 object AddressDialogHelper {
 
+    data class AddressFormDraft(
+        val label: String = "",
+        val receiver: String = "",
+        val street: String = "",
+        val city: String = "",
+        val postalCode: String = "",
+        val phone: String = "",
+        val isDefault: Boolean = false
+    )
+
+    data class AddressFormData(
+        val label: String,
+        val receiver: String,
+        val street: String,
+        val city: String,
+        val postalCode: String,
+        val phone: String,
+        val isDefault: Int
+    )
+
     fun showAddressDialog(
         context: Context,
-        userId: Int,
         direccionExistente: Direccion? = null,
-        onSaved: () -> Unit
+        draft: AddressFormDraft? = null,
+        onSelectLocation: (AddressFormDraft) -> Unit,
+        onSave: (AddressFormData) -> Unit
     ) {
         val dialogView = LayoutInflater.from(context)
             .inflate(R.layout.dialog_direccion, null)
 
+        val btnSelectLocation = dialogView.findViewById<View>(R.id.btnSelectLocation)
         val etLabel = dialogView.findViewById<EditText>(R.id.etLocation)
         val etReceiver = dialogView.findViewById<EditText>(R.id.etReceptor)
         val etStreet = dialogView.findViewById<EditText>(R.id.etStreet)
@@ -29,14 +51,24 @@ object AddressDialogHelper {
         val etPhone = dialogView.findViewById<EditText>(R.id.etTelefono)
         val cbDefault = dialogView.findViewById<CheckBox>(R.id.cbDefault)
 
-        direccionExistente?.let { direccion ->
-            etLabel.setText(direccion.label)
-            etReceiver.setText(direccion.receiver)
-            etStreet.setText(direccion.street)
-            etCity.setText(direccion.city)
-            etPostalCode.setText(direccion.postal_code)
-            etPhone.setText(direccion.phone)
-            cbDefault.isChecked = direccion.is_default == 1
+        if (draft != null) {
+            etLabel.setText(draft.label)
+            etReceiver.setText(draft.receiver)
+            etStreet.setText(draft.street)
+            etCity.setText(draft.city)
+            etPostalCode.setText(draft.postalCode)
+            etPhone.setText(draft.phone)
+            cbDefault.isChecked = draft.isDefault
+        } else {
+            direccionExistente?.let { direccion ->
+                etLabel.setText(direccion.label)
+                etReceiver.setText(direccion.receiver)
+                etStreet.setText(direccion.street)
+                etCity.setText(direccion.city)
+                etPostalCode.setText(direccion.postal_code)
+                etPhone.setText(direccion.phone)
+                cbDefault.isChecked = direccion.is_default == 1
+            }
         }
 
         val title = if (direccionExistente == null) {
@@ -54,6 +86,21 @@ object AddressDialogHelper {
 
         dialog.setOnShowListener {
             val btnSave = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+
+            btnSelectLocation.setOnClickListener {
+                val currentDraft = AddressFormDraft(
+                    label = etLabel.text.toString(),
+                    receiver = etReceiver.text.toString(),
+                    street = etStreet.text.toString(),
+                    city = etCity.text.toString(),
+                    postalCode = etPostalCode.text.toString(),
+                    phone = etPhone.text.toString(),
+                    isDefault = cbDefault.isChecked
+                )
+
+                dialog.dismiss()
+                onSelectLocation(currentDraft)
+            }
 
             btnSave.setOnClickListener {
                 val label = etLabel.text.toString().trim()
@@ -80,66 +127,19 @@ object AddressDialogHelper {
                     return@setOnClickListener
                 }
 
-                if (direccionExistente == null) {
-                    ApiService.Post.createAddress(
-                        context = context,
-                        idUser = userId,
+                onSave(
+                    AddressFormData(
                         label = label,
                         receiver = receiver,
                         street = street,
                         city = city,
                         postalCode = postalCode,
                         phone = phone,
-                        isDefault = isDefault,
-                        onResult = { response ->
-                            Toast.makeText(
-                                context,
-                                response.message ?: "Dirección creada correctamente",
-                                Toast.LENGTH_SHORT
-                            ).show()
-
-                            dialog.dismiss()
-                            onSaved()
-                        },
-                        onError = { error ->
-                            Toast.makeText(
-                                context,
-                                "Error creando dirección: $error",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
+                        isDefault = isDefault
                     )
-                } else {
-                    ApiService.Post.updateAddress(
-                        context = context,
-                        idAddress = direccionExistente.id_address,
-                        idUser = userId,
-                        label = label,
-                        receiver = receiver,
-                        street = street,
-                        city = city,
-                        postalCode = postalCode,
-                        phone = phone,
-                        isDefault = isDefault,
-                        onResult = { response ->
-                            Toast.makeText(
-                                context,
-                                response.message ?: "Dirección actualizada correctamente",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                )
 
-                            dialog.dismiss()
-                            onSaved()
-                        },
-                        onError = { error ->
-                            Toast.makeText(
-                                context,
-                                "Error actualizando dirección: $error",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    )
-                }
+                dialog.dismiss()
             }
         }
 

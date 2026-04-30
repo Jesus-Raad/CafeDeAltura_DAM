@@ -10,8 +10,8 @@
         android:id="@+id/btnSelectLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Seleccionar ubicación en mapa"
-        android:layout_marginBottom="12dp"/>
+        android:layout_marginBottom="12dp"
+        android:text="Seleccionar ubicación en mapa" />
 
     <EditText
         android:id="@+id/etLocation"
