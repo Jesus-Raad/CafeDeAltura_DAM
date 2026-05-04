@@ -57,7 +57,7 @@ class RegisterFragment : Fragment() {
             val password = etPassword.text.toString().trim()
             val confirmPassword = etConfirmPassword.text.toString().trim()
 
-            // 🔹 VALIDACIONES
+            // VALIDACIONES
 
             if (name.isEmpty()) {
                 etName.error = "Introduce tu nombre"
@@ -134,10 +134,10 @@ class RegisterFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            // 🔹 DESACTIVAR BOTÓN
+            // DESACTIVAR BOTÓN
             btnRegister.isEnabled = false
 
-            // 🔹 PASO 1: COMPROBAR EMAIL
+            // COMPROBAR EMAIL
             ApiService.Post.checkEmail(
                 context = requireContext(),
                 email = email,
@@ -149,7 +149,7 @@ class RegisterFragment : Fragment() {
                         etEmail.requestFocus()
                     } else {
 
-                        // 🔹 PASO 2: CREAR USUARIO
+                        // CREAR USUARIO
                         ApiService.Post.createUser(
                             context = requireContext(),
                             name = name,

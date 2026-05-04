@@ -3,4 +3,5 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="server_client_id">810614249154-u06il51ie2hmeol5pacdajf632ubp360.apps.googleusercontent.com</string>
+    <string name="paypal_client_id">AQ071hygpBV6tl43w9vmj</string>
 </resources>

@@ -14,11 +14,16 @@ import com.example.cafedealtura_dam.dataAPI.ApiService
 import com.example.cafedealtura_dam.utils.applyTopInsets
 import com.google.android.material.button.MaterialButton
 import com.example.cafedealtura_dam.data.CheckoutSession
+import android.content.Intent
+import android.net.Uri
+
 
 class PaymentFragment : Fragment(R.layout.fragment_payment) {
 
     private lateinit var btnPay: MaterialButton
     private var isProcessingPayment = false
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -27,6 +32,8 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
 
         val btnBack = view.findViewById<ImageView>(R.id.btnBack)
         btnPay = view.findViewById(R.id.btnPayNow)
+
+        val btnConfirmPayment = view.findViewById<MaterialButton>(R.id.btnConfirmPayment)
 
         val tvSubtotal = view.findViewById<TextView>(R.id.tvSubtotalValue)
         val tvShipping = view.findViewById<TextView>(R.id.tvShippingValue)
@@ -42,11 +49,33 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
         }
 
         btnPay.setOnClickListener {
+
             if (isProcessingPayment) return@setOnClickListener
 
             if (CartRepository.isEmpty()) {
                 Toast.makeText(requireContext(), "El carrito está vacío", Toast.LENGTH_SHORT).show()
                 updatePayButtonState()
+                return@setOnClickListener
+            }
+
+            val user = UserSession.getUser()
+            if (user == null) {
+                Toast.makeText(requireContext(), "No hay usuario iniciado", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            isProcessingPayment = true
+            updatePayButtonState()
+
+            //  PayPal Sandbox (simulación)
+            val paypalUrl = "https://www.sandbox.paypal.com/signin"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(paypalUrl))
+            startActivity(intent)
+        }
+
+        btnConfirmPayment.setOnClickListener {
+            if (CartRepository.isEmpty()) {
+                Toast.makeText(requireContext(), "El carrito está vacío", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -66,7 +95,6 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
                 shippingCost = CartRepository.getShippingCost(),
                 onResult = {
                     CheckoutSession.saveOrderSnapshot()
-
                     CartRepository.clearCart()
 
                     isProcessingPayment = false
